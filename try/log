@@ -1,0 +1,179 @@
+
+ *** MFA_PROG *** MD, DPD, and more. [Compilation Date: Apr 25 2016]
+
+
+  *  SIMULATING: a system with PBC in X and Y coordinates (Walls in Z)
+
+
+  *  SIMULATING: grafted chains, non grafted chains and 3 or 4 type of particles
+  *  Channel-like geometry of the simulation box
+
+
+  *  WALLS: Implicit 9-3 potential. It could be purely repulsive if A_w<0
+
+
+  * Simulating poor solvent conditions with non-additive potentials. Different sig_23  
+
+  * Doing simulation with profiles calculation (slower) 
+
+
+  * Using DPD thermostat. 
+
+  * Using DPD cutoff independently of potentials: dpd_cut_off=    2.24000
+
+  * Using usual DPD weight function: Wd=(1-r/rc)^2 ; Wr^2=Wd 
+
+  * Shear version of the program (Couette). Walls can be moved at V=const.
+
+
+  * No warnings will be sent to standard output
+
+
+  *  Writing out folded coordinates
+
+
+  *  Performing progressive force switch on towards thermalization  
+
+
+   *  Reading system data from system_input file ...    Done!
+
+   ------- Wall fluid parameters for implicit wall--------
+
+  * LJ wall params: sigma_w,a_w =  1.0000 -3.2000
+
+  *   Reading parameters from mfa_input ...
+
+                      n_relax      0
+                      n_obser 500000
+                      n_safe    1000
+                      dt       0.20000E-03
+                 Temperature       0.80000    
+                 x_space        1.0000    
+                 y_space        1.0000    
+                 z_space_wall   40.000    
+                   mass_type =  1.0000    
+                  epsil(i,j) =  0.0000    
+                  epsil(i,j) =  1.0000    
+                  epsil(i,j) = 0.33300    
+                  epsil(i,j) =  1.0000    
+                  sigma(i,i) =  1.0000    
+                    friction =  1.0000    
+                   mass_type =  1.0000    
+                  epsil(i,j) =  1.0000    
+                  epsil(i,j) =  1.0000    
+                  epsil(i,j) = 0.33300    
+                  epsil(i,j) =  1.0000    
+                  sigma(i,i) =  1.0000    
+                    friction =  1.0000    
+                   mass_type =  1.0000    
+                  epsil(i,j) = 0.33300    
+                  epsil(i,j) = 0.33300    
+                  epsil(i,j) =  1.0000    
+                  epsil(i,j) =  1.0000    
+                  sigma(i,i) =  1.0000    
+                    friction =  1.0000    
+                   mass_type =  50.000    
+                  epsil(i,j) =  1.0000    
+                  epsil(i,j) =  1.0000    
+                  epsil(i,j) =  1.0000    
+                  epsil(i,j) =  1.0000    
+                  sigma(i,i) =  1.0000    
+                    friction =  1.0000    
+
+              k_spring_wall =   0.0000    
+                      iseed =  311500357
+
+               FENE: kchain =   30.0000000
+               FENE: rchain =    1.5000000
+                     f_twall =     2     2     1
+              Wall velocity =    0.00000   0.00000   0.00000
+          k_spring_twall(:) =    0.00000   0.00000   0.00000
+
+           Done !
+
+ *       DPD Friction value in all directions: gamma =  1.00000
+        ( Taken from the first friction value in mfa_input )   
+
+
+mass_type=    1.00000   1.00000   1.00000  50.00000
+
+
+  -------- LJ Interaction parameters -------     
+
+   Sigma: particle      1    1.0000    1.0000    1.0000    1.0000
+   Sigma: particle      2    1.0000    1.0000    1.0000    1.0000
+   Sigma: particle      3    1.0000    1.0000    1.0000    1.0000
+   Sigma: particle      4    1.0000    1.0000    1.0000    1.0000
+ 
+
+   Epsilon: particle    1    0.0000    1.0000    0.3330    1.0000
+   Epsilon: particle    2    1.0000    1.0000    0.3330    1.0000
+   Epsilon: particle    3    0.3330    0.3330    1.0000    1.0000
+   Epsilon: particle    4    1.0000    1.0000    1.0000    1.0000
+
+  *  Interaction with implicit walls:
+
+   sigma_w=    1.000    1.000    1.000    1.000
+   a_w    =   -3.200   -3.200   -3.200   -3.200
+
+  * Particle 1 interacts with cutoffs:    0.00000   1.12246   2.24492   0.00000
+  * Particle 2 interacts with cutoffs:    1.12246   1.12246   2.24492   0.00000
+  * Particle 3 interacts with cutoffs:    2.24492   2.24492   2.24492   0.00000
+  * Particle 4 interacts with cutoffs:    0.00000   0.00000   0.00000   0.00000
+
+  * Particle 1 potential's shifts:    0.00000  -1.00000  -0.03101   0.00000
+  * Particle 2 potential's shifts:   -1.00000  -1.00000  -0.03101   0.00000
+  * Particle 3 potential's shifts:   -0.03101  -0.03101  -0.03101   0.00000
+  * Particle 4 potential's shifts:    0.00000   0.00000   0.00000   0.00000
+ 
+      * Interactions between grafted polymers are purely repulsive   
+ 
+
+  * Maximum cut-off radius for potentials:    2.24492
+
+
+  * DPD cut-off radius for potentials:    2.24000
+
+
+  * Max  cut-off radius for ALL:    2.24492
+
+   * Skin for verlet lists =   0.400000005960464     
+   *  Initial random seed=   311500357
+
+   - Number of binning box in each coor. =     11     7    15
+   - Binning box dimensions =                2.727  2.857  2.667
+
+
+  *   Reading  conf_old...        Done !
+
+
+    * V_fluid_fluid for the first configuration =      -1131.60193
+
+ [check_fluid_fluid] V=   -1131.60193205932     
+
+  *  s_time not 1 and conf_old exist. The simulation will NOT  use force switch_on 
+     (Real force from start up)
+
+
+   - First Vcm=        -0.01223        -0.00342         0.00048
+
+
+   - First Vcm(substracting Vcm)=        -0.01223        -0.00342         0.00048
+
+
+  *  Calculating profiles during the run
+
+
+   *  Velocity prof initialized. 
+
+ 
+  * Simulation with bending stiffnes
+  * Bending elastic constant    80.0000000000000     
+  * Equilubrium angle:  0.000000000000000E+000
+ 
+ 
+  * Simulation with orientation stiffnes
+  * Orientation elastic constant    80.0000000000000     
+  * Orientation angle:  0.000000000000000E+000
+  * Force on heads correctly calculated
+  * Valid fort.80
