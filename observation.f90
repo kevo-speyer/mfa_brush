@@ -420,6 +420,7 @@ end if ! mod(i_time-n_relax,5).eq.0
 !ori mfa_drop_force        call refold(2) 
 
         call refold(1,n_mon_d,1+part_init_d,n_mon_tot)
+        call refold(1,n_mon,1,part_init_d) !Add by Kevo 5/2016
 
 
 ! ------- Calculates all the CMs of the chains 

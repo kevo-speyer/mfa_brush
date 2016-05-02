@@ -1454,8 +1454,8 @@ case(1) ! normalization and writing
              do i = 1,nx
 !         do j = 1,ny
 
-                write(35,'(4f16.8)')    real(i-1)*r_box(1) + r_box(1)/2.,  &
-                                        real(k-1)*r_box(3) + r_box(3)/2., histo_b(i,1,k) 
+                write(35,'(4f16.8)')    dble(i-1)*r_box(1) + r_box(1)/2.,  &
+                                        dble(k-1)*r_box(3) + r_box(3)/2., histo_b(i,1,k) 
                 enddo
 !        enddo
     enddo
@@ -1474,8 +1474,8 @@ case(1) ! normalization and writing
       do k = 1,nz
 !         do j = 1,ny
           do i = 1,nx
-                write(35,'(4f16.8)')    real(i-1)*r_box(1) + r_box(1)/2.,  &
-                                        real(k-1)*r_box(3) + r_box(3)/2.,  &
+                write(35,'(4f16.8)')    dble(i-1)*r_box(1) + r_box(1)/2.,  &
+                                        dble(k-1)*r_box(3) + r_box(3)/2.,  &
                                         sqrt( histo_b2(i,1,k) - histo_b(i,1,k)**2 )
                 enddo
 !        enddo
@@ -1579,7 +1579,7 @@ case(3) ! trial of order N algorithm  ! WORKS !
           end if
           ! ------ Brush    
           !    if(a_type(i_part)==1.or.a_type(i_part)==2) then
-          if(a_type(i_part) <  3 ) then  ! if brush 
+          if(a_type(i_part) <  3 ) then  ! if brush
               histo_b(r_index(1),1,r_index(3)) =  histo_b(r_index(1),1,r_index(3)) + 1. 
               histo_step_b(r_index(1),r_index(3)) =  histo_step_b(r_index(1),r_index(3)) + 1. 
           end if
