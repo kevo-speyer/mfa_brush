@@ -424,7 +424,7 @@ end if ! mod(i_time-n_relax,5).eq.0
 
 ! ------- Calculates all the CMs of the chains 
 
-!        call calc_cms(2) !DEFINE LEGACY
+        call calc_cms(2) !DEFINE LEGACY
 
 
 ! ------- Assemble the chains according to the relative distance of the drop CM.

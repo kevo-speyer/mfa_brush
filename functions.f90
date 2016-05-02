@@ -1046,7 +1046,7 @@ subroutine calc_cms(mode) !,spabs_l,r_cm_vec)
 
              do i_chain = 1,n_chain                    ! brush
 !old    
-              r_cm_local(:) = sum(r0_unfold( (i_chain-1)*n_mon+1:i_chain*n_mon,:),dim=1)*inv_n_mon  
+              r_cm_local(:) = sum(r0_unfold(:, (i_chain-1)*n_mon+1:i_chain*n_mon),dim=2)*inv_n_mon  
 !new
 !                  r_cm_local(:)=0.
 !                  do j = 1, n_mon
@@ -1054,12 +1054,12 @@ subroutine calc_cms(mode) !,spabs_l,r_cm_vec)
 !                  end do
                   
                   r_cms(i_chain,:) = r_cm_local(:)*inv_n_mon
-                print*,r_cms(i_chain,:)
+!                print*,r_cms(i_chain,:)
              end do
              do i_chain = n_chain+1, n_chain+n_free_chains ! melt/droplet
 !old
                 r_cm_local(:) =  &
-                sum(r0_unfold( (i_chain-1)*n_mon_d+1:i_chain*n_mon_d,:),dim=1) *inv_n_mon_d
+                sum(r0_unfold(:, (i_chain-1)*n_mon_d+1:i_chain*n_mon_d),dim=2) *inv_n_mon_d
 !new                
 !                  r_cm_local(:)=0.
 !                  do j = 1, n_mon_d
@@ -1068,7 +1068,7 @@ subroutine calc_cms(mode) !,spabs_l,r_cm_vec)
 
                   r_cms(i_chain,:) = r_cm_local(:)*inv_n_mon_d
                 
-                  print*,r_cms(i_chain,:)
+!                  print*,r_cms(i_chain,:)
              end do
     !         print*,"r0_unfold"
     !         print*,r0_unfold
@@ -1110,7 +1110,6 @@ case(0)  ! INIT
  
 !  shift_cm(:) =(/ guessed_drop_cm(1), 0._8 , 0._8  /)
 !  print '(a,3f10.5/)','[rebuild_drop]  *  First drop CM =  ',shift_cm
-
         icount = 0 
 ! Number of chains         
         n_cha = part_init_d/n_mon + nm/n_mon_d
@@ -1130,7 +1129,7 @@ case(0)  ! INIT
            end do
            rg_x_ori = rg_x_ori/dble(nm)
      if (debug) print *,"Rg ori = ", rg_x_ori
-       
+
 !  ---- Translate           
 
            do i_cm = 1, n_cha
@@ -1142,7 +1141,6 @@ case(0)  ! INIT
                  r0_aux(int_curr:int_next,1) =  r0_unfold(1,int_curr:int_next) 
              end if
            end do
-
 !  ---- Calculates Rg_x after translation
 
            rg_x = 0. 
@@ -1150,7 +1148,6 @@ case(0)  ! INIT
            rg_x = rg_x + ( r0_aux(i,1) - drop_cm(1) )**2
            end do
            rg_x = rg_x/dble(nm)
-
      if (debug) print *,"Rg new  = ", rg_x
 !  ---- Decide if translation is done or not 
 
@@ -1165,7 +1162,6 @@ case(0)  ! INIT
            rg_x = rg_x + ( r0_unfold(1,i) - drop_cm(1) )**2
            end do
            rg_x = rg_x/dble(n_mon_tot-part_init_d) ! MORE EFFICIENT LATER
-
            return
      case(3)   !   CM in the right third of the box 
 
@@ -1177,12 +1173,24 @@ case(0)  ! INIT
            end do
            rg_x_ori = rg_x_ori/dble(nm)
      if (debug) print *,"Rg ori = ", rg_x_ori
-    
 !  ---- Translate           
 
-           do i_cm = 1, n_cha
-                 int_curr = (i_cm-1)*n_mon  + 1 
-                 int_next = (i_cm)*n_mon   
+           do i_cm = 1, n_chain !n_cha !loop sobre todas las cadenas
+                 int_curr = (i_cm-1)*n_mon  + 1 ! monomero inicial dentro de la cadena i_cm
+                 int_next = (i_cm)*n_mon   ! monomero final dentro de la cadena i_cm
+
+             if (  r_cms(i_cm,1) < box_center    ) then
+                 r0_aux(int_curr:int_next,1) =  r0_unfold(1,int_curr:int_next) + boundary(1)
+             else
+                 r0_aux(int_curr:int_next,1) =  r0_unfold(1,int_curr:int_next) 
+             end if
+           end do
+
+           do i_cm = n_chain + 1 , n_chain+n_chain_d !n_cha !loop sobre todas las cadenas
+                 int_curr = part_init_d + (i_cm-n_chain-1) * n_mon_d  + 1 ! monomero inicial dentro de la cadena i_cm
+                 int_next = part_init_d + (i_cm-n_chain) * n_mon_d     ! monomero final dentro de la cadena i_cm
+                 if (debug) print *,"int_curr = ", int_curr, "int_next = ", int_next
+
              if (  r_cms(i_cm,1) < box_center    ) then
                  r0_aux(int_curr:int_next,1) =  r0_unfold(1,int_curr:int_next) + boundary(1)
              else
@@ -1199,7 +1207,6 @@ case(0)  ! INIT
            end do
            rg_x = rg_x/dble(nm)
      if (debug) print *,"Rg new = ", rg_x
-
 !  ---- Decide if translation is done or not 
 
            if( rg_x < rg_x_ori ) then ! translation is done 
@@ -1208,7 +1215,6 @@ case(0)  ! INIT
            else ! as it is not done, we store Rg_x as the ori value 
                rg_x = rg_x_ori 
            end if 
-
            ! else translation is not done
 
 ! Substract Lx/2 in order to have the droplet CM in the first half of the BOX.
@@ -1238,7 +1244,7 @@ subroutine calc_drop_rg(rg_x)
            rg_z = rg_z/dble(n_mon_tot-part_init_d)
 
 ! Writes out            
-           write(55,'(i6,x,2(g15.10,x))') i_time,rg_x,rg_z 
+           write(55,'(i6,x,2(g17.10,x))') i_time,rg_x,rg_z 
 
 end subroutine calc_drop_rg
 
@@ -1258,7 +1264,8 @@ select case (mode)
 
 case(0)  ! init 
 
-    allocate( scaled_3_x(nm),  scaled_4_x(nm) , r_local(n_mon_tot,3))
+    allocate( scaled_3_x(nm),  scaled_4_x(nm) , r_local(n_dim,n_mon_tot))
+!Corrected by Kevo 4/2016
 
     n3_box(:) = 0 
     n4_box(:) = 0 
@@ -1275,7 +1282,6 @@ case(1) ! Calculation for the first time
 
     scaled_3_x(:) = 3._8*r0(1,part_init_d+1:n_mon_tot) * inv_boundary(1)
     scaled_4_x(:) = 4._8*r0(1,part_init_d+1:n_mon_tot) * inv_boundary(1)
-
         do i = 1,nm
          index_3 = int( scaled_3_x(i) )  + 1
          index_4 = int(scaled_4_x(i))  + 1
@@ -1285,7 +1291,6 @@ case(1) ! Calculation for the first time
          n4_box(index_4) =  n4_box(index_4) + 1 
 
         end do 
-
        cm_ok = maxloc(n3_box(:),dim=1)
        
 ! Global, used in  rebuild_drop  
@@ -1300,8 +1305,7 @@ case(1) ! Calculation for the first time
 
 ! The brush goes always in the same position 
 
-            r_local(:,:)  = r0(:,:)
-
+        r_local(:,:)  = r0(:,:)
 ! Rebuild the drop 
      select case (cm_ok) 
 
@@ -1311,34 +1315,30 @@ case(1) ! Calculation for the first time
          index_3 = int( scaled_3_x(i) )  + 1
          index_4 = int(scaled_4_x(i))  + 1
              if(index_4 == 3 .or. index_4 == 4) then
-                 r_local(part_init_d+i,1 ) = r_local(part_init_d+i,1) - boundary(1)
+                 r_local(1, part_init_d+i ) = r_local(1, part_init_d+i) - boundary(1)
              end if
         end do
-         
-     case(2) ! Most of the droplet in the second box |   | o |   | 
+                 case(2) ! Most of the droplet in the second box |   | o |   | 
 
-            r_local(part_init_d+1:n_mon_tot,1) =  r0(1,part_init_d+1:n_mon_tot)
-
+            r_local(1, part_init_d+1:n_mon_tot) =  r0(1,part_init_d+1:n_mon_tot)
      case(3) ! Most of the droplet in the third box  |   |   | o | 
 
             do i = 1,nm
                 index_3 = int( scaled_3_x(i) )  + 1
                 index_4 = int(scaled_4_x(i))  + 1
                 if(index_4 == 1 .or. index_4 == 2) then
-                    r_local(part_init_d+i,1) = r_local(part_init_d+i,1) + boundary(1)
+                    r_local(1, part_init_d+i) = r_local(1, part_init_d+i) + boundary(1)
                 end if 
             end do
-
      end select
 
 ! Calculate the CENTER OF MASS   (global var.)   
 
-        drop_cm(:) = sum(r_local(part_init_d+1:n_mon_tot,:),dim=1)/dble(nm)
+        drop_cm(:) = sum(r_local(:,part_init_d+1:n_mon_tot),dim=2)/dble(nm)
 
 !        print '(a,4f10.5/)',"[rebuild_drop2] Estimated droplet CM: ",drop_cm(:)
 
 !OUTPUT : drop_cm and n_cm
-
   end select ! mode
 
 end subroutine rebuild_drop2
@@ -1407,7 +1407,7 @@ case(1) ! normalization and writing
 !---  Write out droplet profile 
 
     open(unit=35,file="num_density.mide",status="unknown")
-! Header for automatic reading from tecplot
+! Header for automatic reading from tecplot !OLD not in use anymore
         write(35,*) 'variables= "x","z","density"'
         write(35,*) 'zone i= ',nx,' ,j= ',nz,' ,f=point'
         write(35,*) 
@@ -1794,8 +1794,8 @@ case(1) ! --------- Normalization and writing
           end if
 
 
-          histo_b(r_index(1),r_index(3),:) =  histo_b(r_index(1),r_index(3),:) + v(i_part,:)   
-          histo_b2(r_index(1),r_index(3),:) =  histo_b2(r_index(1),r_index(3),:) + v(i_part,:)**2   
+          histo_b(r_index(1),r_index(3),:) =  histo_b(r_index(1),r_index(3),:) + v(:,i_part)   
+          histo_b2(r_index(1),r_index(3),:) =  histo_b2(r_index(1),r_index(3),:) + v(:,i_part)**2   
 !    counter
           icount_b(r_index(1),r_index(3)) = icount_b(r_index(1),r_index(3)) + 1
 
@@ -1812,8 +1812,8 @@ case(1) ! --------- Normalization and writing
              if (r_index(3) > size(histo,dim=2) ) print *, " Drops: Bounds exceeded !  ",r_index(3)
           end if
 
-          histo(r_index(1),r_index(3),:) =  histo(r_index(1),r_index(3),:) + v(i_part,:)   
-          histo2(r_index(1),r_index(3),:) =  histo2(r_index(1),r_index(3),:) + v(i_part,:)**2   
+          histo(r_index(1),r_index(3),:) =  histo(r_index(1),r_index(3),:) + v(:,i_part)   
+          histo2(r_index(1),r_index(3),:) =  histo2(r_index(1),r_index(3),:) + v(:,i_part)**2   
 !    counter
 
           icount(r_index(1),r_index(3)) = icount(r_index(1),r_index(3)) + 1
