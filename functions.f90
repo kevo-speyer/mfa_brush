@@ -49,10 +49,10 @@ end subroutine write_conf
 
 !  **** Periodic Boudary conditions refolding
 !
-        subroutine refold(mode,n_mon,n_ini,n_end)
+        subroutine refold(mode,n_mon_loc,n_ini,n_end)
 !        real(kind=8) ,intent(in) :: 
 !        real(kind=8) ,intent(out) :: spabs(:,:) 
-        integer , intent(in) :: mode,n_mon,n_ini, n_end
+        integer , intent(in) :: mode,n_mon_loc,n_ini, n_end
         integer , save :: n_part , n_dim_loc
         integer :: i_dim,i_part
         select case(mode)
@@ -66,14 +66,14 @@ end subroutine write_conf
               r0_unfold(:,n_ini:n_end) = r0(:,n_ini:n_end)
               do i_part=n_ini,n_end
                  do i_dim=1,n_dim_loc
-                   if(mod(i_part-1,n_mon).ne.0) then
+                   if(mod(i_part-1,n_mon_loc).ne.0) then
                       if(r0_unfold(i_dim,i_part)-r0_unfold(i_dim,i_part-1).gt.half_boundary(i_dim)) then
-                      r0_unfold(i_dim,i_part)=r0_unfold(i_dim,i_part)-boundary(i_dim)
-                      cycle
+                          r0_unfold(i_dim,i_part)=r0_unfold(i_dim,i_part)-boundary(i_dim)
+                          cycle
                       end if
                       if(r0_unfold(i_dim,i_part-1)-r0_unfold(i_dim,i_part).gt.half_boundary(i_dim)) then
-                      r0_unfold(i_dim,i_part)=r0_unfold(i_dim,i_part)+boundary(i_dim)
-                      cycle
+                          r0_unfold(i_dim,i_part)=r0_unfold(i_dim,i_part)+boundary(i_dim)
+                          cycle
                       end if
                    end if
                  end do
@@ -1047,12 +1047,7 @@ subroutine calc_cms(mode) !,spabs_l,r_cm_vec)
              do i_chain = 1,n_chain                    ! brush
 !old    
               r_cm_local(:) = sum(r0_unfold(:, (i_chain-1)*n_mon+1:i_chain*n_mon),dim=2)*inv_n_mon  
-!new
-!                  r_cm_local(:)=0.
-!                  do j = 1, n_mon
-!                      r_cm_local(:)=r_cm_local(:)+r0_unfold((i_chain-1)*n_mon+j,:)
-!                  end do
-                  
+                 
                   r_cms(i_chain,:) = r_cm_local(:)*inv_n_mon
 !                print*,r_cms(i_chain,:)
              end do
@@ -1060,18 +1055,9 @@ subroutine calc_cms(mode) !,spabs_l,r_cm_vec)
 !old
                 r_cm_local(:) =  &
                 sum(r0_unfold(:, (i_chain-1)*n_mon_d+1:i_chain*n_mon_d),dim=2) *inv_n_mon_d
-!new                
-!                  r_cm_local(:)=0.
-!                  do j = 1, n_mon_d
-!                      r_cm_local(:)=r_cm_local(:)+r0_unfold((i_chain-1)*n_mon+j,:)
-!                  end do
 
                   r_cms(i_chain,:) = r_cm_local(:)*inv_n_mon_d
-                
-!                  print*,r_cms(i_chain,:)
              end do
-    !         print*,"r0_unfold"
-    !         print*,r0_unfold
          end select
 
         end subroutine calc_cms
@@ -1124,17 +1110,27 @@ case(0)  ! INIT
 !  ---- Calculates Rg_x before translation
 
            rg_x_ori = 0. 
-           do i = part_init_d+1,n_mon_tot
-           rg_x_ori = rg_x_ori + ( r0_unfold(1,i) - drop_cm(1) )**2
+           do i = part_init_d+1,n_mon_tot !melt
+               rg_x_ori = rg_x_ori + ( r0_unfold(1,i) - drop_cm(1) )**2
            end do
            rg_x_ori = rg_x_ori/dble(nm)
      if (debug) print *,"Rg ori = ", rg_x_ori
 
 !  ---- Translate           
-
-           do i_cm = 1, n_cha
+!Modified by Kevo
+           do i_cm = 1, n_chain ! loop over brush
                  int_curr = (i_cm-1)*n_mon  + 1 
                  int_next = (i_cm)*n_mon   
+             if (  r_cms(i_cm,1) > box_center    ) then
+                 r0_aux(int_curr:int_next,1) =  r0_unfold(1,int_curr:int_next) - boundary(1)
+             else
+                 r0_aux(int_curr:int_next,1) =  r0_unfold(1,int_curr:int_next) 
+             end if
+           end do
+
+          do i_cm = 1, n_chain_d ! loop over melt
+                 int_curr = part_init_d + (i_cm-1)*n_mon_d  + 1 
+                 int_next = part_init_d + (i_cm)*n_mon_d   
              if (  r_cms(i_cm,1) > box_center    ) then
                  r0_aux(int_curr:int_next,1) =  r0_unfold(1,int_curr:int_next) - boundary(1)
              else
@@ -1145,7 +1141,7 @@ case(0)  ! INIT
 
            rg_x = 0. 
            do i = part_init_d+1,n_mon_tot
-           rg_x = rg_x + ( r0_aux(i,1) - drop_cm(1) )**2
+               rg_x = rg_x + ( r0_aux(i,1) - drop_cm(1) )**2
            end do
            rg_x = rg_x/dble(nm)
      if (debug) print *,"Rg new  = ", rg_x
@@ -1159,7 +1155,7 @@ case(0)  ! INIT
          ! nothing to do
            rg_x = 0. 
            do i = part_init_d+1,n_mon_tot
-           rg_x = rg_x + ( r0_unfold(1,i) - drop_cm(1) )**2
+               rg_x = rg_x + ( r0_unfold(1,i) - drop_cm(1) )**2
            end do
            rg_x = rg_x/dble(n_mon_tot-part_init_d) ! MORE EFFICIENT LATER
            return
@@ -1169,13 +1165,13 @@ case(0)  ! INIT
 
            rg_x_ori = 0. 
            do i = part_init_d+1,n_mon_tot
-           rg_x_ori = rg_x_ori + ( r0_unfold(1,i) - drop_cm(1) )**2
+               rg_x_ori = rg_x_ori + ( r0_unfold(1,i) - drop_cm(1) )**2
            end do
            rg_x_ori = rg_x_ori/dble(nm)
      if (debug) print *,"Rg ori = ", rg_x_ori
 !  ---- Translate           
 
-           do i_cm = 1, n_chain !n_cha !loop sobre todas las cadenas
+           do i_cm = 1, n_chain !loop over brush
                  int_curr = (i_cm-1)*n_mon  + 1 ! monomero inicial dentro de la cadena i_cm
                  int_next = (i_cm)*n_mon   ! monomero final dentro de la cadena i_cm
 
@@ -1186,9 +1182,9 @@ case(0)  ! INIT
              end if
            end do
 
-           do i_cm = n_chain + 1 , n_chain+n_chain_d !n_cha !loop sobre todas las cadenas
-                 int_curr = part_init_d + (i_cm-n_chain-1) * n_mon_d  + 1 ! monomero inicial dentro de la cadena i_cm
-                 int_next = part_init_d + (i_cm-n_chain) * n_mon_d     ! monomero final dentro de la cadena i_cm
+           do i_cm = 1, n_chain_d !loop over melt
+                 int_curr = part_init_d + (i_cm-1) * n_mon_d  + 1 ! monomero inicial dentro de la cadena i_cm
+                 int_next = part_init_d + (i_cm) * n_mon_d     ! monomero final dentro de la cadena i_cm
                  if (debug) print *,"int_curr = ", int_curr, "int_next = ", int_next
 
              if (  r_cms(i_cm,1) < box_center    ) then
@@ -1203,7 +1199,7 @@ case(0)  ! INIT
 
            rg_x = 0. 
            do i = part_init_d+1,n_mon_tot
-           rg_x = rg_x + ( r0_aux(i,1) - drop_cm(1) )**2
+               rg_x = rg_x + ( r0_aux(i,1) - drop_cm(1) )**2
            end do
            rg_x = rg_x/dble(nm)
      if (debug) print *,"Rg new = ", rg_x
@@ -1244,7 +1240,7 @@ subroutine calc_drop_rg(rg_x)
            rg_z = rg_z/dble(n_mon_tot-part_init_d)
 
 ! Writes out            
-           write(55,'(i6,x,2(g17.10,x))') i_time,rg_x,rg_z 
+           write(55,'(i7,x,2(g17.10,x))') i_time,rg_x,rg_z 
 
 end subroutine calc_drop_rg
 
@@ -1256,6 +1252,17 @@ real (kind=8) , allocatable, save :: scaled_3_x(:),scaled_4_x(:),r_local(:,:)
 integer :: n3_box(3), n4_box(4),i, index_3,index_4
 integer,save :: cm_ok
 logical, parameter :: debug=.false.
+!below, variables for case(2). More accuarate drop_cm calculation.
+logical :: control
+real (kind=8) :: x_cm, x_cm_new, delta_cm, delta_cm_new
+real (kind=8),dimension(nm) :: r0_cent
+!below, variables for case(3). Optimized drop_cm calculation
+integer :: n_boxes, i_index, max_box
+real (kind=8) :: delta_L = 0.25
+integer, allocatable, save :: box_count(:)
+!below, variables for case(4). Bisection drop_cm calculation 
+integer :: case1, case2
+real (kind=8) :: box_min, box_middle, box_max
 
 ! Find in which third of the box there are more beads
 ! N_CM take the values 1,2,or 3 according with the third in the box that has
@@ -1263,7 +1270,8 @@ logical, parameter :: debug=.false.
 select case (mode)
 
 case(0)  ! init 
-
+    n_boxes = int( boundary(1) / delta_L ) + 1
+    allocate(box_count(n_boxes))
     allocate( scaled_3_x(nm),  scaled_4_x(nm) , r_local(n_dim,n_mon_tot))
 !Corrected by Kevo 4/2016
 
@@ -1318,7 +1326,7 @@ case(1) ! Calculation for the first time
                  r_local(1, part_init_d+i ) = r_local(1, part_init_d+i) - boundary(1)
              end if
         end do
-                 case(2) ! Most of the droplet in the second box |   | o |   | 
+     case(2) ! Most of the droplet in the second box |   | o |   | 
 
             r_local(1, part_init_d+1:n_mon_tot) =  r0(1,part_init_d+1:n_mon_tot)
      case(3) ! Most of the droplet in the third box  |   |   | o | 
@@ -1337,6 +1345,100 @@ case(1) ! Calculation for the first time
         drop_cm(:) = sum(r_local(:,part_init_d+1:n_mon_tot),dim=2)/dble(nm)
 
 !        print '(a,4f10.5/)',"[rebuild_drop2] Estimated droplet CM: ",drop_cm(:)
+
+case(2) !More accuarate drop_cm calculation, for systems 
+        ! with a non negligible vapor fraction. Works for 1 droplet only. 
+        !Also gives r0_cent, wich is r0 with the center of mass inx in
+        !boundary(1)/2. by Kevo 5/2016.
+        !The idea is to calculate the center of mass of the melt. Then translate
+        !the system, so that the centre of mass is in Lx/2. Then apply PBC to
+        !have all particles in 0 < x < Lx. Then calculate the center of mass of
+        !the melt. Then translate the system, so that the centre of mass is in
+        !Lx/2 and so on... This process has a fixed point, when the centre of
+        !mass of the melt is in Lx/2, which for 1 droplet, coincides with the
+        !center of mass of the droplet. WARNING: arbitrary convergence criteria
+
+    !Define r0_cent for the first time in this step:
+    r0_cent(:) = r0(1,part_init_d+1:n_mon_tot)
+    x_cm = sum(r0_cent(:))/dble(nm) 
+    control = .true.
+    drop_cm(1) = x_cm
+!While not converged
+    do while(control) 
+        r0_cent(:) = r0_cent(:) - x_cm + boundary(1)/2. !Translate whole system so that 
+                                                            ! x_cm is in Lx / 2  
+
+        !Apply PBC for droplet only
+        do i_part = 1,nm
+            if (r0_cent(i_part).lt.0.) then
+                r0_cent(i_part) = r0_cent( i_part) + boundary(1)
+            else if (r0_cent(i_part).gt.boundary(1)) then
+                r0_cent( i_part) = r0_cent( i_part) - boundary(1)
+            end if
+        end do    
+    
+        !get new centre of mass x coordinate after aplying PBC
+        x_cm_new = sum(r0_cent(:))/dble(nm)
+         
+        delta_cm =      x_cm -  boundary(1) / 2.      !Quantify translation 
+        delta_cm_new =  x_cm_new - boundary(1) / 2.  
+        
+        !Check if converged
+        if(abs(delta_cm_new).le.abs(delta_cm)) then !Transaltion in x mus be less than previous transaltion
+            if (abs(delta_cm_new).le.0.25) then !The distance between centre of mass
+                control = .false.        !and box centre shall be less than the numer in this line
+            end if                      ! HARDCODE WARNING: 0.25 in sigma units            
+        end if     
+        x_cm = x_cm_new 
+        drop_cm(1) = drop_cm(1) +  delta_cm_new                
+    end do !End while
+    
+    drop_cm(2:3) = sum(r0(2:3,part_init_d+1:n_mon_tot),dim=2)/dble(nm)
+    n_cm = int(drop_cm(1) * inv_boundary(1) * 3.) + 1 
+
+case(3) !Another way of calculating drop_cm. The idea is to divide Lx in many
+        !boxes, and count the number of melt particles in each box. Then
+        !transalte the system so that the center of the droplet is at Lx/2
+    delta_L = 0.25
+    n_boxes = boundary(1)/delta_L
+    box_count(:) = 0
+    do i_part = part_init_d+1, n_mon_tot !loop over all melt particles 
+        i_index = int( r0(1,i_part) * inv_boundary(1) * n_boxes + 1 )
+        box_count(i_index) = box_count(i_index) + 1
+    end do
+    max_box = maxloc(box_count,dim=1)
+    drop_cm(1) = ( dble(max_box) - 0.5 ) * delta_L 
+
+    drop_cm(2:3) = sum(r0(2:3,part_init_d+1:n_mon_tot),dim=2)/dble(nm)
+    n_cm = int(drop_cm(1) * inv_boundary(1) * 3.) + 1
+
+case(4) !Yet another way to calculate drop_cm. This case is by bisection.
+    box_min = 0. !Define first box min and max
+    box_max = boundary(1)
+    do while((box_max-box_min).gt.0.25) !WARNING: Resolution to drop_cm is HARDCODED
+        box_middle = (box_min + box_max) / 2.
+        case1 = 0
+        case2 = 0
+        do i_part = part_init_d+1, n_mon_tot !loop over all melt particles
+            if((r0(1,i_part).ge.box_min).and.(r0(1,i_part).lt.box_middle)) then! Particle is on the left side of the box
+                case1 = case1 + 1
+            else if ((r0(1,i_part).ge.box_middle).and.(r0(1,i_part).lt.box_max)) then
+                                 ! Particle is on the right side of the box
+                case2 = case2 + 1
+            end if
+        end do        
+        if(case1.gt.case2) then !More particles on the middle left side of the box
+            box_max = box_middle
+        else if (case2.gt.case1) then! More particles on the middle right side of the box
+            box_min = box_middle
+        else if(case1.eq.case2) then !Equal numer of particles on the right and on the left
+            box_max = box_middle
+            box_min = box_middle
+        end if
+    end do    
+    drop_cm(1) = box_middle
+    drop_cm(2:3) = sum(r0(2:3,part_init_d+1:n_mon_tot),dim=2)/dble(nm)
+    n_cm = int(drop_cm(1) * inv_boundary(1) * 3.) + 1
 
 !OUTPUT : drop_cm and n_cm
   end select ! mode
@@ -1477,9 +1579,9 @@ case(1) ! normalization and writing
                 write(35,'(4f16.8)')    dble(i-1)*r_box(1) + r_box(1)/2.,  &
                                         dble(k-1)*r_box(3) + r_box(3)/2.,  &
                                         sqrt( histo_b2(i,1,k) - histo_b(i,1,k)**2 )
-                enddo
+          enddo
 !        enddo
-    enddo
+      enddo
     close(35)
 
 #ifdef FORCE_PROFILE    
@@ -1850,7 +1952,14 @@ subroutine coor_refold(mode)
            if (r0_unfold(3,i) > boundary(3) ) r0_unfold(3,i) = r0_unfold(3,i) - boundary(3) 
            if (r0_unfold(3,i) < 0.  ) r0_unfold(3,i) = r0_unfold(3,i) + boundary(3) 
            end do 
-       
+
+       case(4)
+      ! Warning: Lx = boundary(1)  
+           do i=1,n_part
+               if (r0_unfold(1,i) > boundary(1) ) r0_unfold(1,i) = r0_unfold(1,i) - boundary(1) 
+               if (r0_unfold(1,i) < 0.  ) r0_unfold(1,i) = r0_unfold(1,i) + boundary(1) 
+           end do 
+
        
        end select
 
