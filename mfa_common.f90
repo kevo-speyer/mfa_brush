@@ -46,14 +46,14 @@ module commons
 
 #ifndef STARS
 #   if WALL==1
-#        if SYSTEM ==3 || SYSTEM==0 
+#        if SYSTEM ==3 || SYSTEM==0 || SYSTEM==1 
 #           ifdef  PARTICLE_4
               integer, parameter  :: n_type=5
 #           else               
               integer, parameter  :: n_type=4
 #           endif
 #        endif
-#   elif WALL==2 /* if wall is implicit  */
+#   elif WALL==2 || WALL==3 /* if wall is implicit  */
               integer, parameter  :: n_type=4
 #   endif
 #else /* if there are stars */

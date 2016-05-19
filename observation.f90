@@ -348,7 +348,7 @@ end if ! mod(i_time-n_relax,5).eq.0
 ! Densities (order N algorithm )
 
 
-        call histo(2,dim_prof_dens)
+        call histo(2,dim_prof_dens) 
 
 ! Velocities  (order N algorithm )
 
@@ -393,11 +393,12 @@ end if ! mod(i_time-n_relax,5).eq.0
 ! (erroneous if there is significant vapor phase)
 
            v_cm_curr(:) = 0.
-           do i_part = part_init_d+1,n_mon_tot
+           do i_part = part_init_d+1,n_mon_tot !loop over melt particles
                v_cm_curr(:) = v_cm_curr(:) + v(:,i_part)
            end do
            
-           v_cm_curr(:) = v_cm_curr(:) / dble(part_init_d) 
+           v_cm_curr(:) = v_cm_curr(:) / dble(nm) 
+                !ori:                  / dble(part_init_d), bad normalization !? 
            
            vcm_d(:) = vcm_d(:) + v_cm_curr(:)
            vcm_d2(:) = vcm_d2(:) + v_cm_curr(:)**2
@@ -405,11 +406,20 @@ end if ! mod(i_time-n_relax,5).eq.0
 
 
 ! Write out droplet's CM position and velocity 
+! rebuild_drop2(2)  should be used. It's fast and gives a continuous trajectory
+! for droplet
+!        call rebuild_drop2(1) ! original. drop_cm(:) and n_cm are recalculated !obsolete
+                                    !Calculations done beeter in rebuild_drop2(2)
 
-        call rebuild_drop2(1) ! drop_cm(:) and n_cm are recalculated 
+        call rebuild_drop2(2) ! More accuratelly and efficient calculation of drop_cm(:) and n_cm
+                        
+!        call rebuild_drop2(3) ! Another way to calculate of drop_cm(:) and n_cm
+!        call rebuild_drop2(4) ! Another way to calculate of drop_cm(:) and  n_cm
+
+
 
     
-        write(54,'(i6,6(g15.8,2x))') i_time,drop_cm(:),v_cm_curr(:)
+        write(54,'(i7,6(g16.8,2x))') i_time,drop_cm(:),v_cm_curr(:)
 
 ! Droplet profiles [ Taken from mide.f90 for mide_drop_force]
 
@@ -419,16 +429,18 @@ end if ! mod(i_time-n_relax,5).eq.0
 
 !ori mfa_drop_force        call refold(2) 
 
-        call refold(1,n_mon_d,1+part_init_d,n_mon_tot)
+        call refold(1,n_mon_d,1+part_init_d,n_mon_tot) !get r0_unfold right for melt
+
+        call refold(1,n_mon,1,part_init_d) !Add by Kevo 5/2016, get r0_unfold right for brush
 
 
 ! ------- Calculates all the CMs of the chains 
 
-!        call calc_cms(2) !DEFINE LEGACY
+        call calc_cms(2) !DEFINE LEGACY
 
 
 ! ------- Assemble the chains according to the relative distance of the drop CM.
-!            Also calculates Rg_drop()
+!         r0_unfold recalculated.   Also calculates Rg_drop()
 
         call  rebuild_drop(n_cm,rgx)
 
@@ -444,9 +456,9 @@ end if ! mod(i_time-n_relax,5).eq.0
 ! The substraction of CM is done only in X AND Z
 ! NOTE: a fix shift in z is done in order to force positive Z coordinate for all the particles. 
 
-        r_trasl(1) = drop_cm(1) 
+        r_trasl(1) = drop_cm(1) - boundary(1)/2. !Added: - boundary(1)/2.
         r_trasl(2) = 0.
-        r_trasl(3) = drop_cm(3) - fix_shift  
+        r_trasl(3) = drop_cm(3) - fix_shift  !fix_shift = boundary(3)/2. OK 
 
 !
 ! --- Translation of coordinates so that drop  CM  in (/ Lx/2,0,Lz/2 /)
@@ -454,6 +466,9 @@ end if ! mod(i_time-n_relax,5).eq.0
 !OBSOLETE?        r_trasl(:)  = r_trasl(:) - Lx_o_2(1:3) 
 !OBSOLETE?
 !OBSOLETE?        r0_unfold(:,:) = r0_unfold(:,:) - spread ( r_trasl(1:3),1,n_part ) ! all
+
+!WARNING RESET r0_unfold to get a good histogram
+    r0_unfold(:,:) = r0(:,:)
 
 ! Melt translation
 ! Translates in X and Z
@@ -472,24 +487,26 @@ end if ! mod(i_time-n_relax,5).eq.0
         end do
 
 ! Brush translation
-! Translated  only in X
+! Translated  only in X. 
+! No translation done for brush, because it gives a blurry image
 
-        do i=1,part_init_d
-             r0_unfold(1,i) = r0_unfold(1,i) - r_trasl(1)
-        end do
+!        do i=1,part_init_d
+!             r0_unfold(1,i) = r0_unfold(1,i) - r_trasl(1)
+!        end do
 
 ! Translate X positions the middle of the box. Needed after drop rebuilding.
 
-     do i = 1 , n_part
-        r0_unfold(:,i) = r0_unfold(:,i) +  lx_o_2(1:3) 
-     end do
+!     do i = 1 , n_part
+!        r0_unfold(:,i) = r0_unfold(:,i) !+  lx_o_2(1:3) 
+!     end do
 !
 ! Density prof calculation
 !
 !  Refold in y before getting the density 
 
-        call  coor_refold(2)
-        call  coor_refold(1)
+        call  coor_refold(2) !Apply PBC in y 
+!        call  coor_refold(1) !Apply PBC for a box length = 2 * boundary(1)
+        call  coor_refold(4) !Apply PBC in x for a box length =  boundary(1)
 
 ! ------ Density profile 
 ! Order N algorithm: 

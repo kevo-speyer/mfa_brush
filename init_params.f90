@@ -214,8 +214,8 @@ else      ! ---- READ mfa_input
     read(10,*) k_spring_wall,c_dummy ; print '(/a30,g12.5)', "   k_spring_wall = ", k_spring_wall
     
 # ifdef BENDING        
-read(10,*) k_bend  !bending elastic constant, set default to 0
-read(10,*) alpha_eq  ! equilibrium bending angle set default to 0
+read(10,*) k_bend ; print '(a30,i10)',"k_bend = ", k_bend !bending elastic constant, set default to 0
+read(10,*) alpha_eq ; print '(a30,i10)',"alpha_eq = ", alpha_eq  ! equilibrium bending angle set default to 0
 # endif
     
     read(10,*) !i_dummy
