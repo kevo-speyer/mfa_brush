@@ -9,5 +9,3 @@
  1.0   1.0   1.0
 # Parameters A and s_w for wall-fluid interaction with: V=A (s_w/z) -(s_w/z)^6   
     -3.2         1.0
-# Fx    Fy    Fz 
-0.0   0.0    0.0 
