@@ -1,0 +1,11 @@
+# Author: Claudio Pastorino
+#
+#
+# Input description
+
+* Channel geometry 
+* Fully flexible brush layers.  No bending rigidity
+* Disordered grafted points in the brush layer 
+* Simple liquid incompatible with the brush
+* Non additive potentials between brush and liquid 
+* Shear (or Couette) simulations possible. Not Poiseuille.
