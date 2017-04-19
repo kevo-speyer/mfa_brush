@@ -122,9 +122,9 @@ subroutine conf_default()
 
 #if SYMMETRY == 0 
 #   if SYSTEM ==0   /* Brush un top and bottom walls: channel geometry */
-#       if BRUSH_TYPE ==1  /* Avoids overlp between grafting beads*/
+#       if BRUSH_TYPE ==1  /* Avoids overlap between grafting beads*/
             call gen_brush(3) 
-#       elif BRUSH_TYPE ==0              /* Allows overlp between grafting beads*/
+#       elif BRUSH_TYPE ==0              /* Allows overlap between grafting beads*/
             call gen_brush(1)
 #       elif BRUSH_TYPE ==2              /* Ordered Brush*/
             call gen_brush(5)   
@@ -132,7 +132,7 @@ subroutine conf_default()
 #   elif SYSTEM==1  /* Brush only in bottom wall: droplet */
 #       if BRUSH_TYPE ==1  /* Avoids overlp between grafting beads*/
             call gen_brush(4)
-#       elif BRUSH_TYPE ==0              /* Allows overlp between grafting beads*/
+#       elif BRUSH_TYPE ==0              /* Allows overlap between grafting beads*/
             call gen_brush(2)
 #       elif BRUSH_TYPE ==2              /* Ordered Brush*/
             call gen_brush(6)
