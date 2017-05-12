@@ -1,0 +1,11 @@
+#
+# Author: Kevin Speyer
+#
+# Input description
+
+* Channel geometry 
+* Semi-flexible brush with bending rigidity
+* Ordered grafted points in the brush layer 
+* Simple liquid incompatible with the brush
+* Non additive potentials between brush and liquid 
+* Shear (or Couette) simulations possible. Not Poiseuille.
