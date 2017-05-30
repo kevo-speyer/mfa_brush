@@ -12,7 +12,6 @@ conf_new
 conf_old
 conf_xmol
 constant_force.o
-control_simulation.h
 dens_prof.mide
 dipolar_correction.o
 dpd_forces.o
