@@ -1,0 +1,8 @@
+Authors: María Fiora, Claudio Pastorino
+
+* Starting configuration of two liquids in a channel.
+* No polymers. 
+* The liquid is composed of particles of type 3 and type 4.
+* Starting point for a coarse-grained model of magnetic nano-particles in a microfluidic channel. 
+* Addition of some external force, modeling an external magnetic field is expected.:w
+
