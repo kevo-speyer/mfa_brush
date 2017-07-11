@@ -488,6 +488,11 @@ end if ! mod(i_time-n_relax,5).eq.0
 
 ! Brush translation
 ! Translated  only in X. 
+! No translation done for brush, because it gives a blurry image
+
+!        do i=1,part_init_d
+!             r0_unfold(1,i) = r0_unfold(1,i) - r_trasl(1)
+!        end do
 ! Warning, it gives a blurry image
 
         do i=1,part_init_d

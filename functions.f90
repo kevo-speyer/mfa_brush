@@ -1395,6 +1395,9 @@ case(2) !More accuarate drop_cm calculation, for systems
     
     drop_cm(2:3) = sum(r0(2:3,part_init_d+1:n_mon_tot),dim=2)/dble(nm)
     n_cm = int(drop_cm(1) * inv_boundary(1) * 3.) + 1 
+
+! Claudio: deje esto. Esta bien
+
     if(n_cm.ge.4) n_cm = 3
 
 ! Claudio: deje esto. Esta bien
