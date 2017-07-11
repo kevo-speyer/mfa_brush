@@ -1397,6 +1397,10 @@ case(2) !More accuarate drop_cm calculation, for systems
     n_cm = int(drop_cm(1) * inv_boundary(1) * 3.) + 1 
     if(n_cm.ge.4) n_cm = 3
 
+! Claudio: deje esto. Esta bien
+
+    if(n_cm.ge.4) n_cm = 3
+
 case(3) !Another way of calculating drop_cm. The idea is to divide Lx in many
         !boxes, and count the number of melt particles in each box. Then
         !transalte the system so that the center of the droplet is at Lx/2

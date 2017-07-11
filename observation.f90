@@ -496,10 +496,10 @@ end if ! mod(i_time-n_relax,5).eq.0
 
 ! Translate X positions the middle of the box. Needed after drop rebuilding.
 
-!     do i = 1 , n_part
-!        r0_unfold(:,i) = r0_unfold(:,i) !+  lx_o_2(1:3) 
-!     end do
-!
+     do i = 1 , n_part
+        r0_unfold(:,i) = r0_unfold(:,i) !+  lx_o_2(1:3) 
+     end do
+
 ! Density prof calculation
 !
 !  Refold in y before getting the density 
