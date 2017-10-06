@@ -1,12 +1,12 @@
-             1 initial integer starting time
-         10000 number of relaxation steps
-        100000 number of observation steps
+        310001 initial integer starting time
+             0 number of relaxation steps
+        200000 number of observation steps
           1000 # of steps between configuration storage
-  0.200000E-03 time step increment
+  0.200000E-02 time step increment
  
-     0.80000 obsolete
+     1.80000 obsolete
      1.80000 temperature
-     0.80000 obsolete
+     1.80000 obsolete
  
    obsolete: flagg for constraining wall atoms
   0.100000E+01 spacing betw wall units in x direc
@@ -34,7 +34,7 @@
   0.100000E+01 Lennard Jones epsilon
   0.100000E+01 Lennard Jones sigma
   0.100000E+01 friction constant
-  1.000000E+00 mass
+  0.100000E+01 mass
   0.100000E+01 Lennard Jones epsilon
   0.100000E+01 Lennard Jones epsilon
   0.100000E+01 Lennard Jones epsilon
@@ -42,11 +42,9 @@
   0.100000E+01 Lennard Jones sigma
   0.100000E+01 friction constant
   0.000000E+00 spring const. to wall equil. sites
-  0.800000E+02 bending elastic constant
-  0.000000E+00 bending equilibrium angle
 
  
-     311500357 seed for random number generator
+     311500361 seed for random number generator
  
   0.300000E+02 effective spring constant within chain
   0.150000E+01 max. spacing between neighbored monomers
@@ -63,11 +61,11 @@
  
  ----------  Additional info. Not used as input  ----------------
  
-            10  monomers per chain
-           480  number of 'brush' chains
+             1  monomers per chain
+             0  number of 'brush' chains
              0  number of fluid particles
-          7600  number of droplet/melt chains
-          7600  number of droplet/melt particles
+          2000  number of droplet/melt chains
+          2000  number of droplet/melt particles
             30            20  number of wall cells in x-y direction
  
              2  order of integrator
@@ -81,16 +79,16 @@
  *       DPD Friction value in all directions: gamma =  1.00000
     
   30.00000  20.00000  40.00000                                 MD Box dimensions
-   0.516666667                              initial monomer density 
-         600.00000           0.40000              one wall area, grafting density     
+   0.875000000E-01                          initial monomer density 
+         600.00000           0.00000              one wall area, grafting density     
  
              11              7             15  binning boxes
        2.727273       2.857143       2.666667  binning distances
  
-       0     300  max. observed and maximum allowed fl. binnings
+      11     300  max. observed and maximum allowed fl. binnings
        0      16  max. observed and maximum allowed wa. binnings
  
-      37     256  max. observed and maximum allowed fl fl neighbors
+      11     256  max. observed and maximum allowed fl fl neighbors
        0      32  max. observed and maximum allowed fl wa neighbors
        0      32  max. observed and maximum allowed wa wa neighbors
  
@@ -98,28 +96,32 @@
    0.000000E+00   0.000000E+00 wall_wall kinetic e
    0.000000E+00   0.000000E+00 wall_wall total ene
  
-       6.3769       0.0001   total intramolecular energy per part.
+       0.0000       0.0000   total intramolecular energy per part.
        0.0000       0.0000       intramolecular energy droplet/melt per part
  
-   0.509485E+01   0.333480E+01 fl_fl potential
-   0.127931E+01   0.165458E+01 fl_fl kinetic e
-  -0.121994E+00   0.657274E+01 fl_fl total ene
+  -0.448366E+00   0.124975E+00 fl_fl potential
+   0.269890E+01   0.120999E+01 fl_fl kinetic e
+   0.220517E+01   0.125536E+01 fl_fl total ene
  
-   0.509485E+01   0.333480E+01 total potential
-   0.127931E+01   0.165458E+01 total kinetic e
-   0.637416E+01   0.602209E+01 total total ene
+  -0.448366E+00   0.124975E+00 total potential
+   0.269890E+01   0.120999E+01 total kinetic e
+   0.225054E+01   0.125499E+01 total total ene
  
    0.000000E+00   0.000000E+00 average spacing
  
  
-        0.24797        0.23544        7.13167                                       Mean Rg^2 for brushes
+            NaN            NaN            NaN                                       Mean Rg^2 for brushes
         0.00000        0.00000        0.00000                                  Mean Rg^2 for droplet/melt
-        0.12399        0.11772        3.56584                                            Mean total Rg^2 
-        0.90478        Mean Rg(z)^2-0,5*(Rg^2(x)+Rg^2(y))/sum(Rg^2) brushes
+            NaN            NaN            NaN                                            Mean total Rg^2 
+            NaN        Mean Rg(z)^2-0,5*(Rg^2(x)+Rg^2(y))/sum(Rg^2) brushes
             NaN           Mean Rg(z)^2-0,5*(Rg^2(x)+Rg^2(y))/sum(Rg^2) melt
  
-         0.00526         0.00526         0.00527          Mean total force on the wall  
-        0.0000088                           Shear stress 
  
-         0.00023                    Effective viscocity 
  
+
+        Quantities for particle 4
+
+        <v4>,N =   0.114477E-01   0.348746E-01  -0.363505E-0220000000
+        <v4^2> =    1.80421        1.77801        4.34556    
+        sig(v4)=    1.34316        1.33297        2.08460    
+        err(v4)=   0.300340E-03   0.298060E-03   0.466130E-03
