@@ -74,7 +74,8 @@ OBJS = mfa_common.o \
 	  wall_time.o \
       bending.o \
       bending_melt.o \
-orientation.o
+      orientation.o \
+	  gcmc_module.o
 
 #obsoleted       fluid_fluid_test.o  
 #obsoleted       corrector.o   
@@ -102,7 +103,7 @@ $(exe):  $(OBJS) Makefile control_simulation.h
 # Dependencies of the object files 
 #
 mfa_common.o: control_simulation.h Makefile
-md_main.o : md_main.f90 mfa_common.o control_simulation.h
+md_main.o : md_main.f90 mfa_common.o gcmc_module.o control_simulation.h
 init_params.o : init_params.f90 mfa_common.o control_simulation.h
 init_config.o : init_config.f90 mfa_common.o control_simulation.h 
 conf_default.o : conf_default.f90 mfa_common.o control_simulation.h
@@ -152,6 +153,7 @@ my_binning.o: my_binning.f90 mfa_common.o control_simulation.h
 bending.o: bending.f90 control_simulation.h mfa_common.o
 bending_melt.o: bending.f90 control_simulation.h mfa_common.o
 orientation.o: orientation.f90  bending.f90 control_simulation.h mfa_common.o
+gcmc_module.o: gcmc_module.f90 mfa_common.o ziggurat.o
 
 
 wall_time.o : wall_time.c
@@ -173,120 +175,3 @@ mkdir ./current ; \
 cd ./current ; tar -zxvf ../mfa_prog.tar.gz ; cd ../
 	diff -Naur ./$(ref_dir) ./current > mfa_prog.patch
 
-## all: mfa_poiss mfa_poiss_prof mfa_cou mfa_cou_prof mfa_cou_dpd_gs mfa_cou_dpd_bs  
-## 
-## 	@echo " "
-## 	@echo " The program has been compiled for different geometries and physics ..."
-## 	@echo " Each CS_*.h has different physical setup of the program "
-## 	@echo " "
-## #
-## #
-## # Uses different .h to make the appropriate execi (with different physics, systems and or methods)
-## # 
-## mfa_poiss:  $(exe) CS_poiss.h
-## 	cp CS_poiss.h control_simulation.h ; $(MAKE) 
-## 	cp $(exe) mfa_poiss
-## mfa_cou:  $(exe) CS_cou.h
-## 	cp CS_cou.h control_simulation.h ; $(MAKE) 
-## 	cp $(exe) mfa_cou
-## mfa_cou_prof:  $(exe) CS_cou_prof.h
-## 	cp CS_cou_prof.h control_simulation.h ; $(MAKE) 
-## 	cp $(exe) mfa_cou_prof
-## mfa_poiss_prof:  $(exe) CS_poiss_prof.h
-## 	cp CS_poiss_prof.h control_simulation.h ; $(MAKE) 
-## 	cp $(exe) mfa_poiss_prof
-## 
-## mfa_cou_dpd_gs: CS_mfa_cou_dpd_gs.h
-## 	cp CS_mfa_cou_dpd_gs.h control_simulation.h ; $(MAKE) 
-## 	cp $(exe) mfa_cou_dpd_gs
-## 
-## mfa_cou_dpd_bs: CS_mfa_cou_dpd_bs.h
-## 	cp CS_mfa_cou_dpd_gs.h control_simulation.h ; $(MAKE) 
-## 	cp $(exe) mfa_cou_dpd_gs
-## 
-## mfa_cou_lgv_gs: CS_mfa_cou_lgv_gs.h
-## 	cp CS_mfa_cou_lgv_gs.h control_simulation.h ; $(MAKE) 
-## 	cp $(exe) mfa_cou_lgv_gs
-## 
-## mfa_cou_lgv_bs: CS_mfa_cou_lgv_bs.h
-## 	cp CS_mfa_cou_lgv_bs.h control_simulation.h ; $(MAKE) 
-## 	cp $(exe) mfa_cou_lgv_bs
-## 
-## mfa_cou_lgv_bs_gx0: CS_mfa_cou_lgv_bs_gx0.h
-## 	cp CS_mfa_cou_lgv_bs_gx0.h control_simulation.h ; $(MAKE) 
-## 	cp $(exe) mfa_cou_lgv_bs_gx0
-## 
-## mfa_cou_lgv_gs_gx0: CS_mfa_cou_lgv_gs_gx0.h
-## 	cp CS_mfa_cou_lgv_gs_gx0.h control_simulation.h ; $(MAKE) 
-## 	cp $(exe) mfa_cou_lgv_gs_gx0
-## 
-## # 
-## # Compilation of the program with the inclusion of a fourth particle type (can be a chain)
-## #
-## 
-## mfa_part4: mfa_part4_cou_gs mfa_part4_poiss_gs mfa_part4_cou_ps mfa_part4_poiss_ps 
-## 	@echo -e "\n\t * Compiling different versions of mfa_prog with particle 4 \n"
-## 	@touch CS_mfa_part4_*.h
-## 
-## mfa_part4_cou_gs: CS_mfa_part4_cou_gs.h
-## 	@cp CS_mfa_part4_cou_gs.h control_simulation.h ; $(MAKE) 
-## 	@cp $(exe) mfa_part4_cou_gs
-## 	@ echo -e "\n\t * mfa_part4_cou_gs version of mfa_prog generated ! (Couette) \n "
-## 
-## mfa_part4_poiss_gs: CS_mfa_part4_poiss_gs.h
-## 	@cp CS_mfa_part4_poiss_gs.h control_simulation.h ; $(MAKE) 
-## 	@cp $(exe) mfa_part4_poiss_gs
-## 	@ echo -e "\n\t * mfa_part4_poiss_gs version of mfa_prog generated ! (Poiseuille) \n "
-## 
-## mfa_part4_cou_ps: CS_mfa_part4_cou_ps.h
-## 	@cp CS_mfa_part4_cou_ps.h control_simulation.h ; $(MAKE) 
-## 	@cp $(exe) mfa_part4_cou_ps
-## 	@ echo -e "\n\t * mfa_part4_cou_ps version of mfa_prog generated ! (Couette) \n "
-## 
-## mfa_part4_poiss_ps: CS_mfa_part4_poiss_ps.h
-## 	@cp CS_mfa_part4_poiss_ps.h control_simulation.h ; $(MAKE) 
-## 	@cp $(exe) mfa_part4_poiss_ps
-## 	@ echo -e "\n\t * mfa_part4_poiss_ps version of mfa_prog generated ! (Poiseuille) \n "
-## 
-## #
-## # First trial with DROPLET geometry
-## #
-## 
-## mfa_drop: CS_mfa_drop.h
-## 	@cp CS_mfa_drop.h control_simulation.h ; $(MAKE) 
-## 	@echo -e "\n\t*** COMPILATION VARIABLES ***  \n" 
-## 	@ cat CS_mfa_drop.h 
-## 	@cp $(exe) ./mfa_drop
-## 	@ echo -e "\n\t * mfa_drop version of mfa_prog generated ! (DROPLETS) \n "
-## 
-## 
-## # Compilation of versions of different DPD weight functions
-## # mfa_cou is just the compilation with the usual choice, in *h, mfa_dpd_weight_1
-## #
-## 
-## change_dpd_weight:  mfa_dpd_weight_0 mfa_dpd_weight_1 mfa_dpd_weight_2 mfa_dpd_weight_3 mfa_dpd_weight_4
-## 	@echo " "
-## 	@echo " The program has been compiled with different weights in DPD "
-## 	@echo " Have a look in control_simulation.h to see what is this about "
-## 	@echo " "
-## 
-## mfa_dpd_weight_0: CS_dpd_weight_0.h
-## 	cp CS_dpd_weight_0.h control_simulation.h ; $(MAKE) 
-## 	cp $(exe) mfa_dpd_weight_0
-## 
-## mfa_dpd_weight_1: CS_dpd_weight_1.h
-## 	cp CS_dpd_weight_1.h control_simulation.h ; $(MAKE) 
-## 	cp $(exe) mfa_dpd_weight_1
-## 
-## mfa_dpd_weight_2: CS_dpd_weight_2.h
-## 	cp CS_dpd_weight_2.h control_simulation.h ; $(MAKE) 
-## 	cp $(exe) mfa_dpd_weight_2
-## 
-## mfa_dpd_weight_3: CS_dpd_weight_3.h
-## 	cp CS_dpd_weight_3.h control_simulation.h ; $(MAKE) 
-## 	cp $(exe) mfa_dpd_weight_3
-## 
-## mfa_dpd_weight_4: CS_dpd_weight_3.h
-## 	cp CS_dpd_weight_4.h control_simulation.h ; $(MAKE) 
-## 	cp $(exe) mfa_dpd_weight_4
-## 

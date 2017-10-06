@@ -1,5 +1,13 @@
 /* Incorporates C preprocessor as a way of compiling the program with the appropriate physics */
 
+/* Simulation method*/
+
+/* If defined, it performs Grand canonical Monte Carlo with MD. Implemmented from Frenkel p. 132
+ *  * The program performs a cycle of MD and a cycle of GCMC inside the loop n_cycle 
+ *   * If GCMC is NOT defined, the program runs usual MD.
+ *   */
+#define GCMC 
+
 /* SYSTEM: determines the system type compiled in the program
 *  0= brush-melt channel, no PBC in z
  * 1= droplet(no brush on top wall) 

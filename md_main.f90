@@ -2,15 +2,21 @@
 #include 'control_simulation.h'
       use commons 
       use util  
+#   ifdef GCMC
+      use gcmc_module
+      use ziggurat
+#   endif
       
       implicit none
-      integer  :: tot_time
+      integer  :: tot_time,i
       real (kind=8) :: t0,t1
+      integer :: i_total,n_cycl,nexc,npav,mc_rand ! aux 
       logical,parameter :: debug =.false.
-! [12/2015] Paralelization with OpenMP
+
+! [12/2015] Kevin Speyer: Parallelization with OpenMP
 ! [11/2013]: Droplet compatibility fixed
 ! [7/2013] : Bending Force for the brush added       
-! March 2013: pass to Kevin
+! March 2013: Program passes to Kevin Speyer
 ! [4/2010] Heavy changes in data structures and improvement of some routines 
 ! [5/2009]: Additions by Leonid Spirin: pinning, stars, LJ wall and shear
 ! protocols 
@@ -41,15 +47,23 @@
 !
            call messages()
 
-! ---- Setup some flags
-
-!      if(ad_flag.eq.0) then
-!       f_angle=0
-!      end if
 
 ! --------------- ENDS writing  out of compilation settings ---------------------------     
       
-! ---- Inizialization  routines
+! ----  Inizialization  routines
+
+! GCMC + MD parameters
+#       ifdef GCMC
+            n_cycl = 1000  ! cycles of MD+GCMC
+            nexc= 100   ! MC steps per cycle
+            tot_time = 1 ! MD steps per cycle
+            npav =  n_part ! First value of npav. It is the expected number of particles. 
+
+            call init_gcmc()
+
+#       endif
+
+
 
            call init_system() ! physical system. Reads system_input
            call init_params()   ! md simulation parameters, box dimensions. Read mfa_input
@@ -71,22 +85,29 @@
 
           tot_time = n_relax + n_obser 
             
-           !print *,"v_fluid",v_fluid_fluid ; stop
+#         ifdef GCMC
+          do i_total = 1,n_cycl                       ! total loop: combined MD + GCMC
 
-       do i_time = 1 , tot_time !  MAIN TIME LOOP 
+               print*,"MD+GCMC cycle number: i_total=",i_total
+
+               mc_rand = int(uni()*(npav+nexc)) + 1
+               print *,"mc_rand=",mc_rand ! debug
+
+
+               if(mc_rand <= n_part) then ! Decide if MD or GCMC
+
+#          endif
+
+           do i_time = 1 , tot_time !  MAIN TIME LOOP 
 
            r_time = dble(s_time+i_time-1)*dt
 
 
-           ! ----  Propagate coordinates 
+! ----  Propagate coordinates 
 
 
            call verlet_positions()
 
-!deb           if (i_time == 1 ) then
-!deb               call write_conf(1,r0,10)
-!deb               stop
-!deb           end if
 
 
            call check_skin  !calculates if it is necessary to update the verlet list. If it is,
@@ -115,7 +136,7 @@
 ! routine computing forces. 
 ! this should not be here.
 #   if SYMMETRY == 1
-   press_tensor(:,:) = 0.
+           press_tensor(:,:) = 0.
 #   endif
 
  
@@ -159,7 +180,7 @@
 #   endif
 
 #           ifdef POISEUILLE
-           call constant_force() ! Poseuille flow generation
+           call constant_force() ! Poiseuille flow generation
 #           endif
 
 
@@ -174,7 +195,7 @@
 
            call new_dpd_fd()  
 #endif
-
+#       ifndef GCMC
 !----  Observe system after equilibration
 
            if(i_time.gt.n_relax) call observation 
@@ -190,13 +211,53 @@
 #       endif
            end if
 
+#       endif /* if not defined GCMC */
        end do   ! --------------  ENDS TIME LOOP ----------------
+
+#   ifdef GCMC 
+
+          else ! mcrand: Do MC
+
+              ! Loop of grand canonical MC
+              ! Note: we develop GCMC algorithm in serial version first
+
+              print *,"hola MC"
+              do i = 1,nexc
+                  print*,"GCMC step: i_time=",i_time !debug
+                  call mc_exc()
+              end do
+
+       !----  Observe system each n_measure
+       if(mod(i_total,n_safe)==0) then  ! warn: check if this is correct  
+            call observation 
+       end if
+
+!----  Make safety copies  to recover from crashes and write out of configurations
+
+
+       !ori            if(mod(i_time,n_safe) == 0) then
+            if(mod(i_total,n_safe) == 0) then
+                    call store_config(2)  ! writes out conf_xmol and conf_new
+#       if STORE == 0
+                    call store_config(3) ! Writes out ! film_xmol ! and ! vel.dat
+#       elif STORE == 1
+                    call store_config(4) ! Writes ! out ! film_xmol ! and ! vel.dat ! UNFOLDED
+#       endif
+            end if
+
+               end if ! mc_rand 
+
+               end do ! n_cycl: ! Ends ! loop ! of ! cycles ! MD ! + ! GCMC ! moves 
+
+#       endif /* ifdef GCMC */
+
 
                call obser_out()
 
        close(20) ! closing mfa_output
 !
        call get_walltime(t1)
+
        print *,'    WALL TIME (s)= ',t1-t0
 
   end program md_pb

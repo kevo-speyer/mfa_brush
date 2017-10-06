@@ -368,7 +368,7 @@ real (kind=8) ,allocatable :: force_or(:,:)
 
 ! Definition of  droplet variables: (or the melt according the shape)
       integer :: n_mon_d,n_chain_d,part_init_d,n_chain_e,n_mon_e,part_init_e,n_tot_e, part_init_star
-      integer :: n_chain_2
+      integer :: n_chain_2,n_liq
 #ifdef SHEARED 
       integer ::  n_mon_arm, n_arms, n_stars, i_star, i_arm, i_mon_arm, d_part
       integer :: i_mon_d, i_chain_d
