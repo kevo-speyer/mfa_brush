@@ -10,8 +10,8 @@
             subroutine init_gcmc()
                     use commons
                     implicit none
-                    print *,"  * Initializing Grand Canonical Monte Carlo (GCMC) parameter   "
-                    mu = 1.2 ! Chemical potential
+                    print *,"  * Initializing Grand Canonical Monte Carlo (GCMC) parameters   "
+                    mu = 12000.0 ! Chemical potential
                     print *," Chemical Potential: mu=",mu
                     beta = 1./temp 
 !                    pi = 4.0*atan(1.0)

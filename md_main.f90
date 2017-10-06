@@ -54,9 +54,9 @@
 
 ! GCMC + MD parameters
 #       ifdef GCMC
-            n_cycl = 1000  ! cycles of MD+GCMC
-            nexc= 100   ! MC steps per cycle
-            tot_time = 1 ! MD steps per cycle
+            n_cycl = 10000  ! cycles of MD+GCMC
+            nexc= 10000   ! MC steps per cycle
+          
             npav =  n_part ! First value of npav. It is the expected number of particles. 
 
             call init_gcmc()
@@ -84,6 +84,7 @@
 #endif
 
           tot_time = n_relax + n_obser 
+          tot_time = 1 ! MD steps per cycle
             
 #         ifdef GCMC
           do i_total = 1,n_cycl                       ! total loop: combined MD + GCMC

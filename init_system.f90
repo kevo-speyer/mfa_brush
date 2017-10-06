@@ -186,10 +186,16 @@ subroutine init_system()
 
        n_part=  n_mon_tot + n_wall      ! All the particles of the system (wall + fluid)
        
-!   Check if the algorithm combination makes sense with what it is really implemmented
-       
+               
+#       ifdef GCMC
+!NOTE: for GCMC we double the number of liquid particles for allocation. The empty coordinates will be used
+!      for the allocation of fluctuating number of  particles
 
-!
+            n_part=n_part+n_mon_d*n_chain_d
+#       endif
+
+         
+!        
 !******************** Dynamic allocation of variables *********
 !
 
@@ -234,6 +240,19 @@ subroutine init_system()
                      random(n_part)   )         ! random vector
 ! Variables to monitor minimum image convention 
         allocate  ( mic_count(n_dim,n_part) )
+
+#       ifdef GCMC
+!NOTE: after allocating the variables with extra memory space for allocating the fluctuting number
+!      of liquid particles, we come back to the original value of n_part. 
+!      the fluctuation of liquid particles will be managed with n_liq variable
+
+        n_part=n_part-n_mon_d*n_chain_d
+
+#       endif
+
+
+
+
 ! Variables used for binning:
 
                    n_bin_x= int(0.4*n_cell_w_x)

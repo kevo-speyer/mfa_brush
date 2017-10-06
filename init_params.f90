@@ -913,6 +913,12 @@ write(*,*) "  *  Parallel OpenMP version. N_threads: ", numth
            part_init_e = n_mon*n_chain + n_mon_d*n_chain_d !NOTE: this is n_mon_tot if there is no particle 4
            part_init_star= part_init_e+ n_mon_e*n_chain_e
 
+#ifdef GCMC
+           !  Initial number of liquid particles [needed for GCMC]
+
+                       n_liq = n_mon_d*n_chain_d
+                       print *, "  *  Starting number of liquid particles: n_liq =", n_liq 
+#ENDIF         
 #if  SYSTEM == 1
            nm = n_mon_tot - part_init_d ! number of melt particles
            print '(/a,i6/)',"  * Melt particles= ",nm
