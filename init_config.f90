@@ -503,6 +503,7 @@ if (f_twall(3).eq.9) then
 end if
 write(*,*)
 #endif
+
       if(debug) then
           vec_dummy(:) = 0.
           do i_part=1,n_part

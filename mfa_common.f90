@@ -364,7 +364,10 @@ real (kind=8) ,allocatable :: force_or(:,:)
       integer ::            n_cell_w_x,n_cell_w_y, n_wall  
 
 ! Definition of limit variables to be read or calculated in init_system
-      integer :: n_mon,n_chain,n_mon_tot,n_part                    
+      integer :: n_mon,n_chain,n_mon_tot,n_part,n_part_w
+#ifdef GCMC
+      integer :: n_ghost
+#endif
 
 ! Definition of  droplet variables: (or the melt according the shape)
       integer :: n_mon_d,n_chain_d,part_init_d,n_chain_e,n_mon_e,part_init_e,n_tot_e, part_init_star

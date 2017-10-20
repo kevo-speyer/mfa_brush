@@ -101,7 +101,7 @@
 
 ! #### film_xmol ####
 
-         write(12,'(i5)') n_part
+         write(12,'(i5)') n_part_w
          write(12,*)  " " !   i_time=  ",i_time
 !brush
          do i_part = 1,part_init_d
@@ -130,7 +130,7 @@
 #   endif
             write(12,203) "He   ",r0(1,i_part),r0(2,i_part),r0(3,i_part)
          end do
-         
+! defined particle_4         
 #else         
          do i_part = part_init_d+1,part_init_e
             write(12,203) "He   ",r0(1,i_part),r0(2,i_part),r0(3,i_part)
@@ -237,4 +237,4 @@
   130 format(3i13)
   203 format(a,3f13.4)
 !
-      end
+      end subroutine store_config

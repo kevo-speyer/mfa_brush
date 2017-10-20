@@ -55,7 +55,7 @@
 #undef BENDING_MELT  /* if def the melt polymers are assumed to be semiflxible: bending potential *//
 #undef ORIENTATION  /* if def the grafted polymers will be oriented through an harmonic potential*//
 
-#define PARTICLE_4 /* If defined the program runs with four different particle type */
+#undef PARTICLE_4 /* If defined the program runs with four different particle type */
 
 #undef STARS /*whether you want to simulate with or without stars, sigma is fixed to 1. As well as sigma for walls */
 

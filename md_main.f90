@@ -52,16 +52,6 @@
       
 ! ----  Inizialization  routines
 
-! GCMC + MD parameters
-#       ifdef GCMC
-            n_cycl = 10000  ! cycles of MD+GCMC
-            nexc= 10000   ! MC steps per cycle
-          
-            npav =  n_part ! First value of npav. It is the expected number of particles. 
-
-            call init_gcmc()
-
-#       endif
 
 
 
@@ -70,6 +60,15 @@
            call init_config()   ! initial conf or read an old one
            call init_obser()    ! Measurable variables init.
            
+! GCMC + MD parameters
+#       ifdef GCMC
+            n_cycl = 10  ! cycles of MD+GCMC
+            nexc= 1   ! MC steps per cycle
+          
+            npav =  n_part ! First value of npav. It is the expected number of particles. 
+            call init_gcmc()
+
+#       endif
 #ifdef BENDING     
           call bending(0) ! writes brush bending constants  to log
 #endif
@@ -84,15 +83,16 @@
 #endif
 
           tot_time = n_relax + n_obser 
-          tot_time = 1 ! MD steps per cycle
+          tot_time = 10000 ! MD steps per cycle
             
 #         ifdef GCMC
           do i_total = 1,n_cycl                       ! total loop: combined MD + GCMC
 
-               print*,"MD+GCMC cycle number: i_total=",i_total
+               print*," * MD+GCMC cycle number: i_total=",i_total
 
                mc_rand = int(uni()*(npav+nexc)) + 1
-               print *,"mc_rand=",mc_rand ! debug
+
+               !print *,"mc_rand=",mc_rand ! debug
 
 
                if(mc_rand <= n_part) then ! Decide if MD or GCMC
@@ -114,7 +114,8 @@
            call check_skin  !calculates if it is necessary to update the verlet list. If it is,
 #          if BIN_TYPE == 0
  
-           if (f_skin.eq.1) call binning
+           !if (f_skin.eq.1) call binning
+            call binning ! top debug GCMC
 #           elif BIN_TYPE == 1 
 
            if (f_skin.eq.1) call my_binning
@@ -222,13 +223,16 @@
               ! Loop of grand canonical MC
               ! Note: we develop GCMC algorithm in serial version first
 
-              print *,"hola MC"
+              !              print *,"hola MC"
               do i = 1,nexc
-                  print*,"GCMC step: i_time=",i_time !debug
+                  print*,"GCMC step: i_time=",n_cycl*(nexc -1)+ i !debug
                   call mc_exc()
               end do
 
-       !----  Observe system each n_measure
+          end if ! mc_rand 
+
+!----  Observe system each n_measure
+
        if(mod(i_total,n_safe)==0) then  ! warn: check if this is correct  
             call observation 
        end if
@@ -245,8 +249,6 @@
                     call store_config(4) ! Writes ! out ! film_xmol ! and ! vel.dat ! UNFOLDED
 #       endif
             end if
-
-               end if ! mc_rand 
 
                end do ! n_cycl: ! Ends ! loop ! of ! cycles ! MD ! + ! GCMC ! moves 
 

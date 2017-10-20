@@ -11,7 +11,7 @@
             subroutine init_gcmc()
                     implicit none
                     print *,"  * Initializing Grand Canonical Monte Carlo (GCMC) parameters   "
-                    mu = 0.0001 ! Chemical potential
+                    mu = -0.4 ! Chemical potential
                     print *," Chemical Potential: mu= ",mu
                     beta = 1./temp 
 !                    pi = 4.0*atan(1.0)
@@ -64,7 +64,14 @@
                             n_liq = n_liq + 1
                             r0(:,n_liq) = rn(:)
                             a_type(n_liq) = 3 ! we are doing GCMC only with liquid particles
-                            print *, "Adding a particle: N= ",n_liq
+                            ! UPdate n_part
+!                            n_mon_tot =n_mon*n_chain+n_liq
+!#ifdef PARTICLE_4      
+!                            n_mon_tot =n_mon_tot + n_mon_e*n_chain_e  ! All the particles, including type 4
+!#endif
+!                            n_part = n_mon_tot
+!
+                            print *, "Adding a particle: N_liq= ",n_liq
                         end if
 
 
@@ -217,8 +224,8 @@
               
              
               if( r_2 .lt. r_cut2 ) then
-                  if(r_2 < 0.49 ) then ! if new particle is too close to an existing one. Return with huge energy
-                      eno = log(huge(r_2))
+                  if(r_2 < 0.64 ) then ! if new particle is too close to an existing one. Return with huge energy
+                      eno = 1.E10  !log(huge(r_2))
                       return 
                   end if
                   inv_r_2 = 1./r_2

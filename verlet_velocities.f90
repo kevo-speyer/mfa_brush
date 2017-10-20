@@ -8,6 +8,7 @@ use commons
   real (kind=8) ::  T_inst, T_dummy
   real (kind=8) ::  T_inst_mean = 0.
   integer :: i_head
+  integer, save :: tt
   logical, parameter :: debug = .false.
 
 
@@ -182,8 +183,8 @@ use commons
 !
 
    time_ave_count_2 = time_ave_count_2 + 1
-
-   if(time_ave_count_2.eq.10) then
+   tt = tt + 1
+   if(time_ave_count_2.eq.5) then  ! debug gcmc
        time_ave_count_2 = 0
 
 #ifdef SHEARED
@@ -198,13 +199,13 @@ use commons
 
 #if SYSTEM == 0 || SYSTEM == 1 || SYSTEM == 4
         write(61,'(i7,3g17.5)') i_time,v_fluid_fluid,v_intra_molec,v_fluid_wall
-        write(60,'(i7,3g17.5)') i_time,e_total*inv_N,v_total*inv_N, t_total*inv_N
+        write(60,'(i7,3g17.5)') tt,e_total*inv_N,v_total*inv_N, t_total*inv_N
 #elif SYSTEM == 2  || SYSTEM == 3
         v_total = v_total + v_coul
         write(60,'(i7,4g17.5)') i_time,e_total*inv_N,v_total*inv_N, t_total*inv_N,v_coul*inv_N
 #endif
 
-    end if
+    end if ! time_ave_count_2
 #endif   /* not DPD_VV */ 
 
 

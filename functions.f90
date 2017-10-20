@@ -40,7 +40,6 @@ case default
         write(25,*) n
         write(25,*) 'mode= default, long system of same color'
         write(25,'("Cl   ",3f10.4)') (vector(i,:),i=1,n)
-
 end select
 !write
         close(unit=25)
@@ -114,9 +113,13 @@ subroutine histo(mode,hist_dim)
     allocate(dens_z(hist_dim,4),r_scaled(3,n_mon_tot))
 
 #else
-
+#   ifndef GCMC
     allocate(dens_z(hist_dim,3),r_scaled(3,n_mon_tot))
+#   else
+    allocate(dens_z(hist_dim,3),r_scaled(3,n_mon_tot+n_ghost))
+#   endif
 #endif
+    print *,'r_scaled',size(r_scaled)
 
     r_scaled = 0.
 
@@ -278,8 +281,11 @@ select case (mode)
 
     v_prof(:,:,:) = 0.
     v_prof_2(:,:,:) = 0.
-
+#ifndef GCMC
     allocate( r_scaled(3,n_mon_tot) )
+#else
+    allocate( r_scaled(3,n_mon_tot+n_ghost) )
+#endif
 
     !            n_time = 0 
     dz = boundary(3) /dble(n_layers)
@@ -1490,8 +1496,13 @@ case(0) ! Init.
     allocate ( histo_f(nx))
     histo_f(:) = 0
 #endif
-
+#ifndef GCMC
     allocate (r_scaled(3,n_part))
+#else
+    allocate (r_scaled(3,n_part+n_ghost))
+#endif
+
+
     allocate (  histo_step(nx,nz),histo_step_b(nx,nz) )
 
     r_scaled(1:3,:) = 0.0
@@ -1758,8 +1769,11 @@ case(0)    ! ---- Initialize
 
     i_time = 0 
     print *, "nx,nz,n_part   = ",nx,nz,n_part
-    
+#ifndef GCMC 
     allocate (r_scaled(3,n_part))
+#else
+    allocate (r_scaled(3,n_part+n_ghost))
+#endif
 
     r_scaled(1:3,:) = 0.0
 
