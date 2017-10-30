@@ -348,8 +348,11 @@
 ! mass of each particle 
 
 ! Allocation of the external force vector
-
+#ifndef GCMC
        allocate(ext_force(3,n_mon_tot)) 
+#else
+       allocate(ext_force(3,n_mon_tot+n_ghost)) 
+#endif
 
 ! Define the value
         ext_force(:,:) = 0.

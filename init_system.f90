@@ -169,7 +169,16 @@ subroutine init_system()
 !
 ! ----  Setting  Total number of everything    
 !
-       n_mon_tot =n_mon*n_chain+n_mon_d*n_chain_d  ! All the particles, but the wall.
+#       ifndef GCMC
+        n_mon_tot = n_mon*n_chain+n_mon_d*n_chain_d  ! All the particles, but the wall.
+#else 
+! Number of empty spaces to allocate fluctutating particles:
+         n_ghost = 4*n_mon_d*n_chain_d
+
+! NOTE: to allow for flcutuating number of liquid particles we used five times od that defined in system_input
+        n_mon_tot = n_mon*n_chain+n_mon_d*n_chain_d+n_ghost  ! All the particles, but the wall.
+#       endif
+
 #ifdef PARTICLE_4      
        n_mon_tot =n_mon_tot + n_mon_e*n_chain_e  ! All the particles, including type 4
        n_tot_e = n_mon_e*n_chain_e
@@ -188,10 +197,8 @@ subroutine init_system()
        
                
 #       ifdef GCMC
-!NOTE: for GCMC we double the number of liquid particles for allocation. The empty coordinates will be used
-!      for the allocation of fluctuating number of  particles
 
-            n_part=n_part+n_mon_d*n_chain_d
+            n_part_w = n_part ! used only for writing film_xmol 
 #       endif
 
          
@@ -241,15 +248,6 @@ subroutine init_system()
 ! Variables to monitor minimum image convention 
         allocate  ( mic_count(n_dim,n_part) )
 
-#       ifdef GCMC
-!NOTE: after allocating the variables with extra memory space for allocating the fluctuting number
-!      of liquid particles, we come back to the original value of n_part. 
-!      the fluctuation of liquid particles will be managed with n_liq variable
-
-        n_part=n_part-n_mon_d*n_chain_d
-
-#       endif
-
 
 
 
@@ -283,7 +281,18 @@ allocate (  ff_list(0:n_neigh_fl+n_layer*n_wall,n_part) ) ! ,             &
 
         allocate (force_d(3,n_mon_tot) , force_r(3,n_mon_tot) )
 
-!TO OPRIMIZE PARALLEL VERSION
+#       ifdef GCMC
+!NOTE: after allocating the variables with extra memory space for allocating the fluctuting number
+!      of liquid particles, we come back to the original value of n_part. 
+!      the fluctuation of liquid particles will be managed with n_liq variable
+
+        n_mon_tot = n_mon_tot-n_ghost
+           n_part = n_mon_tot
+
+#       endif
+
+!TO OPTIIMIZE PARALLEL VERSION
+
 #ifdef _OPENMP
 !$OMP PARALLEL 
         numth=omp_get_num_threads() !Define parellel variables for each thread

@@ -11,7 +11,7 @@
             subroutine init_gcmc()
                     implicit none
                     print *,"  * Initializing Grand Canonical Monte Carlo (GCMC) parameters   "
-                    mu = -0.4 ! Chemical potential
+                    mu = -5. ! Chemical potential
                     print *," Chemical Potential: mu= ",mu
                     beta = 1./temp 
 !                    pi = 4.0*atan(1.0)
@@ -34,7 +34,7 @@
 
                     if (uni() < 0.5) then ! Decide if removing or adding particles
                         if (n_liq == 0 ) then
-                            print *,"   * Warning: zero particles !!"
+                            print *,"   * Warning: zero liquid particles !!"
                             return
                         end if
 ! Choose a random liquid particle                         
@@ -45,9 +45,12 @@
                         arg = dble(n_liq)*exp(beta*eno)*inv_vol*inv_zz
                         print*,'n_liq,eno,arg',n_liq,eno,arg
                         if (uni() < arg) then
+!                            print *,'o_part',o_part
                             r0(:,o_part)=r0(:,n_liq) ! put n_liq in the index of the removed particle. 
-                            ! Effectively removing o_part
+!        Effectively removing o_part
                             n_liq = n_liq - 1 ! update  current number of particles. 
+                            n_part = n_part - 1
+                            n_mon_tot = n_mon_tot - 1
                             print *, "Removing a particle: N=",n_liq
                         end if
 
@@ -61,9 +64,13 @@
                         arg = zz*vol*exp(-beta*enn)/(dble(n_liq)+1)
 !                        print *,'arg=',zz,beta,enn,n_liq,arg ; stop ! debug
                         if (uni() < arg) then
+
                             n_liq = n_liq + 1
-                            r0(:,n_liq) = rn(:)
-                            a_type(n_liq) = 3 ! we are doing GCMC only with liquid particles
+                            n_part = n_part +1 
+                            n_mon_tot = n_mon_tot +1
+                            r0(:,n_part) = rn(:)
+                            a_type(n_part) = 3 ! we are doing GCMC only with liquid particles
+
                             ! UPdate n_part
 !                            n_mon_tot =n_mon*n_chain+n_liq
 !#ifdef PARTICLE_4      
@@ -71,12 +78,13 @@
 !#endif
 !                            n_part = n_mon_tot
 !
-                            print *, "Adding a particle: N_liq= ",n_liq
+                            print '(a,i6,3f17.6)', "Adding a particle: N_liq= ",n_liq,rn(:)
                         end if
 
 
                     end if ! decide if adding or removing particles
 
+                    print *,"  * Liquid particles = ",n_liq
 
             end subroutine mc_exc
 
@@ -90,7 +98,7 @@
                     real (kind=8) :: delta_v(3),r_versor(3),g_rand,rrc,f_ipart(3) ! Needed for DPD_EMBEDDED only
                     real (kind=8) :: l_eps,r_cut2,r_61
                     real (kind=8) :: f_cou_real(3)
-                    real(kind=8)  :: inv_r_2,inv_sqrt_r_2
+                    real(kind=8)  :: inv_r_2,inv_sqrt_r_2,v_wall
                      logical, parameter :: debug=.false.
                      
 !
@@ -107,7 +115,6 @@
         select case (mode)
 
         case(1) ! energy for an existing particle
-            
 
 !          do j_part = part_init_d+1, part_init_d+n_liq
               do j_part = part_init_d+1, part_init_d + oo_part-1  ! energy for i_part < oo_part
@@ -169,9 +176,9 @@
 
               delta_r(1) = delta_r(1) - boundary(1)*int(2.*delta_r(1)*inv_boundary(1))
               delta_r(2) = delta_r(2) - boundary(2)*int(2.*delta_r(2)*inv_boundary(2))
-#       if SYMMETRY == 1
+#             if SYMMETRY == 1
               delta_r(3) = delta_r(3) - boundary(3)*int(2.*delta_r(3)*inv_boundary(3))
-#       endif
+#             endif
 
               r_2 =  delta_r(1)*delta_r(1)  + delta_r(2)*delta_r(2) +  delta_r(3)*delta_r(3)
 
@@ -194,6 +201,11 @@
 
               end if
           end do
+
+!  Add energy from wall 
+              call ener_wall(r(3),eno)
+
+            print *, '  *  Energy of removed particle ',eno
 
 
 
@@ -243,6 +255,12 @@
 
               end if
           end do
+
+!  Add energy from wall 
+              call ener_wall(r(3),eno)
+
+
+            print *, ' Energy of added particle = ',eno
         end select
 
 !          print *,'eno',eno !; stop
@@ -253,5 +271,35 @@
           end if
 
   end subroutine ener
+
+    subroutine ener_wall(zp,eno) 
+            real(kind=8) ,intent(in) :: zp
+            real(kind=8) ,intent(inout) :: eno
+            real(kind=8)  :: v_wall,inv_z
+
+!       Compute energy from wall                  
+
+! WARN: assuming i_type - 3 for liquid particles 
+
+!           Energy  from bottom wall  (copied from v_fluid_wall)
+
+              r_dummy = sigma_wall(3)/zp
+              v_wall =  abs(a_wall(3))*r_dummy**9 - a_w*r_dummy**3    !int with bottom wall
+
+                 eno = eno + v_wall 
+
+!           Energy from top wall 
+              inv_z = 1./(z_space_wall-zp)
+              r_dummy = sigma_wall(3)*inv_z
+
+              v_wall = v_fluid_wall + abs(a_wall(3))*r_dummy**9 - a_w*r_dummy**3        
+
+
+                 eno = eno + v_wall 
+
+
+    end subroutine ener_wall
+
+
 
     end module gcmc_module

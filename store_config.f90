@@ -123,14 +123,22 @@
          end do
 !melt         
 #ifndef PARTICLE_4
-#   if WALL != 1
+#   ifndef GCMC
          do i_part = part_init_d+1,n_mon_tot
 #   else
-         do i_part = part_init_d+1,n_mon_tot
+
+!  If doing grand canonical MC 
+!print *, ; stop 
+! Put to position cero the  current number og ghost particles 
+         r0(:,n_mon_tot+1:) = 0.0
+         do i_part = part_init_d+1,n_mon_d*n_chain_d+n_ghost
 #   endif
             write(12,203) "He   ",r0(1,i_part),r0(2,i_part),r0(3,i_part)
          end do
-! defined particle_4         
+
+
+
+         ! If defined particle_4         
 #else         
          do i_part = part_init_d+1,part_init_e
             write(12,203) "He   ",r0(1,i_part),r0(2,i_part),r0(3,i_part)

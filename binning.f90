@@ -2,7 +2,7 @@
       subroutine binning
 #include 'control_simulation.h'
       use commons ; implicit none
-      logical,parameter :: binning_debug=.true.
+      logical,parameter :: binning_debug=.false.
 
 !cla: I think that is the linked-list algorithm (Smit & Frenkel, 1996, p. 368 )
 !---  zero the binning entrances
@@ -27,6 +27,7 @@
         i_bin_x = mod(int(r0(1,i_part)*inv_r_bin_x),n_bin_x)
         i_bin_y = mod(int(r0(2,i_part)*inv_r_bin_y),n_bin_y)
         i_bin_z = mod(int(r0(3,i_part)*inv_r_bin_z),n_bin_z)
+!        print '(i6,3f17.5)',i_part,r0(:,i_part)
 !debug
         if(binning_debug) then
             if (i_bin_x>n_bin_x-1.or.i_bin_y>n_bin_y-1.or.i_bin_z>n_bin_z-1) then
@@ -35,6 +36,7 @@
             end if
         end if 
 
+!debug        print '(a,3i6)', 'bin_fluid_0',i_bin_x,i_bin_y,i_bin_z
         bin_fluid(i_bin_x,i_bin_y,i_bin_z,0) = bin_fluid(i_bin_x,i_bin_y,i_bin_z,0) + 1
 
         if(binning_debug) then 

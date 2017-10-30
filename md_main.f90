@@ -62,10 +62,10 @@
            
 ! GCMC + MD parameters
 #       ifdef GCMC
-            n_cycl = 10  ! cycles of MD+GCMC
-            nexc= 1   ! MC steps per cycle
+            n_cycl = 5000  ! cycles of MD+GCMC
+            nexc= 100   ! MC steps per cycle
           
-            npav =  n_part ! First value of npav. It is the expected number of particles. 
+            npav =  n_part+n_ghost ! First value of npav. It is the expected number of particles. 
             call init_gcmc()
 
 #       endif
@@ -83,19 +83,21 @@
 #endif
 
           tot_time = n_relax + n_obser 
-          tot_time = 10000 ! MD steps per cycle
+          tot_time = 100 ! MD steps per cycle
             
 #         ifdef GCMC
           do i_total = 1,n_cycl                       ! total loop: combined MD + GCMC
 
                print*," * MD+GCMC cycle number: i_total=",i_total
 
-               mc_rand = int(uni()*(npav+nexc)) + 1
+!deb               mc_rand = int(uni()*(npav+nexc)) + 1
 
-               !print *,"mc_rand=",mc_rand ! debug
+               print *,"mc_rand=",mc_rand,n_part ! debug
 
 
-               if(mc_rand <= n_part) then ! Decide if MD or GCMC
+
+           !    if(mc_rand <= n_part) then ! Decide if MD or GCMC
+               if(uni() <= 0.5) then ! Decide if MD or GCMC
 
 #          endif
 
@@ -115,7 +117,12 @@
 #          if BIN_TYPE == 0
  
            !if (f_skin.eq.1) call binning
-            call binning ! top debug GCMC
+!           open(unit=232)
+!           do i_part = 1,n_part
+!               write(232,'(3i6,3f17.5)') i_total,i_time,i_part,r0(:,i_part)
+!           end do
+               close(232)
+            call binning() ! to debug GCMC
 #           elif BIN_TYPE == 1 
 
            if (f_skin.eq.1) call my_binning

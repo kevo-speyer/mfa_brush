@@ -913,7 +913,7 @@ write(*,*) "  *  Parallel OpenMP version. N_threads: ", numth
 #       ifndef GCMC
            part_init_e = n_mon*n_chain + n_mon_d*n_chain_d !NOTE: this is n_mon_tot if there is no particle 4
 #       else
-           part_init_e = n_mon*n_chain + 5*n_mon_d*n_chain_d 
+           part_init_e = part_init_d + n_mon_d*n_chain_d+n_ghost 
 #       endif
            part_init_star= part_init_e+ n_mon_e*n_chain_e
 
