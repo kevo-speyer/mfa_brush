@@ -488,11 +488,6 @@ end if ! mod(i_time-n_relax,5).eq.0
 
 ! Brush translation
 ! Translated  only in X. 
-! No translation done for brush, because it gives a blurry image
-
-!        do i=1,part_init_d
-!             r0_unfold(1,i) = r0_unfold(1,i) - r_trasl(1)
-!        end do
 ! Warning, it gives a blurry image
 
         do i=1,part_init_d
@@ -501,10 +496,10 @@ end if ! mod(i_time-n_relax,5).eq.0
 
 ! Translate X positions the middle of the box. Needed after drop rebuilding.
 
-!     do i = 1 , n_part
-!        r0_unfold(:,i) = r0_unfold(:,i) !+  lx_o_2(1:3) 
-!     end do
-!
+     do i = 1 , n_part
+        r0_unfold(:,i) = r0_unfold(:,i) !+  lx_o_2(1:3) 
+     end do
+
 ! Density prof calculation
 !
 !  Refold in y before getting the density 

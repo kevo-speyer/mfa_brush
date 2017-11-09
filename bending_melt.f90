@@ -20,16 +20,16 @@ print*," * Equilubrium angle for melt chains: ",alpha_eq
 print*,""
 
 case(1)
-beg=n_mon*n_chain
+beg=n_mon*n_chain ! starting monomer
 v_bend_melt=0  !Reset Bending Potential Energy
 Do l=0,n_chain_d-1 !n_chain , loop over melt chains
     r_next=r0(:,beg+l*n_mon_d+2)-r0(:,beg+l*n_mon_d+1)
     !This lines below correct for perioduc boundry conditions
     r_next(1) = r_next(1) - boundary(1) * int(2.*r_next(1)*inv_boundary(1))
     r_next(2) = r_next(2) - boundary(2) * int(2.*r_next(2)*inv_boundary(2))
-   ! #if SYMMETRY == 1
-   ! r_next(3) = r_next(3) - boundary(3) * int(2.*r_next(3)*inv_boundary(3))
-   ! #endif
+#if SYMMETRY == 1
+    r_next(3) = r_next(3) - boundary(3) * int(2.*r_next(3)*inv_boundary(3))
+#endif
     !End correction fo periodic boundry conditions
     Do i=2,n_mon_d-1 !n_mon, loop over particles in chain
         !Reset dummy variables
@@ -44,9 +44,9 @@ Do l=0,n_chain_d-1 !n_chain , loop over melt chains
         !This lines below correct for perioduc boundry conditions
         r_next(1) = r_next(1) - boundary(1) * int(2.*r_next(1)*inv_boundary(1))
         r_next(2) = r_next(2) - boundary(2) * int(2.*r_next(2)*inv_boundary(2))
-        !#if SYMMETRY == 1
-        !r_next(3) = r_next(3) - boundary(3) * int(2.*r_next(3)*inv_boundary(3))
-        !#endif
+#if SYMMETRY == 1
+        r_next(3) = r_next(3) - boundary(3) * int(2.*r_next(3)*inv_boundary(3))
+#endif
         !End correction fo periodic boundry conditions
         Do j=1,3
             dot_pr=dot_pr+r_next(j)*r_prev(j)
@@ -60,20 +60,41 @@ Do l=0,n_chain_d-1 !n_chain , loop over melt chains
             dir_prev_2=dir_prev_2+dir_prev(j)*dir_prev(j)
             dir_next_2=dir_next_2+dir_next(j)*dir_next(j)
         End do
-        if(dir_next_2.lt.0.0001) then !if alpha is small make force 0
-            dir_next=dir_next*0
+        if(dir_next_2.lt.0.00001) then !if alpha is small make force 0
+            ! old ! dir_next=dir_next*0
+            dir_next = r_prev / sqrt(r_prev_2) - r_next / sqrt(r_next_2)
+            dir_next_2=norm2(dir_next) 
+            if(dir_next_2.ne.0.0) then
+                dir_next = dir_next / dir_next_2 / sqrt(r_next_2)
+            else
+                dir_next=dir_next*0    
+            end if
         else
         !Below I divide by |r_next|, because the bending force is proportional to 
         !k_bend*delta_alpha/|r_next|. This comes from V_vend=1/2*k_bend*delta_alpha_2
             dir_next=dir_next/sqrt(dir_next_2*r_next_2)
         end if
-        if(dir_prev_2.lt.0.0001) then !if alpha is small make force 0
-            dir_prev=dir_prev*0
+        if(dir_prev_2.lt.0.00001) then !if alpha is small make force 0
+            ! old ! dir_prev=dir_prev*0
+            dir_prev = r_prev / sqrt(r_prev_2) - r_next / sqrt(r_next_2)
+            dir_prev_2=norm2(dir_prev) 
+            if(dir_prev_2.ne.0.0) then
+                dir_prev = dir_prev / dir_prev_2 / sqrt(r_prev_2)
+            else
+                dir_prev=dir_prev*0    
+            end if
         else
         !Below I divide by |r_prev|, because the bending force is proportional to 
         !k_bend*delta_alpha/|r_prev|. This comes from V_vend=1/2*k_bend*delta_alpha_2
             dir_prev=dir_prev/sqrt(dir_prev_2*r_prev_2)
         end if
+        if(cos_alpha.ge.1.0) then
+            print*, "Error cos_alpha melt =",cos_alpha, " >= 0"
+            delta_alpha=0
+        else
+            delta_alpha=acos(cos_alpha)-alpha_eq
+        end if
+
         delta_alpha=acos(cos_alpha)-alpha_eq
         F_mod=k_bend*delta_alpha
         v_bend_melt=v_bend_melt+.5*F_mod*delta_alpha

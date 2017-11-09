@@ -56,16 +56,36 @@ Do l=0,n_chain-1 !n_chain , loop over chains
             dir_prev_2=dir_prev_2+dir_prev(j)*dir_prev(j)
             dir_next_2=dir_next_2+dir_next(j)*dir_next(j)
         End do
-        if(dir_next_2.lt.0.0001) then !if alpha is small make force 0
-            dir_next=dir_next*0
+        if(dir_next_2.lt.0.000001) then !if alpha is small, use approximation
+            ! old ! 
+            !dir_next=dir_next*0
+            ! DEBUG !
+            ! print*, "SMALL_ANGLE_APPROXIMATION_DONE"
+            ! new
+            dir_next = r_prev / sqrt(r_prev_2) - r_next / sqrt(r_next_2)
+            dir_next_2=norm2(dir_next) 
+            if(dir_next_2.ne.0.0) then
+                dir_next = dir_next / dir_next_2 / sqrt(r_next_2)
+            else
+                dir_next=dir_next*0    
+            end if
         else
         !Below I divide by |r_next|, because the bending force is proportional to 
         !k_bend*delta_alpha/|r_next|. This comes from V_vend=1/2*k_bend*delta_alpha_2
             dir_next=dir_next/sqrt(dir_next_2*r_next_2)
         end if
-        if(dir_prev_2.lt.0.0001) then !if alpha is small make force 0
-            dir_prev=dir_prev*0
-        else
+        if(dir_prev_2.lt.0.000001) then !if alpha is small make force 0
+            ! old ! 
+            !dir_prev=dir_prev*0
+            !new
+            dir_prev = r_prev / sqrt(r_prev_2) - r_next / sqrt(r_next_2)
+            dir_prev_2=norm2(dir_prev) 
+            if(dir_prev_2.ne.0.0) then
+                dir_prev = dir_prev / dir_prev_2 / sqrt(r_prev_2)
+            else
+                dir_prev=dir_prev*0    
+            end if
+       else
         !Below I divide by |r_prev|, because the bending force is proportional to 
         !k_bend*delta_alpha/|r_prev|. This comes from V_vend=1/2*k_bend*delta_alpha_2
             dir_prev=dir_prev/sqrt(dir_prev_2*r_prev_2)
@@ -94,6 +114,7 @@ Do l=0,n_chain-1 !n_chain , loop over chains
         !print*, k_bend, "bending constant"
         !print*, F_bend, "bending FORCE"
         !print*, v_bend, "bending ENERGY"
+        !print*,delta_alpha,F_mod/sqrt(r_next_2),dot_product(F_bend(4:6),dir_next*sqrt(r_next_2))
         ! ERASE AFTER CHECKING
         !!!!!!!!!!!!!!!!!!!!!!!!!!!
     End Do
