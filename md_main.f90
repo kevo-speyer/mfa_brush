@@ -134,6 +134,9 @@
                                 call intra_wall
 #       endif
 #   endif
+
+           call magnetic_force()
+
            call intra_molec
 #ifdef BENDING        
            call bending(1)  ! adds brush bending forces and bending energy
