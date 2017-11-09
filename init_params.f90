@@ -1,5 +1,6 @@
      subroutine init_params
 
+
 ! This routine:
 ! - sets simulation parameters if mfa_input doesn't exist
 ! - reads simulation parameters from mfa_input if it exists
@@ -8,6 +9,7 @@
 !   in mfa_output
 ! - initialize predictor/corrector or verlet integration algorhitms
 ! - Initializes other parameters as well.
+#include 'control_simulation.h'
       use commons
 
 #ifdef _OPENMP
@@ -16,7 +18,6 @@
 #endif
 
       use ziggurat ! gaussian number generator suite
-#include 'control_simulation.h'
       implicit none
       real (kind=8) :: init_dens,graft_dens,wall_t_area
       integer :: iseed_z,j 
@@ -142,11 +143,15 @@ else      ! ---- READ mfa_input
     write (6,fmt='(/a/)',advance='no') "  *   Reading parameters from mfa_input ..."
     read(10,*)   s_time     ! I don't know if it will be used 
     read(10,*) n_relax         ;print '(/a30,i6)',  "n_relax ",n_relax     
+#ifndef GCMC    
     read(10,*) n_obser         ;print '(a30,i6)',   "n_obser ",n_obser        
+#else
+    read(10,*) n_obser,nexc,n_cycl         ;print '(a30,3(i6,x))',   "n_obser,nexc,n_cycl =  ",n_obser,nexc,n_cycl        
+#endif
     read(10,*) n_safe          ;print '(a30,i6)',   "n_safe  ",n_safe             
     read(10,*) dt              ;print '(a30,g12.5)',"dt      ",dt                
     read(10,*) !c_dummy        
-    read(10,*) !r_dummy       
+    read(10,*) mu            ;  print '(a30,g16.5)'," Chemical potential =  ",mu
     read(10,*) temp          ;  print '(a30,g16.5)',"Temperature  ",temp                  
     read(10,*) 
     read(10,*) 
@@ -254,11 +259,19 @@ end if
 
        write(20,210) s_time+n_relax+n_obser , " initial integer starting time"
        write(20,210) n_relax," number of relaxation steps"
+#ifndef GCMC       
        write(20,210) n_obser," number of observation steps"
+#else
+        write(20,'(3i8,a)') n_obser,nexc,n_cycl , " n_obser, MC exchange trials per cycle, number of cycles"
+#endif
        write(20,210) n_safe ," # of steps between configuration storage"
        write(20,201) dt     ," time step increment"
        write(20,*)
+#ifndef GCMC       
        write(20,'(f12.5,a)') temp ," obsolete"
+#else
+       write(20,'(f12.5,a)') mu ," Excess chemical potential  "
+#endif
        write(20,'(f12.5,a)') temp ," temperature"
        write(20,'(f12.5,a)') temp ," obsolete"
        write(20,*)

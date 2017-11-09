@@ -6,6 +6,7 @@
       select case(mode)
 
      case(1) ! initialization
+
 !    Open positions file
 
         open(12,file="film_xmol",status="unknown",position="append")
@@ -19,18 +20,24 @@
 
          open(10,file="conf_new",status="unknown")
          write(10,'(i1)') 1
+
 #ifdef STARS
 
          write(10,'(4i10)') n_mon,n_chain
          write(10, '(5i10)')n_mon_d,n_chain_d
          write(10,'(6i10)') n_mon_arm, n_arms, n_stars
 #else
-
+#       ifndef GCMC
          write(10,'(4i10)') n_mon,n_chain,n_mon_d,n_chain_d
+#       else
+         write(10,'(4i10)') n_mon,n_chain,n_mon_d,n_chain_d
+!         write(10,'(5i10)') n_mon,n_chain,n_mon_d,n_chain_d,n_part
+#       endif
+
 #endif
 
          write(10,120) n_cell_w_x,n_cell_w_y
-         write(10,110) n_order
+         write(10,*) "   " 
          do i_part = 1,n_part
              write(10,113)a_type(i_part),r0(1,i_part), r0(2,i_part),r0(3,i_part)
          end do
@@ -124,14 +131,21 @@
 !melt         
 #ifndef PARTICLE_4
 #   ifndef GCMC
+
          do i_part = part_init_d+1,n_mon_tot
+
 #   else
 
 !  If doing grand canonical MC 
 !print *, ; stop 
-! Put to position cero the  current number og ghost particles 
-         r0(:,n_mon_tot+1:) = 0.0
-         do i_part = part_init_d+1,n_mon_d*n_chain_d+n_ghost
+! Put to position cero the  current number of ghost particles 
+
+    r0(:,n_mon_tot+1:) = 0.0
+!    print *,"store_config upper limit",n_mon_d*n_chain_d+n_ghost
+!#         do i_part = part_init_d+1,n_mon_d*n_chain_d+n_ghost
+!print *,'init_n_part',init_n_part ; stop 
+
+             do i_part = part_init_d+1,init_n_part
 #   endif
             write(12,203) "He   ",r0(1,i_part),r0(2,i_part),r0(3,i_part)
          end do

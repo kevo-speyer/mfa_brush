@@ -4,21 +4,20 @@
 #   include 'control_simulation.h'
     use commons
     implicit none
-    real(kind=8) :: beta,inv_vol,zz,inv_zz,mu,big_lambda,vol
+    real(kind=8) :: beta,zz,inv_zz,big_lambda,vol
 
         contains
 
             subroutine init_gcmc()
                     implicit none
                     print *,"  * Initializing Grand Canonical Monte Carlo (GCMC) parameters   "
-                    mu = -5. ! Chemical potential
-                    print *," Chemical Potential: mu= ",mu
+                    !mu = -0.9 ! Chemical potential ! now in mfa_input
+                    print *,"   Chemical Potential: mu= ",mu
                     beta = 1./temp 
-!                    pi = 4.0*atan(1.0)
                     inv_vol = inv_boundary(1)*inv_boundary(2)*inv_boundary(3)
                     vol = 1./inv_vol
-                     big_lambda = 1./sqrt(2*pi*temp) ; print *, 'Thermal wavelength:i big_lambda= ', big_lambda !thermal wave length, without mass yet, planck constant h = 1
-                    zz = exp(beta*mu)/big_lambda ; print *,'zz=',zz  
+                    big_lambda = 1./sqrt(2*pi*temp) ; print *, '   Thermal wavelength: big_lambda= ', big_lambda !thermal wave length, without mass yet, planck constant h = 1
+                    zz = exp(beta*mu)/big_lambda**3 ; print *,'   zz=',zz  
                     inv_zz = 1./zz
 
             end subroutine init_gcmc
@@ -41,14 +40,16 @@
                         o_part = int(dble(n_liq)*uni()) + part_init_d + 1
 
                         call ener(1,r0(:,o_part),o_part,eno)
-                        print *,'eno mc_exc ',eno
+!deb                        print *,'eno mc_exc ',eno
+                        print *,'energy',eno
                         arg = dble(n_liq)*exp(beta*eno)*inv_vol*inv_zz
-                        print*,'n_liq,eno,arg',n_liq,eno,arg
+!deb                        print*,'n_liq,eno,arg',n_liq,eno,arg
                         if (uni() < arg) then
 !                            print *,'o_part',o_part
                             r0(:,o_part)=r0(:,n_liq) ! put n_liq in the index of the removed particle. 
 !        Effectively removing o_part
                             n_liq = n_liq - 1 ! update  current number of particles. 
+                            n_chain_d = n_chain_d - 1 
                             n_part = n_part - 1
                             n_mon_tot = n_mon_tot - 1
                             print *, "Removing a particle: N=",n_liq
@@ -59,25 +60,29 @@
                         rn(1) = uni()*boundary(1) 
                         rn(2) = uni()*boundary(2) 
                         rn(3) = uni()*boundary(3) 
-
                         call ener(2,rn(:),o_part,enn) ! o_part not used here 
-                        arg = zz*vol*exp(-beta*enn)/(dble(n_liq)+1)
+                        print *,'energy',enn 
+                        arg = zz*vol*exp(-beta*enn)/(dble(n_liq+1))
 !                        print *,'arg=',zz,beta,enn,n_liq,arg ; stop ! debug
                         if (uni() < arg) then
-
+! WARN: analyze if n_liq and n_chain_d are not exactly the same all over the program
                             n_liq = n_liq + 1
+                            n_chain_d = n_chain_d + 1 
                             n_part = n_part +1 
                             n_mon_tot = n_mon_tot +1
                             r0(:,n_part) = rn(:)
                             a_type(n_part) = 3 ! we are doing GCMC only with liquid particles
 
-                            ! UPdate n_part
-!                            n_mon_tot =n_mon*n_chain+n_liq
-!#ifdef PARTICLE_4      
-!                            n_mon_tot =n_mon_tot + n_mon_e*n_chain_e  ! All the particles, including type 4
-!#endif
-!                            n_part = n_mon_tot
-!
+! Give the inserted particle a random velocity from a Maxwell distribution 
+
+                             v(1,n_part)  =  sqrt(temp/mass_type(a_type(n_part)))*rnor()
+                             v(2,n_part)  =  sqrt(temp/mass_type(a_type(n_part)))*rnor()
+                             v(3,n_part)  =  sqrt(temp/mass_type(a_type(n_part)))*rnor()
+
+                             print '(a,3f15.5)','velocity',v(:,n_part)
+
+
+
                             print '(a,i6,3f17.6)', "Adding a particle: N_liq= ",n_liq,rn(:)
                         end if
 
@@ -108,7 +113,6 @@
 ! mode=2: compute energy for NEW particle 
 
           eno = 0.
-
           i_type = a_type(part_init_d+1)  ! chosen particle always liquid
 
         !  print *, ff_list(:,1) ; stop
@@ -236,7 +240,7 @@
               
              
               if( r_2 .lt. r_cut2 ) then
-                  if(r_2 < 0.64 ) then ! if new particle is too close to an existing one. Return with huge energy
+                  if(r_2 < 0.84 ) then ! if new particle is too close to an existing one. Return with huge energy
                       eno = 1.E10  !log(huge(r_2))
                       return 
                   end if
@@ -292,7 +296,7 @@
               inv_z = 1./(z_space_wall-zp)
               r_dummy = sigma_wall(3)*inv_z
 
-              v_wall = v_fluid_wall + abs(a_wall(3))*r_dummy**9 - a_w*r_dummy**3        
+              v_wall = v_wall + abs(a_wall(3))*r_dummy**9 - a_w*r_dummy**3        
 
 
                  eno = eno + v_wall 
@@ -300,6 +304,29 @@
 
     end subroutine ener_wall
 
+    subroutine write_out_system_input()
+! writes out a version of system_input with the current number of particles
+! This should be used as system_input for a new run to account for the change in number of particles in GCMC
 
+        open(unit=174,file='system_input.new',status='unknown')
+    
+        write(174,*) "# This file sets the system characteristics for mfa_prog"
+        write(174,*) "# It is in free format but the number of files must be held fixed"
+        write(174,*) "4"
+        write(174,'(a)') "#Grafted polymers: n_mon n_chain wall:[number of cells in x] [number of cells in y]" 
+        write(174,'(4i8)') n_mon,n_chain, n_cell_w_x,n_cell_w_y
+        write(174,'(a)') "# The drop or melt:  [n_mon_d] [n_chain_d] [drop_cell_x] [drop_cell_y] [z_skin]"
+        write(174,'(2i8,3f16.5)') n_mon_d,n_chain_d,drop_cell_x,drop_cell_y,z_skin
+        write(174,*) "# non additive sigmas [sig23] [sig24] [sig34]"
+        write(174,'(3f16.5)') delta_sig(1:3)
+        write(174,*) "# Parameters A and s_w for wall-fluid interaction with: V=A (s_w/z) -(s_w/z)^6"
+        write(174,'(4f16.5)')   a_w,sigma_w,a_w4,sigma_w4  
+        write(174,*) "# External constant force for Poseuille flow.  [Fx]   [Fy]   [Fz]"
+        write(174,'(5f16.5)')  const_force(:)
+    
+        close(unit=174)
+
+
+    end subroutine write_out_system_input
 
     end module gcmc_module

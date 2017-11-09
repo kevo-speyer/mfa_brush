@@ -524,5 +524,12 @@ end if ! mod(i_time-n_relax,5).eq.0
           ! Calculates viscosity, pressure and presure tensor
           call viscosity()
 #endif
+#       ifdef GCMC
+          c_av = c_av + 1.
+!deb          print*," c_av",c_av
+          average_N = Average_N + dble(n_liq)
+          average_dens = average_dens + dble(n_liq)*inv_vol
+
+#       endif
 
  end subroutine observation

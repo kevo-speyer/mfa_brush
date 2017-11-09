@@ -342,6 +342,12 @@ real (kind=8) ,allocatable :: force_or(:,:)
 !     n_obser: number of steps in which observation takes place
 !     r_time = i_time * dt 
       integer :: i_time,s_time,n_relax,n_obser !,counttime
+#     ifdef GCMC
+      integer :: nexc,n_cycl,n_liq
+      real (kind=8) :: mu  ! Excess chemical potential 
+      real (kind=8) :: average_dens,average_N,inv_vol,c_av
+#     endif
+
 
 ! System characteristics
 ! ---------------------
@@ -366,12 +372,12 @@ real (kind=8) ,allocatable :: force_or(:,:)
 ! Definition of limit variables to be read or calculated in init_system
       integer :: n_mon,n_chain,n_mon_tot,n_part,n_part_w
 #ifdef GCMC
-      integer :: n_ghost
+      integer :: n_ghost,init_n_part
 #endif
 
 ! Definition of  droplet variables: (or the melt according the shape)
       integer :: n_mon_d,n_chain_d,part_init_d,n_chain_e,n_mon_e,part_init_e,n_tot_e, part_init_star
-      integer :: n_chain_2,n_liq
+      integer :: n_chain_2
 #ifdef SHEARED 
       integer ::  n_mon_arm, n_arms, n_stars, i_star, i_arm, i_mon_arm, d_part
       integer :: i_mon_d, i_chain_d

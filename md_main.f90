@@ -10,7 +10,7 @@
       implicit none
       integer  :: tot_time,i
       real (kind=8) :: t0,t1
-      integer :: i_total,n_cycl,nexc,npav,mc_rand ! aux 
+      integer :: i_total,npav,mc_rand ! aux 
       logical,parameter :: debug =.false.
 
 ! [12/2015] Kevin Speyer: Parallelization with OpenMP
@@ -62,8 +62,8 @@
            
 ! GCMC + MD parameters
 #       ifdef GCMC
-            n_cycl = 5000  ! cycles of MD+GCMC
-            nexc= 100   ! MC steps per cycle
+!now in init_params            n_cycl = 500000  ! cycles of MD+GCMC
+!now in init_params            nexc= 100   ! MC steps per cycle
           
             npav =  n_part+n_ghost ! First value of npav. It is the expected number of particles. 
             call init_gcmc()
@@ -83,7 +83,7 @@
 #endif
 
           tot_time = n_relax + n_obser 
-          tot_time = 100 ! MD steps per cycle
+!          tot_time = 100 ! MD steps per cycle
             
 #         ifdef GCMC
           do i_total = 1,n_cycl                       ! total loop: combined MD + GCMC
@@ -92,7 +92,7 @@
 
 !deb               mc_rand = int(uni()*(npav+nexc)) + 1
 
-               print *,"mc_rand=",mc_rand,n_part ! debug
+!deb               print *,"mc_rand=",mc_rand,n_part ! debug
 
 
 
@@ -238,26 +238,31 @@
 
           end if ! mc_rand 
 
-!----  Observe system each n_measure
+!----  Observe the system 
 
-       if(mod(i_total,n_safe)==0) then  ! warn: check if this is correct  
+!       if(mod(i_total,n_safe)==0) then  ! warn: check if this is correct  
             call observation 
-       end if
+!       end if
 
 !----  Make safety copies  to recover from crashes and write out of configurations
 
+! Note: after each cycle, write
 
        !ori            if(mod(i_time,n_safe) == 0) then
-            if(mod(i_total,n_safe) == 0) then
+!            if(mod(i_total,n_safe) == 0) then
                     call store_config(2)  ! writes out conf_xmol and conf_new
 #       if STORE == 0
                     call store_config(3) ! Writes out ! film_xmol ! and ! vel.dat
 #       elif STORE == 1
                     call store_config(4) ! Writes ! out ! film_xmol ! and ! vel.dat ! UNFOLDED
 #       endif
-            end if
+!            end if
 
                end do ! n_cycl: ! Ends ! loop ! of ! cycles ! MD ! + ! GCMC ! moves 
+
+! Write out system_input.new with updated number of particles                
+              
+            call write_out_system_input()
 
 #       endif /* ifdef GCMC */
 

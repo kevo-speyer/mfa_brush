@@ -319,6 +319,14 @@ write (20,'(/a,f16.7/)') " Mean pressure=", (press_tensor_mean(1,1) +press_tenso
 #endif 
 
 
+#       ifdef GCMC
+          average_N = Average_N/c_av
+          average_dens = average_dens/c_av
+        write(20,'(/a/)') "  * Grand Canonical Simulation parameters "
+        write(20,'(a,f17.5)') " Excess chemical potential ",mu
+        write(20,'(a,f17.5)') " Mean number density       ",average_dens
+        write(20,'(a,f17.5)') " Mean number of particles", average_N
+#       endif
 
 
 ! *** Closing storage  files 

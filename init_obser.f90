@@ -292,4 +292,11 @@ print '(/a/)',"  *  Writing the very first generated configuration to conf0.xyz 
              call diff_coef(1,r_time)
 #       endif             
  
+#       ifdef GCMC
+             c_av = 0.0
+           average_N = 0.0 ! Average number of liquid particles
+           average_dens = 0.0 ! Average number density 
+#       endif 
+
+
       end subroutine init_obser

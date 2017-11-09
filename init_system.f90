@@ -177,6 +177,7 @@ subroutine init_system()
 
 ! NOTE: to allow for flcutuating number of liquid particles we used five times od that defined in system_input
         n_mon_tot = n_mon*n_chain+n_mon_d*n_chain_d+n_ghost  ! All the particles, but the wall.
+        init_n_part  = n_mon_tot
 #       endif
 
 #ifdef PARTICLE_4      

@@ -51,6 +51,11 @@ subroutine messages
 #       endif
 
 #endif
+#ifdef GCMC
+        print '(/a)'," * Performing Grand Canonical MC within MD"
+        print '(a)'," *     * Fluctuating number of liquid particles"
+        print '(a/)'," *     * Simulation at constant chemical potential"
+#endif
 
 ! Messages related to the wall interactions
 #   if SYMMETRY == 0
