@@ -41,7 +41,7 @@
 
                         call ener(1,r0(:,o_part),o_part,eno)
 !deb                        print *,'eno mc_exc ',eno
-                        print *,'energy',eno
+                  !      print *,'energy',eno
                         arg = dble(n_liq)*exp(beta*eno)*inv_vol*inv_zz
 !deb                        print*,'n_liq,eno,arg',n_liq,eno,arg
                         if (uni() < arg) then
@@ -59,7 +59,8 @@
 
                         rn(1) = uni()*boundary(1) 
                         rn(2) = uni()*boundary(2) 
-                        rn(3) = uni()*boundary(3) 
+                        rn(3) = 0.3+ uni()*(boundary(3) -0.6 )
+
                         call ener(2,rn(:),o_part,enn) ! o_part not used here 
                         print *,'energy',enn 
                         arg = zz*vol*exp(-beta*enn)/(dble(n_liq+1))
@@ -77,7 +78,7 @@
 
                              v(1,n_part)  =  sqrt(temp/mass_type(a_type(n_part)))*rnor()
                              v(2,n_part)  =  sqrt(temp/mass_type(a_type(n_part)))*rnor()
-                             v(3,n_part)  =  sqrt(temp/mass_type(a_type(n_part)))*rnor()
+                             v(3,n_part)  =  0.0 ! sqrt(temp/mass_type(a_type(n_part)))*rnor()
 
                              print '(a,3f15.5)','velocity',v(:,n_part)
 
@@ -240,10 +241,10 @@
               
              
               if( r_2 .lt. r_cut2 ) then
-                  if(r_2 < 0.84 ) then ! if new particle is too close to an existing one. Return with huge energy
-                      eno = 1.E10  !log(huge(r_2))
-                      return 
-                  end if
+!                  if(r_2 < 0.84 ) then ! if new particle is too close to an existing one. Return with huge energy
+!                      eno = 1.E10  !log(huge(r_2))
+!                      return 
+!                  end if
                   inv_r_2 = 1./r_2
                   inv_sqrt_r_2 = sqrt(1./r_2)
                   l_eps = epsil(i_type,j_type)

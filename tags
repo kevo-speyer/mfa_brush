@@ -92,6 +92,8 @@ appl_vel_bw	mfa_common.f90	/^      real (kind=8) appl_vel(n_dim),appl_vel_bw(/;"
 appl_vel_tw	mfa_common.f90	/^      real (kind=8) appl_vel(n_dim),appl_vel_bw(n_dim),appl_vel_tw(/;"	v	module:commons
 bending	bending.f90	/^subroutine bending(/;"	s
 bending_melt	bending_melt.f90	/^subroutine bending_melt(/;"	s
+beta	gcmc_module.f90	/^    real(kind=8) :: beta,/;"	v	module:gcmc_module
+big_lambda	gcmc_module.f90	/^    real(kind=8) :: beta,inv_vol,zz,inv_zz,mu,big_lambda,/;"	v	module:gcmc_module
 bin	mfa_common.f90	/^    integer,allocatable :: bin(/;"	v	module:commons
 bin_bwall	mfa_common.f90	/^      integer , allocatable ::  bin_bwall(/;"	v	module:commons
 bin_fluid	mfa_common.f90	/^      integer , allocatable ::  bin_fluid(/;"	v	module:commons
@@ -164,6 +166,7 @@ e_total_1	mfa_common.f90	/^      real (kind=8) ::  v_total,v_total_1,v_total_2,t
 e_total_2	mfa_common.f90	/^      real (kind=8) ::  v_total,v_total_1,v_total_2,t_total,t_total_1, t_total_2,e_total,e_total_1,e_total_2$/;"	v	module:commons
 e_wall_wall_1	mfa_common.f90	/^      real (kind=8) ::  v_wall_wall_1,t_wall_1,v_wall_wall_2,t_wall_2,e_wall_wall_1,/;"	v	module:commons
 e_wall_wall_2	mfa_common.f90	/^      real (kind=8) ::  v_wall_wall_1,t_wall_1,v_wall_wall_2,t_wall_2,e_wall_wall_1,e_wall_wall_2$/;"	v	module:commons
+ener	gcmc_module.f90	/^            subroutine ener(/;"	s	module:gcmc_module
 epsil	mfa_common.f90	/^      real (kind=8) :: mass_type(n_type),    &$/;"	v	module:commons
 ewald_k	ewald_k.f90	/^    subroutine ewald_k(/;"	s
 ewald_real	ewald_real.f90	/^    subroutine ewald_real(/;"	s
@@ -191,6 +194,7 @@ force_twall	mfa_common.f90	/^      real(kind=8)            :: va_spring_twall(n_
 friction	mfa_common.f90	/^      epsil(n_type,n_type),sigma(n_type,n_type),range_2(n_type,n_type),e_shift(n_type,n_type), &$/;"	v	module:commons
 ftw	mfa_common.f90	/^      real(kind=8)            :: ftw(/;"	v	module:commons
 functions	functions.f90	/^module functions$/;"	m
+gcmc_module	gcmc_module.f90	/^    module gcmc_module$/;"	m
 gen_brush	gen_brush.f90	/^  subroutine gen_brush(/;"	s
 gen_droplet	gen_droplet.f90	/^subroutine gen_droplet(/;"	s
 gen_vapour	gen_vapour.f90	/^subroutine gen_vapour(/;"	s
@@ -210,6 +214,7 @@ histo_out	mfa_common.f90	/^       real (kind=8) ,allocatable :: v_prof(:,:,:),v_
 histo_vec	functions.f90	/^subroutine histo_vec(/;"	s	module:functions
 histo_vec	util.f90	/^subroutine histo_vec(/;"	s	module:util
 hz	ziggurat.f90	/^                            ke(0:255), hz$/;"	v	module:Ziggurat
+i	md_main.f90	/^      in/;"	v	program:md_pb
 i1_bin_part	mfa_common.f90	/^      integer            :: i1_bin_part,/;"	v	module:commons
 i2_bin_part	mfa_common.f90	/^      integer            :: i1_bin_part,i2_bin_part,/;"	v	module:commons
 i_arm	mfa_common.f90	/^      integer ::  n_mon_arm, n_arms, n_stars, i_star, i_arm,/;"	v	module:commons
@@ -234,11 +239,13 @@ i_order	mfa_common.f90	/^      integer           :: i_order,/;"	v	module:commons
 i_part	mfa_common.f90	/^      integer :: i_wall,i_part,/;"	v	module:commons
 i_star	mfa_common.f90	/^      integer ::  n_mon_arm, n_arms, n_stars, i_star,/;"	v	module:commons
 i_time	mfa_common.f90	/^      integer :: i_time,/;"	v	module:commons
+i_total	md_main.f90	/^      integer :: i_total,/;"	v	program:md_pb
 i_type	mfa_common.f90	/^      integer i_type,/;"	v	module:commons
 i_wall	mfa_common.f90	/^      integer :: i_wall,/;"	v	module:commons
 inclination_rigidity	inclination_rigidity.f90	/^subroutine inclination_rigidity(/;"	s
 init_config	init_config.f90	/^     subroutine init_config$/;"	s
 init_force_switch_on	init_force_switch_on.f90	/^subroutine init_force_switch_on(/;"	s
+init_gcmc	gcmc_module.f90	/^            subroutine init_gcmc(/;"	s	module:gcmc_module
 init_obser	init_obser.f90	/^      subroutine init_obser$/;"	s
 init_params	init_params.f90	/^     subroutine init_params$/;"	s
 init_system	init_system.f90	/^subroutine init_system(/;"	s
@@ -260,6 +267,8 @@ inv_r_bin_z	mfa_common.f90	/^      real(kind=8)            :: inv_r_bin_x,inv_r_
 inv_r_chain_2	mfa_common.f90	/^      real (kind=8)   :: r_chain,k_chain,r_chain_2,v_intra_molec,v_intra_molec_d,v_intra_molec_e,inv_r_chain_2$/;"	v	module:commons
 inv_range_2	mfa_common.f90	/^      real (kind=8) :: inv_range_2(/;"	v	module:commons
 inv_sqrt_pi	mfa_common.f90	/^        real(kind=8) :: v_coul,v_coul_self,alpha_c,sqrt_alpha_c,charge(n_type) ,inv_sqrt_pi$/;"	v	module:commons
+inv_vol	gcmc_module.f90	/^    real(kind=8) :: beta,inv_vol,/;"	v	module:gcmc_module
+inv_zz	gcmc_module.f90	/^    real(kind=8) :: beta,inv_vol,zz,inv_zz,/;"	v	module:gcmc_module
 iseed	mfa_common.f90	/^      integer           :: iseed,/;"	v	module:commons
 ith	mfa_common.f90	/^integer :: ith,/;"	v	module:commons
 iz	ziggurat.f90	/^   INTEGER,  SAVE       ::  iz,/;"	v	module:Ziggurat
@@ -294,6 +303,8 @@ make_binning_boxes	make_binning_boxes.f90	/^subroutine make_binning_boxes(/;"	s
 mass	mfa_common.f90	/^      real (kind=8), allocatable :: mass(/;"	v	module:commons
 mass_twall	mfa_common.f90	/^      real(kind=8)            :: rx_twall(n_dim,n_order),mass_twall$/;"	v	module:commons
 mass_type	mfa_common.f90	/^      real (kind=8) :: mass_type(/;"	v	module:commons
+mc_exc	gcmc_module.f90	/^            subroutine mc_exc(/;"	s	module:gcmc_module
+mc_rand	md_main.f90	/^      integer :: i_total,n_cycl,nexc,npav,mc_rand /;"	v	program:md_pb
 md_pb	md_main.f90	/^      program md_pb /;"	p
 mean_R_center_box	functions.f90	/^subroutine mean_R_center_box(/;"	s	module:functions
 mean_f_on_heads	mfa_common.f90	/^      real (kind=8) :: mean_f_on_heads(/;"	v	module:commons
@@ -301,6 +312,7 @@ messages	messages.f90	/^subroutine messages /;"	s
 mic_count	mfa_common.f90	/^     integer,allocatable ::  mic_count(/;"	v	module:commons
 mpi_initialize	mpi_module.f90	/^subroutine mpi_initialize(/;"	s	module:mpi_module
 mpi_module	mpi_module.f90	/^    module mpi_module$/;"	m
+mu	gcmc_module.f90	/^    real(kind=8) :: beta,inv_vol,zz,inv_zz,mu,/;"	v	module:gcmc_module
 my_binning	my_binning.f90	/^    subroutine my_binning(/;"	s
 my_binning3	my_binning3.f90	/^subroutine my_binning3(/;"	s
 mz	mfa_common.f90	/^      integer           :: iseed,mz(/;"	v	module:commons
@@ -318,11 +330,12 @@ n_cell	mfa_common.f90	/^    integer :: n_cell /;"	v	module:commons
 n_cell_w_x	mfa_common.f90	/^      integer ::            n_cell_w_x,/;"	v	module:commons
 n_cell_w_y	mfa_common.f90	/^      integer ::            n_cell_w_x,n_cell_w_y,/;"	v	module:commons
 n_chain	mfa_common.f90	/^      integer :: n_mon,n_chain,/;"	v	module:commons
-n_chain_2	mfa_common.f90	/^      integer :: n_chain_2$/;"	v	module:commons
+n_chain_2	mfa_common.f90	/^      integer :: n_chain_2,/;"	v	module:commons
 n_chain_d	mfa_common.f90	/^      integer :: n_mon_d,n_chain_d,/;"	v	module:commons
 n_chain_e	mfa_common.f90	/^      integer :: n_mon_d,n_chain_d,part_init_d,n_chain_e,/;"	v	module:commons
 n_chain_vap	mfa_common.f90	/^      integer :: n_mon_tot_v,n_mon_vap,n_chain_vap$/;"	v	module:commons
 n_cm	mfa_common.f90	/^      integer :: n_cm,/;"	v	module:commons
+n_cycl	md_main.f90	/^      integer :: i_total,n_cycl,/;"	v	program:md_pb
 n_diff_time	mfa_common.f90	/^      integer, parameter :: n_diff_time=/;"	v	module:commons
 n_dim	mfa_common.f90	/^      integer, parameter  ::  n_dim=/;"	v	module:commons
 n_fcell_max	mfa_common.f90	/^      integer            :: delta_bin_x,delta_bin_y,delta_bin_z,n_fcell_max,/;"	v	module:commons
@@ -330,6 +343,7 @@ n_free_chain	mfa_common.f90	/^      integer :: n_free_chain,/;"	v	module:commons
 n_kmax	mfa_common.f90	/^        integer ::  n_kmax$/;"	v	module:commons
 n_layer	mfa_common.f90	/^      integer, parameter  :: n_layer /;"	v	module:commons
 n_layers	mfa_common.f90	/^      integer,parameter ::  n_layers /;"	v	module:commons
+n_liq	mfa_common.f90	/^      integer :: n_chain_2,n_liq$/;"	v	module:commons
 n_mon	mfa_common.f90	/^      integer :: n_mon,/;"	v	module:commons
 n_mon_arm	mfa_common.f90	/^      integer ::  n_mon_arm,/;"	v	module:commons
 n_mon_d	mfa_common.f90	/^      integer :: n_mon_d,/;"	v	module:commons
@@ -358,7 +372,9 @@ n_wall	mfa_common.f90	/^      integer ::            n_cell_w_x,n_cell_w_y, n_wal
 n_wcell_max	mfa_common.f90	/^      integer            :: delta_bin_x,delta_bin_y,delta_bin_z,n_fcell_max,n_wcell_max$/;"	v	module:commons
 name	mfa_common.f90	/^      character (len=20) ::  name$/;"	v	module:commons
 new_dpd_fd	new_dpd_fd.f90	/^subroutine new_dpd_fd(/;"	s
+nexc	md_main.f90	/^      integer :: i_total,n_cycl,nexc,/;"	v	program:md_pb
 nm	mfa_common.f90	/^      integer :: n_cm,nm$/;"	v	module:commons
+npav	md_main.f90	/^      integer :: i_total,n_cycl,nexc,npav,/;"	v	program:md_pb
 numth	mfa_common.f90	/^integer :: ith, numth,/;"	v	module:commons
 obser_out	obser_out.f90	/^      subroutine obser_out$/;"	s
 observation	observation.f90	/^      subroutine observation$/;"	s
@@ -492,7 +508,7 @@ tn	ziggurat.f90	/^   REAL(DP)             ::  dn=3.442619855899_DP, tn=/;"	v	mod
 tn0	par_ziggurat.f90	/^    REAL(DP) :: dn0 = 3.442619855899_DP, tn0 /;"	v	module:Par_Zig_mod
 tot_P	mfa_common.f90	/^       real(kind=8) :: tot_P(/;"	v	module:commons
 tot_P_2	mfa_common.f90	/^       real(kind=8) :: tot_P(3),tot_P_2(/;"	v	module:commons
-tot_time	md_main.f90	/^      integer  :: tot_time$/;"	v	program:md_pb
+tot_time	md_main.f90	/^      integer  :: tot_time,/;"	v	program:md_pb
 turn_time	mfa_common.f90	/^      integer :: turn_time(/;"	v	module:commons
 twopi	mfa_common.f90	/^      real(kind=8), parameter :: pi=3.1415926536,twopi=/;"	v	module:commons
 uni	ziggurat.f90	/^FUNCTION uni(/;"	f	module:Ziggurat
@@ -549,6 +565,7 @@ verlet_velocities	verlet_velocities.f90	/^subroutine verlet_velocities(/;"	s
 viscosity	viscosity.f90	/^subroutine viscosity(/;"	s
 vn	par_ziggurat.f90	/^    REAL(DP) :: dn0 = 3.442619855899_DP, tn0 = 3.442619855899_DP, &$/;"	v	module:Par_Zig_mod
 vn	ziggurat.f90	/^   REAL(DP)             ::  dn=3.442619855899_DP, tn=3.442619855899_DP,    &$/;"	v	module:Ziggurat
+vol	gcmc_module.f90	/^    real(kind=8) :: beta,inv_vol,/;"	v	module:gcmc_module
 vol_drop	mfa_common.f90	/^      real (kind=8) :: z_max_d,z_min_d,x_box_min,x_box_max,vol_drop,/;"	v	module:commons
 w_d	mfa_common.f90	/^       real (kind=8) :: w_d,/;"	v	module:commons
 w_r	mfa_common.f90	/^       real (kind=8) :: w_d, w_r$/;"	v	module:commons
@@ -583,4 +600,5 @@ zcomp2	mfa_common.f90	/^      real(kind=8)            :: crdna2(1:3),crdnb2(1:3)
 zcoord	mfa_common.f90	/^      real(kind=8)            :: crdna(1:3),crdnb(1:3),rend(1:3),rendtot,angle, rendl2,zcomp,xcomp,zcoord$/;"	v	module:commons
 zcoord2	mfa_common.f90	/^      real(kind=8)            :: crdna2(1:3),crdnb2(1:3),rend2(1:3),rendtot2,angle2, rendl22,zcomp2,xcomp2,zcoord2$/;"	v	module:commons
 zigset	ziggurat.f90	/^SUBROUTINE zigset(/;"	s	module:Ziggurat
+zz	gcmc_module.f90	/^    real(kind=8) :: beta,inv_vol,zz,/;"	v	module:gcmc_module
 zz_min	mfa_common.f90	/^       real (kind=8) :: zz_min$/;"	v	module:commons
