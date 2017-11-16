@@ -135,7 +135,6 @@
 #       endif
 #   endif
 
-           call magnetic_force()
 
            call intra_molec
 #ifdef BENDING        
@@ -151,6 +150,9 @@
 
 #ifdef ORIENTATION        
            call orientation(1) ! adds brush orientation bending forces and bending energy
+#endif
+#ifdef MAGNETIC
+            call magnetic_force(1)
 #endif
 
 

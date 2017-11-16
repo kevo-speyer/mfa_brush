@@ -291,5 +291,10 @@ print '(/a/)',"  *  Writing the very first generated configuration to conf0.xyz 
 
              call diff_coef(1,r_time)
 #       endif             
- 
+! Initialize variables needed for magnetic force  
+#       ifdef MAGNETIC
+        call magnetic_force(0)
+#   endif
+
+
       end subroutine init_obser

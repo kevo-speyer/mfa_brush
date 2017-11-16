@@ -290,6 +290,7 @@ m1	par_ziggurat.f90	/^    REAL(DP), PARAMETER :: m1 /;"	v	module:Par_Zig_mod
 m1	ziggurat.f90	/^   REAL(DP), PARAMETER  ::  m1=/;"	v	module:Ziggurat
 m2	par_ziggurat.f90	/^    REAL(DP), PARAMETER :: m1 = 2147483648.0_DP, m2 /;"	v	module:Par_Zig_mod
 m2	ziggurat.f90	/^   REAL(DP), PARAMETER  ::  m1=2147483648.0_DP,   m2=/;"	v	module:Ziggurat
+magnetic_force	magnetic_force.f90	/^subroutine magnetic_force(/;"	s
 make_binning_boxes	make_binning_boxes.f90	/^subroutine make_binning_boxes(/;"	s
 mass	mfa_common.f90	/^      real (kind=8), allocatable :: mass(/;"	v	module:commons
 mass_twall	mfa_common.f90	/^      real(kind=8)            :: rx_twall(n_dim,n_order),mass_twall$/;"	v	module:commons
