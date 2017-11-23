@@ -42,18 +42,19 @@
 #define SOLVENT 1    
 
 #undef HYDROPHOBIA  /* if def, the interaction between brush and melt is purely repulsive *//
-#define BRUSH_IN_GOOD_SV /*if def the interaction between grafted polimers is purely repulsive*/
-#define BENDING  /* if def the grafted polymers are assumed to be semiflxible: bending potential *//
-#define BENDING_MELT  /* if def the melt polymers are assumed to be semiflxible: bending potential *//
-#define ORIENTATION  /* if def the grafted polymers will be oriented through an harmonic potential*//
+#undef BRUSH_IN_GOOD_SV /*if def the interaction between grafted polimers is purely repulsive*/
+#undef BENDING  /* if def the grafted polymers are assumed to be semiflxible: bending potential *//
+#undef BENDING_MELT  /* if def the melt polymers are assumed to be semiflxible: bending potential *//
+#undef ORIENTATION  /* if def the grafted polymers will be oriented through an harmonic potential*//
+#define MAGNETIC /* ifdef the program includes magnetic partcicles. Particle 4 is treated as magnetic. María Fiora */
 
-#undef PARTICLE_4 /* If defined the program runs with four different particle type */
+#define PARTICLE_4 /* If defined the program runs with four different particle type */
 
 #undef STARS /*whether you want to simulate with or without stars, sigma is fixed to 1. As well as sigma for walls */
 
 /* Thermostat */
 
-#define THERMOSTAT 1 /*  1=LGV 0=DPD       */
+#define THERMOSTAT 0 /*  1=LGV 0=DPD       */
 
 #define DPD_WEIGHT 0 /*  0=usual choice of DPD weight: Wd=(1-r/rc)^2 ; 1= constant: Wr=Wd=1 ; 2 "quartic" */ 
                      /*  wd=(1-r/rc)^4                                                                    */  
@@ -74,7 +75,7 @@
                     * This is not MD, but force relaxation */
 
 
-#undef POISEUILLE    /* Adds external constant force to simulate Poiseuille flow      */
+#define POISEUILLE    /* Adds external constant force to simulate Poiseuille flow      */
 #undef SHEARED      /* if defined, the shear protocols are applied, mfa_input is different!! */
                     /* NOTE: if it is not defined, wall velocities can anyway been used */
 
