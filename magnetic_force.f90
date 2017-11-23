@@ -5,14 +5,14 @@ subroutine magnetic_force(mode)
       use commons
       implicit none 
       integer, intent(in) :: mode
-!      real (kind=8), save :: mag_m_z,V_part,r_loop_min,r_loop_max,i_loop,cte,mag_force,M_sat
+!      real (kind=8), save :: m_sat,V_part,r_loop_min,r_loop_max,i_loop,cte,mag_force,mag_m_z
 !      real (kind=8), parameter :: mu_0 = 1.0
 !      integer :: n_loop
      
         select case(mode)
         case(0)   ! Initialization 
 
-            m_sat =10.0  ! Saturation magnetization
+            m_sat =1.0  ! Saturation magnetization
             V_part = 4.*pi*(sigma(4,4)/2.)**3/3. ! Volume of the particle
             r_loop_min =1.0 ! Minimum radius of the loop
             r_loop_max=2.0  ! maximun radius of the loop
