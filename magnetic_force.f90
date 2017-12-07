@@ -18,19 +18,29 @@ subroutine magnetic_force(mode)
             r_loop_max=2.0  ! maximun radius of the loop
             i_loop=1.0 ! Current of the loop
             n_loop=1   ! Number of turns of the loop
-            cte=n_loop*mu_0/(2*pi*2*(r_loop_max-r_loop_min))
+            cte=n_loop*mu_0*i_loop/(2*pi*2*(r_loop_max-r_loop_min))
             mag_m_z=m_sat*V_part !magnetic moment of the particle
 
             print *,"Magnetic momemtum of particles =",mag_m_z
+            print *,"Volume=",V_part
+            print *,"cte=",cte
+            print *,"m_sat=",m_sat
+            print *,"r_loop_min=",r_loop_min
+            print *,"r_loop_max=",r_loop_max
+            print*,"i_loop=",i_loop
+            print*,"n_loop=",n_loop
+            print*,"sigma=",sigma(4,4)
+
+
 
         case(1)  ! Compute magnetic force on particles 
 !            do i_part = part_init_e + 1, n_part
                 i_part= part_init_e + 1
                 r0(3,i_part) = 3.0  ! debug
                 mag_force=cte*mag_m_z*r0(3,i_part)* &
-                    (-r_loop_min/((r_loop_min**2+r0(3,i_part)**2)**(3/2))  &
-                     -1/(r_loop_min*sqrt(r_loop_min**2+r0(3,i_part)**2)+r_loop_min**2+r0(3,i_part)**2) & 
-                     +r_loop_max/((r_loop_max**2+r0(3,i_part)**2)**(3/2))     & 
+                    (-r_loop_min/((r_loop_min**2+r0(3,i_part)**2)**(1.5))  &
+                    -1/(r_loop_min*sqrt(r_loop_min**2+r0(3,i_part)**2)+r_loop_min**2+r0(3,i_part)**2) & 
+                     +r_loop_max/((r_loop_max**2+r0(3,i_part)**2)**(1.5))     & 
                      +1/(sqrt(r_loop_max**2+r0(3,i_part)**2)*(sqrt(r_loop_max**2+r0(3,i_part)**2)+r_loop_max)))
                
                   print *,'mag_force=',mag_force ! debug
