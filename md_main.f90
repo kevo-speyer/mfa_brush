@@ -159,7 +159,16 @@
 #   endif
 
 #           ifdef POISEUILLE
-           call constant_force() ! Poseuille flow generation
+           call constant_force(1) ! Poseuille flow generation
+#           endif
+
+#           ifdef CENTER_DROP
+#               ifndef POISEUILLE
+                    print*, "ERROR: For CENTER_DROP function to work, POISEUILLE must"
+                    print*, "be defined control_simulation.h"
+                    exit
+#               endif
+            call constant_force(2) ! Poseuille flow generation
 #           endif
 
 

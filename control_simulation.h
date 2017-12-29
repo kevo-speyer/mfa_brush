@@ -6,7 +6,7 @@
  * 2= charged system.No brush, 
  * 3= charged channel+brush  */
 
-#define SYSTEM 0 
+#define SYSTEM 1 
 
 
 /*BRUSH TYPE: sets how the grafted beads from the polymer brush will be chosen
@@ -14,13 +14,13 @@
  * 1: randomly distributed with a uniform distribution. Overlaping beads are forbidden.
  * 2: ordered brush. The distance between neighbouring grafted beads is equal for all points*/
 
-#define BRUSH_TYPE 0 
+#define BRUSH_TYPE 2 
 
 /* SYMMETRY */
 /* 0 = channel geometry: no PBC in Z; 
  * 1 = Bulk geometry PBC in 3D */
 
-#define SYMMETRY 1   
+#define SYMMETRY 0   
 
 /* Potentials and particles */
 
@@ -39,12 +39,12 @@
  * 0= poor solvent      */
 
 /* NOTE:  WALL is  not used if SYMMETRY /= 1  */
-#define SOLVENT 1    
+#define SOLVENT 3    
 
 #undef HYDROPHOBIA  /* if def, the interaction between brush and melt is purely repulsive *//
 #define BRUSH_IN_GOOD_SV /*if def the interaction between grafted polimers is purely repulsive*/
 #define BENDING  /* if def the grafted polymers are assumed to be semiflxible: bending potential *//
-#define BENDING_MELT  /* if def the melt polymers are assumed to be semiflxible: bending potential *//
+#undef BENDING_MELT  /* if def the melt polymers are assumed to be semiflxible: bending potential *//
 #define ORIENTATION  /* if def the grafted polymers will be oriented through an harmonic potential*//
 
 #undef PARTICLE_4 /* If defined the program runs with four different particle type */
@@ -74,7 +74,9 @@
                     * This is not MD, but force relaxation */
 
 
-#undef POISEUILLE    /* Adds external constant force to simulate Poiseuille flow      */
+#define POISEUILLE    /* Adds external constant force to simulate Poiseuille flow      */
+#define CENTER_DROP  /*Apply constant force in x towars the center of the box, only to melt paricles*/
+		    /* to form droplets. WARNING: POISEUILLE must be defined to work */
 #undef SHEARED      /* if defined, the shear protocols are applied, mfa_input is different!! */
                     /* NOTE: if it is not defined, wall velocities can anyway been used */
 

@@ -162,7 +162,7 @@ clean:
 
 
 package: 
-	tar -cvf mfa_prog.tar Makefile *.f90 control_simulation.h  *.c
+	tar -cvf mfa_prog.tar Makefile *.f90 control_simulation.h  *.c inputs/
 	@gzip -f mfa_prog.tar
 	@echo "***** Program packaged in mfa_prog.tar.gz  *****"
            
