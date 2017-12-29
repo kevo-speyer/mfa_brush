@@ -42,18 +42,21 @@
 #define SOLVENT 3    
 
 #undef HYDROPHOBIA  /* if def, the interaction between brush and melt is purely repulsive *//
-#define BRUSH_IN_GOOD_SV /*if def the interaction between grafted polimers is purely repulsive*/
-#define BENDING  /* if def the grafted polymers are assumed to be semiflxible: bending potential *//
-#undef BENDING_MELT  /* if def the melt polymers are assumed to be semiflxible: bending potential *//
-#define ORIENTATION  /* if def the grafted polymers will be oriented through an harmonic potential*//
 
-#undef PARTICLE_4 /* If defined the program runs with four different particle type */
+#undef BRUSH_IN_GOOD_SV /*if def the interaction between grafted polimers is purely repulsive*/
+#undef BENDING  /* if def the grafted polymers are assumed to be semiflxible: bending potential *//
+#undef BENDING_MELT  /* if def the melt polymers are assumed to be semiflxible: bending potential *//
+#undef ORIENTATION  /* if def the grafted polymers will be oriented through an harmonic potential*//
+#define MAGNETIC /* ifdef the program includes magnetic partcicles. Particle 4 is treated as magnetic. María Fiora */
+
+
+#define PARTICLE_4 /* If defined the program runs with four different particle type */
 
 #undef STARS /*whether you want to simulate with or without stars, sigma is fixed to 1. As well as sigma for walls */
 
 /* Thermostat */
 
-#define THERMOSTAT 1 /*  1=LGV 0=DPD       */
+#define THERMOSTAT 0 /*  1=LGV 0=DPD       */
 
 #define DPD_WEIGHT 0 /*  0=usual choice of DPD weight: Wd=(1-r/rc)^2 ; 1= constant: Wr=Wd=1 ; 2 "quartic" */ 
                      /*  wd=(1-r/rc)^4                                                                    */  
@@ -75,8 +78,11 @@
 
 
 #define POISEUILLE    /* Adds external constant force to simulate Poiseuille flow      */
+<<<<<<< HEAD
 #define CENTER_DROP  /*Apply constant force in x towars the center of the box, only to melt paricles*/
 		    /* to form droplets. WARNING: POISEUILLE must be defined to work */
+=======
+>>>>>>> 886ab9f0179e3ccee2307e89dc895f2d7b9757e7
 #undef SHEARED      /* if defined, the shear protocols are applied, mfa_input is different!! */
                     /* NOTE: if it is not defined, wall velocities can anyway been used */
 

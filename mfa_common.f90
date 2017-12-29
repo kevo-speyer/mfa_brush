@@ -566,6 +566,12 @@ real (kind=8) :: press_tensor(3,3),press_tensor_mean(3,3)
 
 #endif
 
+#   ifdef MAGNETIC
+   real (kind=8), save :: mag_m_z,V_part,r_loop_min,r_loop_max,i_loop,cte,mag_force
+      real (kind=8), parameter :: mu_0 = 1.0
+      integer :: n_loop
+#   endif
+
 !!OMP VARIABLES 
 #ifdef _OPENMP
 integer, dimension(:), allocatable :: par_jsrseed
