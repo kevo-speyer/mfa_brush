@@ -131,7 +131,7 @@ subroutine init_system()
 #       endif
 #       ifdef MAGNETIC
         read(14,*) ! dummy reading
-        read(14,*) m_sat,r_loop_min,r_loop_max,i_loop,n_loop
+        read(14,*) m_sat,r_loop_min,r_loop_max,i_loop,n_loop,a_eff,z_sk
 #       endif
 !            m_sat =1.0  ! Saturation magnetization
 !            r_loop_min =1.0 ! Minimum radius of the loop

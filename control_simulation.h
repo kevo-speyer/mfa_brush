@@ -20,7 +20,7 @@
 /* 0 = channel geometry: no PBC in Z; 
  * 1 = Bulk geometry PBC in 3D */
 
-#define SYMMETRY 1   
+#define SYMMETRY 0   
 
 /* Potentials and particles */
 
@@ -39,7 +39,7 @@
  * 0= poor solvent      */
 
 /* NOTE:  WALL is  not used if SYMMETRY /= 1  */
-#define SOLVENT 1    
+#define SOLVENT 0    
 
 #undef HYDROPHOBIA  /* if def, the interaction between brush and melt is purely repulsive *//
 #undef BRUSH_IN_GOOD_SV /*if def the interaction between grafted polimers is purely repulsive*/

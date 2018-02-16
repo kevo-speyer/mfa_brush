@@ -30,25 +30,31 @@ subroutine magnetic_force(mode)
             print*,"i_loop=",i_loop
             print*,"n_loop=",n_loop
             print*,"sigma=",sigma(4,4)
-
+            print*,"a_eff=",a_eff
+            print*,"z_sk=",z_sk
 
         case(1)  ! Compute magnetic force on particles 
                do i_part = part_init_e + 1, n_part
 !               i_part= part_init_e + 1 !debug
-!                r0(3,i_part) = 5  ! debug
+ !               r0(3,i_part) = 5  ! debug
                 mag_force=cte*mag_m_z*r0(3,i_part)* &
                     (-r_loop_min/((r_loop_min**2+r0(3,i_part)**2)**(1.5))  &
                     -1/(r_loop_min*sqrt(r_loop_min**2+r0(3,i_part)**2)+r_loop_min**2+r0(3,i_part)**2) & 
                      +r_loop_max/((r_loop_max**2+r0(3,i_part)**2)**(1.5))     & 
                      +1/(sqrt(r_loop_max**2+r0(3,i_part)**2)*(sqrt(r_loop_max**2+r0(3,i_part)**2)+r_loop_max)))
                
-!                  print *,'mag_force=',mag_force ! debug
-
- !                 stop !debug
+  !                print *,'mag_force=',mag_force ! debug
+!               stop !debug
 
                 force(3,i_part) = force(3,i_part) + mag_force
 
               end do
+       case(2) ! simple magnetic force model
+            do i_part=part_init_e+1,n_part
+                mag_force=a_eff/(r0(3,i_part)+z_sk)**2
+                force(3,i_part) = force(3,i_part) + mag_force
+              end do 
+
         end select
                 
 
