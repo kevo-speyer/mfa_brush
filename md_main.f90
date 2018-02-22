@@ -153,6 +153,7 @@
 #endif
 #ifdef MAGNETIC
             call magnetic_force(1)
+!            call magnetic_force(mag_model)
 #endif
 
 
