@@ -21,7 +21,7 @@ subroutine magnetic_force(mode)
             cte=dble(n_loop)*mu_0*i_loop/(2*pi*2*(r_loop_max-r_loop_min))
             mag_m_z=m_sat*V_part !magnetic moment of the particle
 
-            print *,"Magnetic momemtum of particles =",mag_m_z
+            print *," Magnetic momemtum of particles =",mag_m_z
             print *,"Volume=",V_part
             print *,"cte=",cte
             print *,"m_sat=",m_sat
@@ -43,6 +43,7 @@ subroutine magnetic_force(mode)
                      +r_loop_max/((r_loop_max**2+r0(3,i_part)**2)**(1.5))     & 
                      +1/(sqrt(r_loop_max**2+r0(3,i_part)**2)*(sqrt(r_loop_max**2+r0(3,i_part)**2)+r_loop_max)))
                
+! v_mag = v_mag + fljsjfls                
   !                print *,'mag_force=',mag_force ! debug
 !               stop !debug
 
@@ -50,9 +51,11 @@ subroutine magnetic_force(mode)
 
               end do
        case(2) ! simple magnetic force model
+!  mag_energy = 0.0           
             do i_part=part_init_e+1,n_part
                 mag_force=a_eff/(r0(3,i_part)+z_sk)**2
                 force(3,i_part) = force(3,i_part) + mag_force
+! v_mag = v_mag + fljsjfls                
               end do 
 
         end select

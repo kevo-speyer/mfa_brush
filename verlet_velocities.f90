@@ -165,6 +165,9 @@ use commons
 #ifdef BENDING_MELT
       v_total = v_total + v_bend_melt !Add melt bending energy
 #endif
+#ifdef MAGNETIC
+!      v_total = v_total + v_mag ! add magnetic energy
+#endif
 !        print *,"v_fluid_fluid=",v_fluid_fluid/dble(n_part) !; stop
 
 !
