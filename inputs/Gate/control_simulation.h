@@ -98,7 +98,7 @@
 #define NO_WARNS     /* Does not print the warning messages of the "beads too close"                      */     
 /*#define FLUID_ROUTINE 0*/  /* controls if it uses the normal fluid routine (0) or the experimental HPC-tuned (1) */
 #undef FREE_HEADS        /* if defined, the heads of brushes are not fixed, epsilon between head and surface is 250, potential - attractive*/
-#define BIN_TYPE 2 /* 0: uses binning.f90; single counting of each interaction;*/
+#define BIN_TYPE  2 /* 0: uses binning.f90; single counting of each interaction;*/
                     /* 1: uses my_binning.f90, from S. Plimpton and Cem Servantie versions; double counts each interaction.  */
                     /* 2: uses cell_list.f90; does cell-linked lists, No Verlet-List. by Kevo*/
 
