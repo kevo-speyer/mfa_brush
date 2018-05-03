@@ -46,7 +46,7 @@
 #undef BENDING  /* if def the grafted polymers are assumed to be semiflxible: bending potential *//
 #undef BENDING_MELT  /* if def the melt polymers are assumed to be semiflxible: bending potential *//
 #undef ORIENTATION  /* if def the grafted polymers will be oriented through an harmonic potential*//
-#define MAGNETIC /* ifdef the program includes magnetic partcicles. Particle 4 is treated as magnetic. María Fiora */
+#undef MAGNETIC /* ifdef the program includes magnetic partcicles. Particle 4 is treated as magnetic. María Fiora */
 
 #define PARTICLE_4 /* If defined the program runs with four different particle type */
 
@@ -54,7 +54,7 @@
 
 /* Thermostat */
 
-#define THERMOSTAT 0 /*  1=LGV 0=DPD 2=thermal walls       */
+#define THERMOSTAT 2 /*  1=LGV 0=DPD 2=thermal walls       */
 
 #define DPD_WEIGHT 0 /*  0=usual choice of DPD weight: Wd=(1-r/rc)^2 ; 1= constant: Wr=Wd=1 ; 2 "quartic" */ 
                      /*  wd=(1-r/rc)^4                                                                    */  
