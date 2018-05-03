@@ -12,13 +12,18 @@ implicit none
  r0(3,i_part )
 
 
-! Si está en el skin
 
 ! If top wall
     fac= sqrt(kb*temp_top/m)
-       v_new(:) = fac*(/rnor(),rnor(),sqrt(2.)*sqrt(-log( uni() ) )/)
-
+       v_new(:) = fac*(/rnor(),rnor(),-sqrt(2.)*sqrt(-log( uni() ) )/)
        v(:,i_part) = v_new(:)
+   !end if top wwall 
+
+
+       ! if bottom wall 
+       v_new(:) = fac*(/rnor(),rnor(),sqrt(2.)*sqrt(-log( uni() ) )/)
+       v(:,i_part) = v_new(:)
+       !end if bottom wall
     end do
 
 
