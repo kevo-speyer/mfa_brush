@@ -33,7 +33,9 @@ subroutine magnetic_force(mode)
             print*,"a_eff=",a_eff
             print*,"z_sk=",z_sk
 
-        case(1)  ! Compute magnetic force on particles 
+        case(1)  ! Compute magnetic force on particles. Calculate the magnetic field of a circular loop on the z axis using Biot Savart law
+           ! and aproximate tha field of the spiral as the radial integral of the magnetic field of a single loop (asuming that the
+           ! distance bwteen loops is small compare to the radius of the spiral ). Then calculate the force by taking - gradient(field)  
                do i_part = part_init_e + 1, n_part
 !               i_part= part_init_e + 1 !debug
  !               r0(3,i_part) = 5  ! debug
@@ -50,7 +52,7 @@ subroutine magnetic_force(mode)
                 force(3,i_part) = force(3,i_part) + mag_force
 
               end do
-       case(2) ! simple magnetic force model
+       case(2) ! simple magnetic force model.Calculate the magnetic force using a simple model of a potential that decays as 1/(zdistance)**2
 !  mag_energy = 0.0           
             do i_part=part_init_e+1,n_part
                 mag_force=a_eff/(r0(3,i_part)+z_sk)**2

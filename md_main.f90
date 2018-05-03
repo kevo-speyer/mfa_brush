@@ -152,8 +152,7 @@
            call orientation(1) ! adds brush orientation bending forces and bending energy
 #endif
 #ifdef MAGNETIC
-            call magnetic_force(1)
-!            call magnetic_force(mag_model)
+            call magnetic_force(mag_model)
 #endif
 
 

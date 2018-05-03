@@ -130,16 +130,15 @@ subroutine init_system()
         end if
 #       endif
 #       ifdef MAGNETIC
-        read(14,*) ! dummy reading
-        read(14,*) m_sat,r_loop_min,r_loop_max,i_loop,n_loop,a_eff,z_sk
-!        read(14,*) mag_model,m_sat,r_loop_min,r_loop_max,i_loop,n_loop,a_eff,z_sk
-
+        read(14,*) ! dummy reading   
+        read(14,*) mag_model,m_sat,r_loop_min,r_loop_max,i_loop,n_loop,a_eff,z_sk
 #       endif
-!            m_sat =1.0  ! Saturation magnetization
-!            r_loop_min =1.0 ! Minimum radius of the loop
-!            r_loop_max=2.0  ! maximun radius of the loop
-!            i_loop=1.0 ! Current of the loop
-!            n_loop=1   ! Number of turns of the loop
+!            mag_model: Integer to select magnetic model    
+!            m_sat: Saturation magnetization
+!            r_loop_min: Minimum radius of the loop
+!            r_loop_max: Maximun radius of the loop
+!            i_loop: Current of the loop
+!            n_loop: Number of turns of the loop
 
 
 
