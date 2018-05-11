@@ -16,10 +16,10 @@ flags = -fpp # -vec-report0    # -fpe0: stops prog after first fp exception
 #  sol02: -axT (core 2 duos)
 #  sheldon: -axW
 #  core 2 duo -axT
-flags+=  -O3 -ip #-i-static   -align all  -axSSSE3  # -axSSE4.1   # optimization
+#flags+=  -O3 -ip #-i-static   -align all  -axSSSE3  # -axSSE4.1   # optimization
 #flags+=  -openmp # multi-platform shared-memory parallel programming
 #flags+=  -warn unused
-#flags+=  -g -check bounds -traceback
+flags+=  -g -check bounds -traceback
 #flags+=     -pg # profiling
 ref_dir = REF # reference directory for patching
 
