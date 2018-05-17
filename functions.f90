@@ -452,6 +452,20 @@ end subroutine velocity_prof
         
         end subroutine diff_coef
 #endif /* DIFF */
+!!
+!!   -----  Calculation of pair correlation function between rings ----
+!!
+!        subroutine rings_gr(mode)
+!            select case (mode)
+!            case(0)
+!            case(1)
+!               
+!
+!
+!            end select
+!
+!        end subroutine rings_gr
+
 !        
 !                                **** Radius of Gyration  ****
 ! WARN: assumes equal masses  

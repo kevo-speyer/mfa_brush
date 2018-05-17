@@ -4,26 +4,29 @@ use commons
 use ziggurat
 
 implicit none
-
-
+real(kind=8) :: v_new(3)
+real(kind=8) :: fac
 
 
     do i_part = 1 , n_part
- r0(3,i_part )
+ 
 
 
 
-! If top wall
-    fac= sqrt(kb*temp_top/m)
+        If (r0(3,i_part)>z_space_wall-thermal_skin) then !! change velocity if the particle is above interwall spacing -thermal skin    CAMBIAR 40
+        !! INTERWALL SPACING
+       
+       fac= sqrt(kb*top_thermal_wall*inv_mass(i_part))
        v_new(:) = fac*(/rnor(),rnor(),-sqrt(2.)*sqrt(-log( uni() ) )/)
        v(:,i_part) = v_new(:)
-   !end if top wwall 
+   endif
 
 
-       ! if bottom wall 
+       If (r0(3,i_part)>thermal_skin) then
+       fac= sqrt(kb*bottom_thermal_wall/inv_mass(i_part))
        v_new(:) = fac*(/rnor(),rnor(),sqrt(2.)*sqrt(-log( uni() ) )/)
        v(:,i_part) = v_new(:)
-       !end if bottom wall
+      end if
     end do
 
 

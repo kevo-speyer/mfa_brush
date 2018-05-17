@@ -146,9 +146,9 @@ else      ! ---- READ mfa_input
     read(10,*) n_safe          ;print '(a30,i6)',   "n_safe  ",n_safe             
     read(10,*) dt              ;print '(a30,g12.5)',"dt      ",dt                
     read(10,*) !c_dummy        
-    read(10,*) !r_dummy       
+    read(10,*) top_thermal_wall   ;    print '(a30,g16.5)',"top wall temperature  ",top_thermal_wall
     read(10,*) temp          ;  print '(a30,g16.5)',"Temperature  ",temp                  
-    read(10,*) 
+    read(10,*) bottom_thermal_wall; print '(a30,g16.5)',"bottom wall temperature  ",bottom_thermal_wall
     read(10,*) 
     read(10,*) 
     read(10,*) x_space         ;  print '(a30,g12.5)' ,"   x_space      ",x_space
