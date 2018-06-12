@@ -141,7 +141,7 @@ subroutine init_system()
 !            n_loop: Number of turns of the loo
 #       ifdef THERMOSTAT==2
         read(14,*) ! dummy reading
-        read(14,*) thermal_skin
+        read(14,*) thermal_skin ; print *,"thermal skin =",thermal_skin
 #       endif
 
 

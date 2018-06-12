@@ -171,10 +171,7 @@
 ! -----  Update  velocities
 
            call verlet_velocities()
-! ----- Redefine some velocities with thermal walls 
-#       if THERMOSTAT == 2           
-           call thermal_walls()
-#       endif
+
 
 #ifdef DPD_VV                     
 

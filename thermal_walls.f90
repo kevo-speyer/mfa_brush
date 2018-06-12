@@ -1,17 +1,45 @@
-subroutine thermal_walls()
+subroutine thermal_walls(mode)
 #include 'control_simulation.h'
 use commons
 use ziggurat
 
 implicit none
+integer, intent(in) :: mode
 real(kind=8) :: v_new(3)
 real(kind=8) :: fac
 
 
+    select case(mode)
+    case(0) ! initialization
+        print *, "  * Initializing thermal walls" 
+!        fac_top = 
+!        fac_bot = 
+
+    case(2)
+     print *,kb,thermal_skin,top_thermal_wall,bottom_thermal_wall !deb
+
+   !     stop ! deb
     do i_part = 1 , n_part
  
 
 
+<<<<<<< HEAD
+
+        If (r0(3,i_part)>z_space_wall-thermal_skin) then !! change velocity if the particle is above interwall spacing -thermal skin  commons
+       
+       fac= sqrt(kb*top_thermal_wall*inv_mass(i_part))
+       v_new(:) = fac*(/rnor(),rnor(),-sqrt(2.)*sqrt(-log( uni() ) )/)
+       v(:,i_part) = v_new(:)
+   endif
+
+
+       If (r0(3,i_part)<thermal_skin) then
+       fac= sqrt(kb*bottom_thermal_wall*inv_mass(i_part))
+       v_new(:) = fac*(/rnor(),rnor(),sqrt(2.)*sqrt(-log( uni() ) )/)
+       v(:,i_part) = v_new(:)
+!       print*,'bottom wall',v_new(:)
+      end if
+=======
 ! Top wall
         If (r0(3,i_part)>z_space_wall-thermal_skin) then !! change velocity if the particle is above interwall spacing -thermal skin    CAMBIAR 40
             !! INTERWALL SPACING
@@ -29,9 +57,10 @@ real(kind=8) :: fac
             v(:,i_part) = v_new(:)
 !            print '(a,3f10.5)',"bottom wall",v_new(:)
         end if
+>>>>>>> 49cf6cbd21d83bde03add119cb90f7837b40a2de
     end do
 
-
+    end select 
 
 
 

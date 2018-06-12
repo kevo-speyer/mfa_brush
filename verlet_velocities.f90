@@ -1,4 +1,4 @@
-subroutine verlet_velocities()
+subroutine verlet_velocities()   
 ! * Updates velocities, forces and accels using Velocity verlet  
 ! * Updates wall positions
 ! in the DPD scheme
@@ -29,7 +29,9 @@ use commons
 !        end do
 
 ! Update velocities 
-
+#if THERMOSTAT ==2
+    call thermal_walls(2)
+#endif
 !        do i_part = 1 , n_mon_tot
 !            v(1,i_part) = v_half(1,i_part) + 0.5*dt*a(1,i_part)       ! old force(1,i_part)*inv_mass(i_part)
 !            v(2,i_part) = v_half(2,i_part) + 0.5*dt*a(2,i_part)       ! old force(2,i_part)*inv_mass(i_part)
