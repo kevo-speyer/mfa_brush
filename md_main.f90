@@ -80,7 +80,9 @@
 
            ! ----  Propagate coordinates 
 
-
+#           if THERMOSTAT ==2
+           call thermal_walls()
+#endif
            call verlet_positions()
 
 !deb           if (i_time == 1 ) then

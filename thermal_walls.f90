@@ -57,7 +57,6 @@ real(kind=8) :: fac
             v(:,i_part) = v_new(:)
 !            print '(a,3f10.5)',"bottom wall",v_new(:)
         end if
->>>>>>> 49cf6cbd21d83bde03add119cb90f7837b40a2de
     end do
 
     end select 
