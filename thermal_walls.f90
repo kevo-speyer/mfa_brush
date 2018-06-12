@@ -22,15 +22,11 @@ real(kind=8) :: fac
     do i_part = 1 , n_part
  
 
-
-<<<<<<< HEAD
-
         If (r0(3,i_part)>z_space_wall-thermal_skin) then !! change velocity if the particle is above interwall spacing -thermal skin  commons
-       
        fac= sqrt(kb*top_thermal_wall*inv_mass(i_part))
        v_new(:) = fac*(/rnor(),rnor(),-sqrt(2.)*sqrt(-log( uni() ) )/)
        v(:,i_part) = v_new(:)
-   endif
+       endif
 
 
        If (r0(3,i_part)<thermal_skin) then
@@ -38,36 +34,8 @@ real(kind=8) :: fac
        v_new(:) = fac*(/rnor(),rnor(),sqrt(2.)*sqrt(-log( uni() ) )/)
        v(:,i_part) = v_new(:)
 !       print*,'bottom wall',v_new(:)
-      end if
-=======
-! Top wall
-        If (r0(3,i_part)>z_space_wall-thermal_skin) then !! change velocity if the particle is above interwall spacing -thermal skin    CAMBIAR 40
-            !! INTERWALL SPACING
+       end if
+  end do
 
-            fac= sqrt(kb*top_thermal_wall*inv_mass(i_part))
-            v_new(:) = fac*(/rnor(),rnor(),-sqrt(2.)*sqrt(-log( uni() ) )/)
-            v(:,i_part) = v_new(:)
-!            print '(a,3f10.5)',"top wall",v_new(:)
-        endif
-!   Bottom wall 
-! Claudio: va menor
-        If (r0(3,i_part)<thermal_skin) then
-            fac= sqrt(kb*bottom_thermal_wall/inv_mass(i_part))
-            v_new(:) = fac*(/rnor(),rnor(),sqrt(2.)*sqrt(-log( uni() ) )/)
-            v(:,i_part) = v_new(:)
-!            print '(a,3f10.5)',"bottom wall",v_new(:)
-        end if
-    end do
-
-    end select 
-
-
-
-
-
-
-
-
-
-
+  end select 
 end subroutine thermal_walls
