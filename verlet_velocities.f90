@@ -34,10 +34,16 @@ use commons
 !            v(1,i_part) = v_half(1,i_part) + 0.5*dt*a(1,i_part)       ! old force(1,i_part)*inv_mass(i_part)
 !            v(2,i_part) = v_half(2,i_part) + 0.5*dt*a(2,i_part)       ! old force(2,i_part)*inv_mass(i_part)
 !            v(3,i_part) = v_half(3,i_part) + 0.5*dt*a(3,i_part)       ! old force(3,i_part)*inv_mass(i_part)
-            v(1,i_part) = v(1,i_part) + 0.5*dt*a(1,i_part)    
-            v(2,i_part) = v(2,i_part) + 0.5*dt*a(2,i_part)    
+            v(1,i_part) = v(1,i_part) + 0.5*dt*a(1,i_part)
+            v(2,i_part) = v(2,i_part) + 0.5*dt*a(2,i_part)
             v(3,i_part) = v(3,i_part) + 0.5*dt*a(3,i_part)    
         end do
+
+
+! ----- Redefine some velocities with thermal walls 
+#       if THERMOSTAT == 2           
+           call thermal_walls()
+#       endif
 
 ! NOTE: if DPD_VV is defined the energies and temp are calculated afterwards in new_dpd_fd.f90
 #ifdef SHEARED
