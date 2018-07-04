@@ -48,6 +48,8 @@ messages.o
 mfa_common.o
 mfa_input
 mfa_output
+magnetic_force.o
+thermal_walls.o
 my_binning.o
 new_dpd_fd.o
 norm_sig2_v_prof.mide
