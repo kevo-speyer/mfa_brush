@@ -1,4 +1,4 @@
-        320001 initial integer starting time
+        420001 initial integer starting time
              0 number of relaxation steps
         100000 number of observation steps
           1000 # of steps between configuration storage
@@ -44,7 +44,7 @@
   0.000000E+00 spring const. to wall equil. sites
 
  
-     311500363 seed for random number generator
+     311500365 seed for random number generator
  
   0.300000E+02 effective spring constant within chain
   0.150000E+01 max. spacing between neighbored monomers
@@ -82,10 +82,10 @@
               7              3             15  binning boxes
        2.857143       3.333333       2.666667  binning distances
  
-      26     300  max. observed and maximum allowed fl. binnings
+      25     300  max. observed and maximum allowed fl. binnings
        0      16  max. observed and maximum allowed wa. binnings
  
-      35     256  max. observed and maximum allowed fl fl neighbors
+      34     256  max. observed and maximum allowed fl fl neighbors
        0      32  max. observed and maximum allowed fl wa neighbors
        0      32  max. observed and maximum allowed wa wa neighbors
  
@@ -96,13 +96,13 @@
        0.0000       0.0000   total intramolecular energy per part.
        0.0000       0.0000       intramolecular energy droplet/melt per part
  
-   0.716051E+00   0.176991E+04 fl_fl potential
-   0.249278E+02   0.105535E+06 fl_fl kinetic e
-   0.254986E+02   0.134259E+06 fl_fl total ene
+  -0.209469E+01   0.190300E+03 fl_fl potential
+   0.497202E+01   0.683612E+04 fl_fl kinetic e
+   0.280202E+01   0.917227E+04 fl_fl total ene
  
-   0.716051E+00   0.176991E+04 total potential
-   0.249278E+02   0.105535E+06 total kinetic e
-   0.256438E+02   0.134481E+06 total total ene
+  -0.209469E+01   0.190300E+03 total potential
+   0.497202E+01   0.683612E+04 total kinetic e
+   0.287733E+01   0.929074E+04 total total ene
  
    0.000000E+00   0.000000E+00 average spacing
  
