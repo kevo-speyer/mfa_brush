@@ -73,6 +73,7 @@
             
            !print *,"v_fluid",v_fluid_fluid ; stop
 
+
        do i_time = 1 , tot_time !  MAIN TIME LOOP 
 
            r_time = dble(s_time+i_time-1)*dt
@@ -80,9 +81,9 @@
 
            ! ----  Propagate coordinates 
 
-#           if THERMOSTAT ==2
-           call thermal_walls()
-#endif
+!#           if THERMOSTAT ==2
+!           call thermal_walls()
+!#           endif
            call verlet_positions()
 
 !deb           if (i_time == 1 ) then
@@ -171,7 +172,6 @@
 
 
 ! -----  Update  velocities
-
            call verlet_velocities()
 
 

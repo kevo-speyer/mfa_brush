@@ -295,9 +295,9 @@ print '(/a/)',"  *  Writing the very first generated configuration to conf0.xyz 
 #       ifdef MAGNETIC
         call magnetic_force(0)
 #   endif
-#if THERMOSTAT == 2 
-    call thermal_walls(0)
-#endif
+#   if THERMOSTAT == 2 
+        call thermal_walls(0)
+#   endif
 
 
       end subroutine init_obser

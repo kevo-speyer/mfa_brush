@@ -1,8 +1,8 @@
-       1500001 initial integer starting time
-        500000 number of relaxation steps
-       1000000 number of observation steps
+        420001 initial integer starting time
+             0 number of relaxation steps
+        100000 number of observation steps
           1000 # of steps between configuration storage
-  0.200000E-03 time step increment
+  0.200000E-02 time step increment
  
      1.80000 obsolete
      1.80000 temperature
@@ -44,7 +44,7 @@
   0.000000E+00 spring const. to wall equil. sites
 
  
-     311500359 seed for random number generator
+     311500365 seed for random number generator
  
   0.300000E+02 effective spring constant within chain
   0.150000E+01 max. spacing between neighbored monomers
@@ -64,9 +64,9 @@
              1  monomers per chain
              0  number of 'brush' chains
              0  number of fluid particles
-          2000  number of droplet/melt chains
-          2000  number of droplet/melt particles
-            30            20  number of wall cells in x-y direction
+          4000  number of droplet/melt chains
+          4000  number of droplet/melt particles
+            20            10  number of wall cells in x-y direction
  
              2  order of integrator
      obsolete: ad_flag  flag for adsorbed or endgrafted
@@ -74,54 +74,10 @@
     
  * Using potential 9-3, for wall int.
     
- * Using DPD thermostat and Veloc. Verlet integration scheme.
-
- *       DPD Friction value in all directions: gamma =  1.00000
     
-  30.00000  20.00000  40.00000                                 MD Box dimensions
-   0.875000000E-01                          initial monomer density 
-         600.00000           0.00000              one wall area, grafting density     
+  20.00000  10.00000  40.00000                                 MD Box dimensions
+   0.500000000                              initial monomer density 
+         200.00000           0.00000              one wall area, grafting density     
  
-             11              7             15  binning boxes
-       2.727273       2.857143       2.666667  binning distances
- 
-      12     300  max. observed and maximum allowed fl. binnings
-       0      16  max. observed and maximum allowed wa. binnings
- 
-      13     256  max. observed and maximum allowed fl fl neighbors
-       0      32  max. observed and maximum allowed fl wa neighbors
-       0      32  max. observed and maximum allowed wa wa neighbors
- 
-   0.000000E+00   0.000000E+00 wall_wall potential
-   0.000000E+00   0.000000E+00 wall_wall kinetic e
-   0.000000E+00   0.000000E+00 wall_wall total ene
- 
-       0.0000       0.0000   total intramolecular energy per part.
-       0.0000       0.0000       intramolecular energy droplet/melt per part
- 
-  -0.449692E+00   0.142122E+00 fl_fl potential
-   0.269522E+01   0.164282E+01 fl_fl kinetic e
-   0.220021E+01   0.177595E+01 fl_fl total ene
- 
-  -0.449692E+00   0.142122E+00 total potential
-   0.269522E+01   0.164282E+01 total kinetic e
-   0.224553E+01   0.183395E+01 total total ene
- 
-   0.400000E+02   0.000000E+00 average spacing
- 
- 
-            NaN            NaN            NaN                                       Mean Rg^2 for brushes
-        0.00000        0.00000        0.00000                                  Mean Rg^2 for droplet/melt
-            NaN            NaN            NaN                                            Mean total Rg^2 
-            NaN        Mean Rg(z)^2-0,5*(Rg^2(x)+Rg^2(y))/sum(Rg^2) brushes
-            NaN           Mean Rg(z)^2-0,5*(Rg^2(x)+Rg^2(y))/sum(Rg^2) melt
- 
- 
- 
-
-        Quantities for particle 4
-
-        <v4>,N =  -0.447311E-01   0.770981E-01   0.365921E-02********
-        <v4^2> =    1.76001        1.79125        23.5044    
-        sig(v4)=    1.32590        1.33615        4.84814    
-        err(v4)=   0.132590E-03   0.133615E-03   0.484814E-03
+              7              3             15  binning boxes
+       2.857143       3.333333       2.666667  binning distances

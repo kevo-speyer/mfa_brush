@@ -16,7 +16,7 @@ real(kind=8) :: fac
 !        fac_bot = 
 
     case(2)
-     print *,kb,thermal_skin,top_thermal_wall,bottom_thermal_wall !deb
+!     print *,kb,thermal_skin,top_thermal_wall,bottom_thermal_wall !deb
 
    !     stop ! deb
     do i_part = 1 , n_part
