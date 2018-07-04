@@ -139,9 +139,9 @@ subroutine init_system()
 !            r_loop_max: Maximun radius of the loop
 !            i_loop: Current of the loop
 !            n_loop: Number of turns of the loo
-#       ifdef THERMOSTAT==2
+#       if THERMOSTAT==2
         read(14,*) ! dummy reading
-        read(14,*) thermal_skin
+        read(14,*) thermal_skin ; print *,"thermal skin =",thermal_skin
 #       endif
 
 
