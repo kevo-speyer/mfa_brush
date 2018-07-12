@@ -129,6 +129,8 @@ print '(/a/)',"  * Doing simulation with profiles calculation (slower) "
 
 #elif THERMOSTAT == 1
      print '(/a/)',"  * Using LANGEVIN thermostat. "
+#elif THERMOSTAT == 2
+     print '(/a/)',"  * Using THERMAL WALLS thermostat. "
 #endif
 
 #if SYSTEM == 0 
