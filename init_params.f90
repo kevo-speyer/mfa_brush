@@ -258,9 +258,9 @@ end if
        write(20,210) n_safe ," # of steps between configuration storage"
        write(20,201) dt     ," time step increment"
        write(20,*)
-       write(20,'(f12.5,a)') temp ," obsolete"
+       write(20,'(f12.5,a)') top_thermal_wall ,"top_thermal_wall"
        write(20,'(f12.5,a)') temp ," temperature"
-       write(20,'(f12.5,a)') temp ," obsolete"
+       write(20,'(f12.5,a)') bottom_thermal_wall ,"bottom_thermal_wall"
        write(20,*)
        write(20,*) "  obsolete: flagg for constraining wall atoms"
        write(20,201) x_space      ," spacing betw wall units in x direc"
