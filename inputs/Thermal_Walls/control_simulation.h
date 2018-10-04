@@ -1,5 +1,5 @@
 /* Incorporates C preprocessor as a way of compiling the program with the appropriate physics */
-
+/* example */
 /* SYSTEM: determines the system type compiled in the program
 *  0= brush-melt channel, no PBC in z
  * 1= droplet(no brush on top wall) 
