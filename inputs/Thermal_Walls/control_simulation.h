@@ -1,5 +1,5 @@
 /* Incorporates C preprocessor as a way of compiling the program with the appropriate physics */
-/* example */
+
 /* SYSTEM: determines the system type compiled in the program
 *  0= brush-melt channel, no PBC in z
  * 1= droplet(no brush on top wall) 
@@ -47,6 +47,7 @@
 #undef BENDING_MELT  /* if def the melt polymers are assumed to be semiflxible: bending potential *//
 #undef ORIENTATION  /* if def the grafted polymers will be oriented through an harmonic potential*//
 #undef MAGNETIC /* ifdef the program includes magnetic partcicles. Particle 4 is treated as magnetic. María Fiora */
+#undef ASYM_WALLS /* if not def symmetric walls. Ifdef ... */
 
 #define PARTICLE_4 /* If defined the program runs with four different particle type */
 
