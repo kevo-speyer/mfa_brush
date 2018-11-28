@@ -58,8 +58,15 @@ subroutine init_system()
 
 #if WALL==2 || WALL == 3
 #    ifdef  PARTICLE_4
+#       ifndef ASYM_WALLS
         read(14,*) ! dummy reading
            read(14,*,iostat=n_read) a_w,sigma_w,a_w4,sigma_w4  ! Wall interaction parameters
+#       else
+        read(14,*) ! dummy reading
+           read(14,*,iostat=n_read) a_w(1),sigma_w(1),a_w4(1),sigma_w4(1)  ! Top  Wall interaction parameters
+        read(14,*) ! dummy reading
+           read(14,*,iostat=n_read) a_w(2),sigma_w(2),a_w4(2),sigma_w4(2)  ! Bottom Wall interaction parameters
+#       endif /* ASYM_WALLS */
         if(n_read/=0) then
             print*," * Parameter missing in system_input! Line: a_w, sigma_w,a_w4,sigma_w4 "
             stop 

@@ -599,6 +599,8 @@ range_2(2,1) = (2.**(1./6.)*sigma(2,1) )**2
           a_wall(4)=a_w4
 
 #    endif
+
+
 #if SYMMETRY != 1          
         print '(/a/)','  *  Interaction with implicit walls:' 
         print '(a,4(f8.3,x))','   sigma_w= ',sigma_wall(:)

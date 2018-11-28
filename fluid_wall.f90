@@ -33,46 +33,6 @@
           end if
 #       endif
 
-!obs: now in fluid-fluid          j_type = n_type                  ! wall atoms
-!obs: now in fluid-fluid          do i_part = 1,n_mon_tot
-!obs: now in fluid-fluid              i_type =a_type(i_part)
-!obs: now in fluid-fluid              i_dummy = fw_list(0,i_part)
-!obs: now in fluid-fluid              !debug
-!obs: now in fluid-fluid              if(debug_fw) then
-!obs: now in fluid-fluid                  if (i_dummy>n_neigh_wa) print*, "i_dummy exceeeds limit",i_dummy
-!obs: now in fluid-fluid                  if (i_part>n_mon_tot) print*, "i_part exceeeds limit",i_part
-!obs: now in fluid-fluid              end if       
-!obs: now in fluid-fluid              do i_neigh = 1,i_dummy
-!obs: now in fluid-fluid                  j_part = fw_list(i_neigh,i_part)
-!obs: now in fluid-fluid                  do i_dim = 1,n_dim
-!obs: now in fluid-fluid                      delta_r(i_dim) = r0(i_dim,i_part) - r0(i_dim,j_part)
-!obs: now in fluid-fluid                  end do
-!obs: now in fluid-fluid!-----  get boundaries right
-!obs: now in fluid-fluid                  do i_dim = 1,n_dim-1
-!obs: now in fluid-fluid                      delta_r(i_dim) = delta_r(i_dim) - boundary(i_dim)*             &
-!obs: now in fluid-fluid                          &   int(2*delta_r(i_dim)/boundary(i_dim))
-!obs: now in fluid-fluid                  end do
-!obs: now in fluid-fluid                  r_2 = 0.
-!obs: now in fluid-fluid                  do i_dim = 1,n_dim
-!obs: now in fluid-fluid                      r_2 = r_2 + delta_r(i_dim)**2
-!obs: now in fluid-fluid                  end do
-!obs: now in fluid-fluid!-----  check whether interaction takes place
-!obs: now in fluid-fluid                  if(r_2.lt.range_2(i_type,j_type)) then
-!obs: now in fluid-fluid                      r_2 = max(r_2,0.5*r_2_min)!(i_type, j_type)) !ORI *0.5*r_2_min ??? why??
-!obs: now in fluid-fluid                      r_6 = (sigma_2(i_type,j_type)/r_2)**3
-!obs: now in fluid-fluid                      r_12 = r_6**2
-!obs: now in fluid-fluid                      pot_loc = (r_12-r_6) - e_shift(i_type,j_type)
-!obs: now in fluid-fluid                      v_fluid_wall = v_fluid_wall + epsil(i_type,j_type)*pot_loc
-!obs: now in fluid-fluid!------  force_loc is force acting on wall atoms
-!obs: now in fluid-fluid                      r_dummy = epsil(i_type,j_type)*(-12*r_12+6*r_6)/r_2
-!obs: now in fluid-fluid                      do i_dim = 1,n_dim
-!obs: now in fluid-fluid                          force_loc(i_dim) = r_dummy*delta_r(i_dim)
-!obs: now in fluid-fluid                          force(i_dim,i_part) = force(i_dim,i_part) - force_loc(i_dim)
-!obs: now in fluid-fluid                          force(i_dim,j_part) = force(i_dim,j_part) + force_loc(i_dim)
-!obs: now in fluid-fluid                      end do
-!obs: now in fluid-fluid                  end if
-!obs: now in fluid-fluid              end do
-!obs: now in fluid-fluid          end do
 
       case(2)     !  (1/z)^9-(1/z)^3 interaction 
 
