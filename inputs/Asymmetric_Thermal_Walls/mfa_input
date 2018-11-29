@@ -4,7 +4,7 @@
           1000 # of steps between configuration storage
   0.200000E-02 time step increment
  
-     1.00000 top_thermal_wall
+     0.80000 top_thermal_wall
      1.00000 temperature
      1.60000 bottom_thermal_wall
  
