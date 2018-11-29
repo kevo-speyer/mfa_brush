@@ -36,7 +36,8 @@
 
       case(2)     !  (1/z)^9-(1/z)^3 interaction 
 
-#if WALL==2    
+#   if WALL==2    
+#       ifndef ASYM_WALLS /* Asymmetric walls */         
 !DEC$ IVDEP
           do i_part = 1,n_mon_tot
 
@@ -81,8 +82,67 @@
               force(3,i_part) = force(3,i_part)    + 3*a_wall(i_type)*(sigma_wall(i_type))**3*(inv_z)**4
 
           end do
+#       else /* Asymmetric walls */
+
+          do i_part = 1,n_mon_tot
+
+              ! *** Bottom wall interaction
+
+#       ifndef NO_WARNS
+              if (r0(3,i_part) < 0. ) then
+                  print*,"[fluid_wall] Warn:",i_part," particle inside the wall ! z=",r0(3,i_part),"t=",i_time
+                  print '(a/)',"[fluid_wall] Forcing a move in z "
+                  r0(3,i_part) = 0.1 
+              end if
+#       endif
+
+              i_type = a_type(i_part)
+
+              ! HPC 
+              inv_z = 1./r0(3,i_part) 
+              r_dummy = sigma_wall(2,i_type)*inv_z
+              v_fluid_wall = v_fluid_wall + abs(a_wall(2,i_type))*r_dummy**9 - a_wall(2,i_type)*r_dummy**3    !int with bottom wall
+              ! HPC
+              force(3,i_part) = force(3,i_part) +   9.*abs(a_wall(2,i_type))*(sigma_wall(2,i_type))**9*(inv_z)**10 
+              force(3,i_part) = force(3,i_part)   - 3.*a_wall(2,i_type)*(sigma_wall(2,i_type))**3*(inv_z)**4                              
+
+              ! ***  Top wall interaction (possibly DIFFERENT from bottom wall)
+
+#       ifndef NO_WARNS
+              if (r0(3,i_part) > z_space_wall ) then
+                  print*,"[fluid_wall] Warn: ",i_part,"particle inside the wall ! z=",r0(3,i_part), \ 
+                  "t=",i_time, "type= ",a_type(i_part)
+                  print '(a/)',"[fluid_wall] Forcing a movement in z "
+                  r0(3,i_part) = z_space_wall - 0.1 
+              end if
+#      endif
+              ! HPC      
+              inv_z = 1./(z_space_wall-r0(3,i_part))
+              r_dummy = sigma_wall(1,i_type)*inv_z
+
+              v_fluid_wall = v_fluid_wall + abs(a_wall(1,i_type))*r_dummy**9 - a_wall(1,i_type)*r_dummy**3        
+
+              !        note: different sign in top wall 
+
+              force(3,i_part) = force(3,i_part)    - 9.*abs(a_wall(1,i_type))*(sigma_wall(1,i_type))**9*(inv_z)**10  
+              force(3,i_part) = force(3,i_part)    + 3*a_wall(1,i_type)*(sigma_wall(1,i_type))**3*(inv_z)**4
+
+          end do
+#endif          /* Asymmetric walls */          
 
 #endif /* WALL = 2*/
+
+
+
+
+
+
+
+
+
+
+
+
 
       case(3) !-----------  ! Only bottom wall with 9-3 potential and top wall pure repulsive (hard wall)
 

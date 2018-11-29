@@ -590,6 +590,8 @@ range_2(2,1) = (2.**(1./6.)*sigma(2,1) )**2
 !            end if ! not f_explicit_wall
 
 #if WALL==2 
+! Define sigmas particle-wall
+#   ifndef ASYM_WALLS
      do i_type=1, n_type
           sigma_wall(i_type)=(sigma_w+sigma(i_type,i_type))/2
           a_wall(i_type)=a_w
@@ -597,14 +599,44 @@ range_2(2,1) = (2.**(1./6.)*sigma(2,1) )**2
 #    ifdef PARTICLE_4
           sigma_wall(4)=(sigma_w4+sigma(4,4))/2.
           a_wall(4)=a_w4
-
 #    endif
+#   else /* ifdef ASYM_WALLS */
+     do i_type=1, n_type
+! Top wall
+          sigma_wall(1,i_type)=(sigma_w(1)+sigma(i_type,i_type))/2
+          a_wall(1,i_type)=a_w(1)
+! Bottom wall
+          sigma_wall(2,i_type)=(sigma_w(2)+sigma(i_type,i_type))/2
+          a_wall(2,i_type)=a_w(2)
+     enddo
+#    ifdef PARTICLE_4
+     ! Top wall 
+          sigma_wall(1,4)=(sigma_w4(1)+sigma(4,4))/2.
+          a_wall(1,4)=a_w4(1)
+     ! Bottom wall 
+          sigma_wall(2,4)=(sigma_w4(2)+sigma(4,4))/2.
+          a_wall(2,4)=a_w4(2)
+#    endif
+
+#   endif
 
 
 #if SYMMETRY != 1          
+#       ifndef ASYM_WALLS        
         print '(/a/)','  *  Interaction with implicit walls:' 
         print '(a,4(f8.3,x))','   sigma_w= ',sigma_wall(:)
         print '(a,4(f8.3,x))','   a_w    = ',a_wall
+#       else /*if ASYM_WALLS*/
+        print '(/a/)','  *  Interaction with implicit walls: ASYMMETRIC WALLS' 
+        ! Top Wall
+        print '(/a)', " Parameters for Top Wall potential"
+        print '(a,4(f8.3,x))','   sigma_w= ',sigma_wall(1,:)
+        print '(a,4(f8.3,x))','   a_w    = ',a_wall(1,:)
+        ! Bottom wall 
+        print '(/a)', " Parameters for Bottom Wall potential"
+        print '(a,6(f8.3,x))','   sigma_w= ',sigma_wall(2,:)
+        print '(a,6(f8.3,x))','   a_w    = ',a_wall(2,:)
+#       endif
 #endif        
 
 #endif

@@ -167,13 +167,22 @@ module commons
 ! parameters for the wall-fluid interaction and potential.
 ! Used when no explicit wall particles defined in the model
 #if WALL==2 || WALL == 3
-      real (kind=8) :: sigma_w,a_w,sigma_w4,a_w4, sigma_wall(n_type), a_wall(n_type)
+#       ifndef ASYM_WALLS
+        real (kind=8) :: sigma_w,a_w,sigma_w4,a_w4, sigma_wall(n_type), a_wall(n_type)
+#       else
+! Variables to define different top and bottom walls        
+        real (kind=8) :: sigma_w(2),a_w(2),sigma_w4(2),a_w4(2), sigma_wall(2,n_type), a_wall(2,n_type)
+        ! sigma_wall(1,i_type) = top wall 
+        ! sigma_wall(2,i_type) = bottom wall 
+#       endif
 #endif
 
       real (kind=8) :: histo_b(hist_dim),histo_d(hist_dim)
 ! Rcut variable
       real (kind=8) :: r_cut_max,vec_dummy(3),z_skin,r_cut_dpd,r_cut_max_2,r_cut_dpd_2
+
 !$OMP THREADPRIVATE(vec_dummy)      
+
 ! Radius of gyration parameters            !(r_g² or other quantity, part_type,coor)
       real (kind=8) :: r_cm(3),r_g2(2,3),r_g2_mean(3,3),r_par_per2(3),v_dummy(3),re_2_mean(3,3)
 
@@ -579,7 +588,7 @@ integer :: ith, numth, grainsize=64
 !$OMP THREADPRIVATE(ith)     
 integer,dimension(8) :: values
 #endif
-#ifdef THERMOSTAT == 2 
+#if THERMOSTAT == 2 
 !define thermal skin and boltzmann constant for thermal walls thermostast
         real(kind=8) :: thermal_skin,top_thermal_wall,bottom_thermal_wall 
         real(kind=8), parameter :: kb=1.0
