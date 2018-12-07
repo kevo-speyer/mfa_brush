@@ -220,6 +220,12 @@ inv_count_obs = 1./count_obs
        open (unit=75,file='norm_vel_prof.mide',status='unknown')
        open (unit=77,file='norm_sig2_v_prof.mide',status='unknown')
 
+! Files headers
+#ifdef PARTICLE_4
+               write(77,'(a)') '# z     Tx_brush        Tx_melt   Tx_part_4    Ty_brush        Ty_melt      Ty_part_4  Tz_brush        Tz_melt         Tz_part_4'
+#else /* not defined particle 4 */
+               write(77,'(a)') '# z     Tx_brush        Tx_melt   Ty_brush    Ty_melt    Tz_brush     Tz_melt'
+#endif
 
 ! NOTE: in order to get a "temperature profile we have : T=mass*sig2_v. 
 ! We multiply by  the mass 
@@ -281,6 +287,7 @@ inv_count_obs = 1./count_obs
                                   v_prof(i,2,1),v_prof(i,2,2), v_prof(i,2,3), &
                                   v_prof(i,3,1),v_prof(i,3,2), v_prof(i,3,3)
 
+!  z,Tx_brush,Tx_melt,Tx_part_4,Ty_brush,Ty_melt,Ty_part_4,Tz_brush,Tz_melt_Tz_part_4
        write(77,'(10f16.10)') dz ,sig2_v_prof(i,1,1),sig2_v_prof(i,1,2),sig2_v_prof(i,1,3),   & ! X
                                   sig2_v_prof(i,2,1),sig2_v_prof(i,2,2),sig2_v_prof(i,2,3),    & ! Y
                                   sig2_v_prof(i,3,1),sig2_v_prof(i,3,2),sig2_v_prof(i,3,3)       ! Z
