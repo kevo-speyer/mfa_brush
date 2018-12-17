@@ -131,7 +131,7 @@ subroutine histo(mode,hist_dim)
 
      case(1)  ! Writing files and normalizing
 
-        print '(/a,i6/)','   *  Density profiles over steps= ',count_obs_b 
+        print '(/a,i10/)','   *  Density profiles over steps= ',count_obs_b 
 
         open(unit=73,file='dens_prof.mide',status='unknown')
 

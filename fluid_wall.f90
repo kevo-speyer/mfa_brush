@@ -9,7 +9,7 @@
 !  inter_type= 4 : Hard walls in top and bottom walls
 #include 'control_simulation.h'
       use commons ; implicit none
-      real (kind=8) :: inv_z
+      real (kind=8) :: inv_z,f_wall_z
       integer, intent(in) :: inter_type
       logical, parameter :: debug_fw=.false.
 !      real (kind=8) :: t1,t2 ! debug
@@ -82,7 +82,7 @@
               force(3,i_part) = force(3,i_part)    + 3*a_wall(i_type)*(sigma_wall(i_type))**3*(inv_z)**4
 
           end do
-#       else /* Asymmetric walls */
+#       else                /* Asymmetric walls */
 
           do i_part = 1,n_mon_tot
 
@@ -102,9 +102,16 @@
               inv_z = 1./r0(3,i_part) 
               r_dummy = sigma_wall(2,i_type)*inv_z
               v_fluid_wall = v_fluid_wall + abs(a_wall(2,i_type))*r_dummy**9 - a_wall(2,i_type)*r_dummy**3    !int with bottom wall
-              ! HPC
-              force(3,i_part) = force(3,i_part) +   9.*abs(a_wall(2,i_type))*(sigma_wall(2,i_type))**9*(inv_z)**10 
-              force(3,i_part) = force(3,i_part)   - 3.*a_wall(2,i_type)*(sigma_wall(2,i_type))**3*(inv_z)**4                              
+              f_wall_z =   9.*abs(a_wall(2,i_type))*(sigma_wall(2,i_type))**9*(inv_z)**10 &
+                           - 3.*a_wall(2,i_type)*(sigma_wall(2,i_type))**3*(inv_z)**4                        
+              force(3,i_part) = force(3,i_part) + f_wall_z
+!  Total force on z direction
+               mean_force_bot_wall = mean_force_bot_wall + f_wall_z
+
+
+
+              !              force(3,i_part) = force(3,i_part) +   9.*abs(a_wall(2,i_type))*(sigma_wall(2,i_type))**9*(inv_z)**10 
+!              force(3,i_part) = force(3,i_part)   - 3.*a_wall(2,i_type)*(sigma_wall(2,i_type))**3*(inv_z)**4                              
 
               ! ***  Top wall interaction (possibly DIFFERENT from bottom wall)
 
@@ -123,10 +130,15 @@
               v_fluid_wall = v_fluid_wall + abs(a_wall(1,i_type))*r_dummy**9 - a_wall(1,i_type)*r_dummy**3        
 
               !        note: different sign in top wall 
+              f_wall_z =   - 9.*abs(a_wall(1,i_type))*(sigma_wall(1,i_type))**9*(inv_z)**10  &
+                         + 3*a_wall(1,i_type)*(sigma_wall(1,i_type))**3*(inv_z)**4
 
-              force(3,i_part) = force(3,i_part)    - 9.*abs(a_wall(1,i_type))*(sigma_wall(1,i_type))**9*(inv_z)**10  
-              force(3,i_part) = force(3,i_part)    + 3*a_wall(1,i_type)*(sigma_wall(1,i_type))**3*(inv_z)**4
+              force(3,i_part) = force(3,i_part)  + f_wall_z
 
+!              force(3,i_part) = force(3,i_part)    - 9.*abs(a_wall(1,i_type))*(sigma_wall(1,i_type))**9*(inv_z)**10  
+!              force(3,i_part) = force(3,i_part)    + 3*a_wall(1,i_type)*(sigma_wall(1,i_type))**3*(inv_z)**4
+!   Z-direction top wall
+                mean_force_top_wall = mean_force_top_wall + f_wall_z
           end do
 #endif          /* Asymmetric walls */          
 

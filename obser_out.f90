@@ -325,6 +325,18 @@ write(20,'(10x,3f16.7)') press_tensor_mean(3,:)
 write (20,'(/a,f16.7/)') " Mean pressure=", (press_tensor_mean(1,1) +press_tensor_mean(2,2) +press_tensor_mean(3,3) ) /3.
 #endif 
 
+! Mean pressure on the wall
+
+   print '(a,g16.8)',  " * Mean pressure (top wall)    = ",mean_force_top_wall/wall_t_area/dble(n_relax+n_obser)
+   print '(a,g16.8/)', " * Mean pressure (bottom wall) = ",mean_force_bot_wall/wall_t_area/dble(n_relax+n_obser)
+
+   print '(a,2g16.8)',  " * Mean dens in,dens out  (top wall)  =",  &
+                rho_top_in/(wall_t_area*dble(n_relax+n_obser)*thermal_skin), &
+                rho_top_out/(wall_t_area*dble(n_relax+n_obser)*thermal_skin)
+      
+    print '(a,2g16.8)',  " * Mean dens in,dens out  (bottom wall)  =", & 
+          rho_bot_in/(wall_t_area*dble(n_relax+n_obser)*thermal_skin), &
+          rho_bot_out/(wall_t_area*dble(n_relax+n_obser)*thermal_skin)
 
 
 

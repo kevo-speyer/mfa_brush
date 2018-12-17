@@ -18,7 +18,7 @@
       use ziggurat ! gaussian number generator suite
 #include 'control_simulation.h'
       implicit none
-      real (kind=8) :: init_dens,graft_dens,wall_t_area
+      real (kind=8) :: init_dens,graft_dens
       integer :: iseed_z,j 
       logical :: input_file,ref_file,es
       character (len=6) :: dummy_char

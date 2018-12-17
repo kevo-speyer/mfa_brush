@@ -25,7 +25,14 @@
       t_wall_2 = 0.
       e_wall_wall_1 = 0.
       e_wall_wall_2 = 0.
-!
+! Wall mean values initialization
+
+      mean_force_bot_wall = 0.0
+      mean_force_top_wall = 0.0
+ 
+
+
+
       v_fluid_fluid_1 = 0.
       v_fluid_fluid_2 = 0.
       t_fluid_1 = 0.
@@ -33,6 +40,7 @@
       e_fluid_fluid_1 = 0.
       e_fluid_fluid_2 = 0.
 !
+
       v_fluid_wall_1 = 0.
       v_fluid_wall_2 = 0.
 !

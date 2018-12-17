@@ -166,12 +166,16 @@ module commons
 
 ! parameters for the wall-fluid interaction and potential.
 ! Used when no explicit wall particles defined in the model
+        real (kind=8) :: wall_t_area
+! densities in and out at the wall (contact theorem)         
+        real(kind=8) :: rho_top_in,rho_top_out,rho_bot_in,rho_bot_out
 #if WALL==2 || WALL == 3
 #       ifndef ASYM_WALLS
         real (kind=8) :: sigma_w,a_w,sigma_w4,a_w4, sigma_wall(n_type), a_wall(n_type)
 #       else
 ! Variables to define different top and bottom walls        
         real (kind=8) :: sigma_w(2),a_w(2),sigma_w4(2),a_w4(2), sigma_wall(2,n_type), a_wall(2,n_type)
+        real (kind=8) :: mean_force_bot_wall,mean_force_top_wall
         ! sigma_wall(1,i_type) = top wall 
         ! sigma_wall(2,i_type) = bottom wall 
 #       endif
