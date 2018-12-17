@@ -305,6 +305,7 @@ print '(/a/)',"  *  Writing the very first generated configuration to conf0.xyz 
 #   endif
 #   if THERMOSTAT == 2 
         call thermal_walls(0)
+        call density_wall(0)
 #   endif
 
 

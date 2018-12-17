@@ -11,7 +11,7 @@ real(kind=8) :: fac
 
     select case(mode)
     case(0) ! initialization
-        print *, "  * Initializing thermal walls" 
+        print *, "  * Initializing density wall: contact theorem" 
 
 ! variables for density of particles getting in and out
 
@@ -22,11 +22,12 @@ real(kind=8) :: fac
 
     case(2)
 
+! Criterium: density bin starts just to the side of thermal skin region        
     do i_part = 1 , n_mon_tot
  
 !    Top wall 
 
-        If (r0(3,i_part)>(z_space_wall-dens_wall_skin) ) then
+        If ( (r0(3,i_part)>(z_space_wall-dens_wall_skin-thermal_skin)) .and. (r0(3,i_part)<=z_space_wall-thermal_skin )) then
             if ( (v(3,i_part)>0.0)) then !! change velocity if the particle is above interwall spacing -thermal skin  commons
             rho_top_in = rho_top_in + 1.0
             else ! particles is going out of the wall region 
@@ -36,7 +37,7 @@ real(kind=8) :: fac
 
 !       Bottom wall       
 
-       If ( (r0(3,i_part) < dens_wall_skin) ) then
+       If ( (r0(3,i_part) < thermal_skin+ dens_wall_skin) .and.( r0(3,i_part) >= thermal_skin)) then
            if (v(3,i_part) < 0.0) then ! particles getting in the wall zone
            rho_bot_in = rho_bot_in + 1.0
             else ! particles going out of the walls

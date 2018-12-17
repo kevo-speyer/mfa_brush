@@ -76,7 +76,8 @@ OBJS = mfa_common.o \
       bending_melt.o \
 orientation.o \
 magnetic_force.o \
-thermal_walls.o
+thermal_walls.o \
+density_wall.o
 
 #obsoleted       fluid_fluid_test.o  
 #obsoleted       corrector.o   

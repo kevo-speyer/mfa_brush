@@ -595,6 +595,7 @@ integer,dimension(8) :: values
 #if THERMOSTAT == 2 
 !define thermal skin and boltzmann constant for thermal walls thermostast
         real(kind=8) :: thermal_skin,top_thermal_wall,bottom_thermal_wall 
+        real(kind=8) :: dens_wall_skin
         real(kind=8), parameter :: kb=1.0
 #endif 
       end module commons

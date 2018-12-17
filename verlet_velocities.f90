@@ -45,6 +45,7 @@ use commons
 ! ----- Redefine some velocities with thermal walls 
 #       if THERMOSTAT == 2           
            call thermal_walls(2)
+           call density_wall(2)
 #       endif
            
 
