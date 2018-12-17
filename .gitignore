@@ -9,7 +9,6 @@ commons.mod
 conf0.xyz
 conf_default.o
 conf_new
-conf_old
 conf_xmol
 constant_force.o
 dens_prof.mide
@@ -62,7 +61,6 @@ par_ziggurat.o
 random_seed.dat
 store_config.o
 store_obser.o
-system_input
 util.mod
 util.o
 vel.dat
