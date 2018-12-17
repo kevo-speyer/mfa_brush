@@ -7,9 +7,9 @@
 1  4000 20  10    10.0
 # particle 4   [n_mon_d] [n_chain_d] [drop_cell_x] [drop_cell_y] [z_skin]
 1  0  20  10    10.0
-# Top wall: Parameters A and s_w for wall-fluid interaction with: V=A (s_w/z) -(s_w/z)^6   
+# Top wall: Parameters Aw and s_w for wall-fluid interaction with: V=Aw [ (s_w/z)^9 -(s_w/z)^3 ]   
     3.2         1.0     3.2         1.0
-# Bottom wall: Parameters A and s_w for wall-fluid interaction with: V=A (s_w/z) -(s_w/z)^6   
+# Bottom wall: Parameters Aw and s_w for wall-fluid interaction with: V=Aw [ (s_w/z)^9 -(s_w/z)^3 ]   
     -3.2         1.0     -3.2         1.0
 # External constant force for Poseuille flow.  [Fx]   [Fy]   [Fz]
       0.0   0.0      0.0
