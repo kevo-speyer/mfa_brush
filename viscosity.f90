@@ -3,13 +3,14 @@ subroutine viscosity()
 ! are calculated here.
 !   
 use commons
+#include 'control_simulation.h'
 implicit none
 logical, parameter :: debug=.false.
 integer :: i,j
 real(kind=8) :: delta_f(3), visc_t = 0., norm_press_t_corr(3,3) = 0.
 real(kind=8),save :: press_tensor_0(3,3),press_ten_f(3,3)
- 
-#if SYMMETRY == 1 /* Bulk simulation */
+
+#if SYMMETRY == 1  /* Bulk simulation */
 
 ! Add Kinetic part of pressure tensor
 
