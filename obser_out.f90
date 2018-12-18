@@ -334,11 +334,17 @@ write (20,'(/a,f16.7/)') " Mean pressure=", (press_tensor_mean(1,1) +press_tenso
                 rho_top_in/(wall_t_area*dble(n_relax+n_obser)*thermal_skin), &
                 rho_top_out/(wall_t_area*dble(n_relax+n_obser)*thermal_skin)
       
-    print '(a,2g16.8)',  " * Mean dens in,dens out  (bottom wall)  =", & 
+    print '(a,2g16.8/)',  " * Mean dens(in), dens(out)  (bottom wall)  =", & 
           rho_bot_in/(wall_t_area*dble(n_relax+n_obser)*thermal_skin), &
           rho_bot_out/(wall_t_area*dble(n_relax+n_obser)*thermal_skin)
 
+    print '(a,4g16.8/)',  " * Top Wall: Mean Temp_y(in),Temp_z(in), Temp_y(out), Temp_z(out)= ", & 
+          temp_top_in(:)/dble(n_relax+n_obser), &
+          temp_top_out(:)/dble(n_relax+n_obser) 
 
+    print '(a,4g16.8/)',  " * Bottom Wall: Temp_y(in),Temp_z(in), Temp_y(out), Temp_z(out)= ", & 
+          temp_bot_in(:)/dble(n_relax+n_obser), &
+          temp_bot_out(:)/dble(n_relax+n_obser) 
 
 ! *** Closing storage  files 
 
