@@ -854,6 +854,7 @@ print*,""
         end do
     end do
 
+#if  BIN_TYPE == 0 || BIN_TYPE == 1
 ! --- Set skin and variables for verlet lists (?) 
 
       mic_count(:,:) = 0
@@ -867,7 +868,7 @@ print*,""
       r_dummy = r_cut_max
       skin_2 = (r_dummy+skin)**2-r_dummy**2
 
-
+#endif
 
 !      
 !---- Initialize random number generator
@@ -930,7 +931,7 @@ write(*,*) "  *  Parallel OpenMP version. N_threads: ", numth
   
 !--------------------------------------------------
 ! Check consistency of using Poiseuille version of the program and moving the walls at the same time
-#ifdef POISEUILLE
+#if defined POISEUILLE || defined CENTER_DROP
        if (va_spring_twall(1) /= 0._8 .or.  &
            va_spring_twall(2) /= 0._8 .or.  &
            va_spring_twall(3) /= 0._8 ) then

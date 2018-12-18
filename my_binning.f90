@@ -4,6 +4,7 @@
 
     subroutine my_binning()
 #include 'control_simulation.h'     
+#if BIN_TYPE == 1
     use commons 
 #ifdef MPI
     use mpi_commons
@@ -135,6 +136,5 @@
 !        print '(/a/)',"DEBUG ON in my_binning.f90" 
 !        print *, ff_list(1:3,:) ; stop
     end if
-    
-    
-    end subroutine my_binning
+#endif     
+end subroutine my_binning

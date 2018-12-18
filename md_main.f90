@@ -7,7 +7,8 @@
       integer  :: tot_time
       real (kind=8) :: t0,t1
       logical,parameter :: debug =.false.
-! [12/2015] Paralelization with OpenMP
+! [01/2018]: New Binning. Cell linked list. Scales better with OpenMP
+! [12/2015]: Paralelization with OpenMP
 ! [11/2013]: Droplet compatibility fixed
 ! [7/2013] : Bending Force for the brush added       
 ! March 2013: pass to Kevin
@@ -91,8 +92,10 @@
 !deb               stop
 !deb           end if
 
-
+#          if BIN_TYPE == 0 || BIN_TYPE == 1
            call check_skin  !calculates if it is necessary to update the verlet list. If it is,
+# endif
+
 #          if BIN_TYPE == 0
  
            if (f_skin.eq.1) call binning
@@ -167,7 +170,16 @@
 #   endif
 
 #           ifdef POISEUILLE
-           call constant_force() ! Poseuille flow generation
+           call constant_force(1) ! Poseuille flow generation
+#           endif
+
+#           ifdef CENTER_DROP
+#               ifndef POISEUILLE
+                    print*, "ERROR: For CENTER_DROP function to work, POISEUILLE must"
+                    print*, "be defined control_simulation.h"
+                    exit
+#               endif
+            call constant_force(2) ! Poseuille flow generation
 #           endif
 
 
@@ -177,6 +189,11 @@
 
 #ifdef DPD_VV                     
 
+#if BIN_TYPE == 2
+print "ERROR: DPD_VV not compatible with BIN_TYPE 2 yet!"
+print*, "Exiting program"
+exit
+#endif
 !Note: this recalculates Fd with the new velocities and updates F for the begining og the next cycle 
 !       with this new value.  
 

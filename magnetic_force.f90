@@ -2,6 +2,7 @@
 
 subroutine magnetic_force(mode)
 #include 'control_simulation.h'
+#ifdef MAGNETIC
       use commons
       implicit none 
       integer, intent(in) :: mode
@@ -62,5 +63,5 @@ subroutine magnetic_force(mode)
 
         end select
                 
-
+#endif 
 end subroutine magnetic_force

@@ -14,7 +14,7 @@
  * 1: randomly distributed with a uniform distribution. Overlaping beads are forbidden.
  * 2: ordered brush. The distance between neighbouring grafted beads is equal for all points*/
 
-#define BRUSH_TYPE 0 
+#define BRUSH_TYPE 2 
 
 /* SYMMETRY */
 /* 0 = channel geometry: no PBC in Z; 
@@ -39,17 +39,19 @@
  * 0= poor solvent      */
 
 /* NOTE:  WALL is  not used if SYMMETRY /= 1  */
+
 #define SOLVENT 0    
 
 #undef HYDROPHOBIA  /* if def, the interaction between brush and melt is purely repulsive *//
+
 #undef BRUSH_IN_GOOD_SV /*if def the interaction between grafted polimers is purely repulsive*/
-#undef BENDING  /* if def the grafted polymers are assumed to be semiflxible: bending potential *//
+#define BENDING  /* if def the grafted polymers are assumed to be semiflxible: bending potential *//
 #undef BENDING_MELT  /* if def the melt polymers are assumed to be semiflxible: bending potential *//
 #undef ORIENTATION  /* if def the grafted polymers will be oriented through an harmonic potential*//
 #undef MAGNETIC /* ifdef the program includes magnetic partcicles. Particle 4 is treated as magnetic. María Fiora */
 #define ASYM_WALLS /* if not def symmetric walls. Ifdef ... */
 
-#define PARTICLE_4 /* If defined the program runs with four different particle type */
+#undef PARTICLE_4 /* If defined the program runs with four different particle type */
 
 #undef STARS /*whether you want to simulate with or without stars, sigma is fixed to 1. As well as sigma for walls */
 
@@ -59,7 +61,7 @@
 
 #define DPD_WEIGHT 0 /*  0=usual choice of DPD weight: Wd=(1-r/rc)^2 ; 1= constant: Wr=Wd=1 ; 2 "quartic" */ 
                      /*  wd=(1-r/rc)^4                                                                    */  
-#define DPD_CUT_OFF  2.24 /* if defined, takes this cutoff for DPD forces */
+#undef DPD_CUT_OFF  2.24 /* if defined, takes this cutoff for DPD forces */
 
 #undef DPD_VV       /* Adds a re-calculation of the Fd at the end of the iteration cycle. 
                      * Improves T=const ? Vattullainen JCP 116 2967 
@@ -77,6 +79,9 @@
 
 
 #define POISEUILLE    /* Adds external constant force to simulate Poiseuille flow      */
+
+#undef CENTER_DROP  /*Apply constant force in x towars the center of the box, only to melt paricles*/
+		    /* to form droplets. WARNING: POISEUILLE must be defined to work */
 #undef SHEARED      /* if defined, the shear protocols are applied, mfa_input is different!! */
                     /* NOTE: if it is not defined, wall velocities can anyway been used */
 
@@ -94,4 +99,12 @@
 #define NO_WARNS     /* Does not print the warning messages of the "beads too close"                      */     
 /*#define FLUID_ROUTINE 0*/  /* controls if it uses the normal fluid routine (0) or the experimental HPC-tuned (1) */
 #undef FREE_HEADS        /* if defined, the heads of brushes are not fixed, epsilon between head and surface is 250, potential - attractive*/
-#define BIN_TYPE  0 /*0: uses binning.f90; single counting of each interaction; 1: uses my_binning.f90, from S. Plimpton and Cem Servantie versions; double counts each interaction.  */
+#define BIN_TYPE 2 /* 0: uses binning.f90; single counting of each interaction;*/
+                    /* 1: uses my_binning.f90, from S. Plimpton and Cem Servantie versions; double counts each interaction.  */
+                    /* 2: uses cell_list.f90; does cell-linked lists, No Verlet-List. by Kevo*/
+
+#define L_BOX 1 /*Only relevant if bin_type=2, */
+                /* 1 is length of binning box = r_cut_max. 13 neighbor cells*/
+                /* 2 is length of binning box = r_cut_max / 2 . 62 neighbor cells */
+                                    
+
