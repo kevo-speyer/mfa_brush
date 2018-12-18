@@ -17,7 +17,7 @@ flags = -fpp # -vec-report0    # -fpe0: stops prog after first fp exception
 #  sheldon: -axW
 #  core 2 duo -axT
 flags+=  -O3 -ip #-i-static   -align all  -axSSSE3  # -axSSE4.1   # optimization
-flags+= -qopenmp# -openmp # multi-platform shared-memory parallel programming
+flags+= -openmp# -openmp # multi-platform shared-memory parallel programming
 #flags+=  -warn unused
 #flags+=  -g -check bounds -traceback
 #flags+=     -pg # profiling
@@ -150,12 +150,8 @@ my_binning.o: my_binning.f90 mfa_common.o control_simulation.h
 bending.o: bending.f90 control_simulation.h mfa_common.o
 bending_melt.o: bending.f90 control_simulation.h mfa_common.o
 orientation.o: orientation.f90  bending.f90 control_simulation.h mfa_common.o
-<<<<<<< HEAD
 thermal_walls.o: thermal_walls.f90 control_simulation.h mfa_common.o
-
-=======
 cell_list.o: cell_list.f90 control_simulation.h mfa_common.o
->>>>>>> 37005bec8f560057ac16df594296e10c717fdfa0
 
 wall_time.o : wall_time.c
 	    gcc -c wall_time.c

@@ -169,6 +169,7 @@ module commons
         real (kind=8) :: wall_t_area
 ! densities in and out at the wall (contact theorem)         
         real(kind=8) :: rho_top_in,rho_top_out,rho_bot_in,rho_bot_out
+        real(kind=8) :: temp_top_in(2),temp_top_out(2),temp_bot_in(2),temp_bot_out(2)
 #if WALL==2 || WALL == 3
 #       ifndef ASYM_WALLS
         real (kind=8) :: sigma_w,a_w,sigma_w4,a_w4, sigma_wall(n_type), a_wall(n_type)
