@@ -45,7 +45,9 @@
 ! LJ fluid-fluid force and V  calculation 
 !
 
-!DEBUG
+#   ifdef  HEAT
+        p_energy(:) = 0.
+#   endif
 
 !BEGIN PARALLEL ZONE
 
@@ -109,7 +111,9 @@
                   pot_loc = (r_12-r_6) - e_shift(i_type,j_type)
 
                   v_fluid_fluid = v_fluid_fluid + l_eps*pot_loc
-
+#ifdef HEAT
+                  p_energy(i_part) = p_energy(i_part) + l_eps*pot_loc
+#endif
                   r_dummy = l_eps*(-12*r_12+6*r_6)*inv_r_2
 
                   force_loc(1) = r_dummy*delta_r(1)
@@ -135,7 +139,7 @@
                  press_tensor(i,j) =  press_tensor(i,j) - force_loc(i)*delta_r(j)              
              end do 
          end do 
-!WRONG?  end if
+
 #   endif
 !
 !  --- DPD calculation if DPD has not its own cut-off  

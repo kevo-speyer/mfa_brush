@@ -41,6 +41,8 @@
 /* NOTE:  WALL is  not used if SYMMETRY /= 1  */
 #define SOLVENT 0    
 
+/* Some specific system properties */
+
 #undef HYDROPHOBIA  /* if def, the interaction between brush and melt is purely repulsive *//
 #undef BRUSH_IN_GOOD_SV /*if def the interaction between grafted polimers is purely repulsive*/
 #undef BENDING  /* if def the grafted polymers are assumed to be semiflxible: bending potential *//
@@ -48,6 +50,9 @@
 #undef ORIENTATION  /* if def the grafted polymers will be oriented through an harmonic potential*//
 #undef MAGNETIC /* ifdef the program includes magnetic partcicles. Particle 4 is treated as magnetic. María Fiora */
 #define ASYM_WALLS /* if not def symmetric walls. Ifdef ... */
+#define HEAT /*if defined, calculates some heat properties.  branch = leidenfrost */
+
+
 
 #define PARTICLE_4 /* If defined the program runs with four different particle type */
 

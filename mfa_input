@@ -1,7 +1,7 @@
        9000011 initial integer starting time
              0 number of relaxation steps
-       2000000 number of observation steps
-          1000 # of steps between configuration storage
+          1000 number of observation steps
+           500 # of steps between configuration storage
   0.200000E-02 time step increment
  
      1.00000 top_thermal_wall

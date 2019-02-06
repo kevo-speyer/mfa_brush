@@ -1,12 +1,12 @@
-       6220001 initial integer starting time
+       9001011 initial integer starting time
              0 number of relaxation steps
-       2000000 number of observation steps
-          1000 # of steps between configuration storage
+          1000 number of observation steps
+           500 # of steps between configuration storage
   0.200000E-02 time step increment
  
-     1.00000 obsolete
+     1.00000 top_thermal_wall
      1.00000 temperature
-     1.00000 obsolete
+     1.60000 bottom_thermal_wall
  
    obsolete: flagg for constraining wall atoms
   0.100000E+01 spacing betw wall units in x direc
@@ -23,13 +23,13 @@
   0.100000E+01 mass
   0.100000E+01 Lennard Jones epsilon
   0.100000E+01 Lennard Jones epsilon
-  0.100000E+01 Lennard Jones epsilon
+  0.333000E+00 Lennard Jones epsilon
   0.100000E+01 Lennard Jones epsilon
   0.100000E+01 Lennard Jones sigma
   0.100000E+01 friction constant
   0.100000E+01 mass
-  0.100000E+01 Lennard Jones epsilon
-  0.100000E+01 Lennard Jones epsilon
+  0.333000E+00 Lennard Jones epsilon
+  0.333000E+00 Lennard Jones epsilon
   0.100000E+01 Lennard Jones epsilon
   0.100000E+01 Lennard Jones epsilon
   0.100000E+01 Lennard Jones sigma
@@ -44,7 +44,7 @@
   0.000000E+00 spring const. to wall equil. sites
 
  
-     311500399 seed for random number generator
+     311500387 seed for random number generator
  
   0.300000E+02 effective spring constant within chain
   0.150000E+01 max. spacing between neighbored monomers
@@ -82,10 +82,10 @@
               7              3             15  binning boxes
        2.857143       3.333333       2.666667  binning distances
  
-      28     300  max. observed and maximum allowed fl. binnings
+      24     300  max. observed and maximum allowed fl. binnings
        0      16  max. observed and maximum allowed wa. binnings
  
-      39     256  max. observed and maximum allowed fl fl neighbors
+      35     256  max. observed and maximum allowed fl fl neighbors
        0      32  max. observed and maximum allowed fl wa neighbors
        0      32  max. observed and maximum allowed wa wa neighbors
  
@@ -96,13 +96,13 @@
        0.0000       0.0000   total intramolecular energy per part.
        0.0000       0.0000       intramolecular energy droplet/melt per part
  
-  -0.318135E+01   0.387090E+01 fl_fl potential
-   0.151197E+01   0.167804E+02 fl_fl kinetic e
-  -0.168111E+01   0.298629E+02 fl_fl total ene
+  -0.368252E+01   0.125719E+01 fl_fl potential
+   0.122168E+01   0.242418E+01 fl_fl kinetic e
+  -0.246085E+01   0.228833E+00 fl_fl total ene
  
-  -0.318135E+01   0.387090E+01 total potential
-   0.151197E+01   0.167804E+02 total kinetic e
-  -0.166938E+01   0.305268E+02 total total ene
+  -0.368252E+01   0.125719E+01 total potential
+   0.122168E+01   0.242418E+01 total kinetic e
+  -0.246085E+01   0.228833E+00 total total ene
  
    0.000000E+00   0.000000E+00 average spacing
  
