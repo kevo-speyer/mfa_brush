@@ -1,4 +1,4 @@
-subroutine dpd_forces(inv_sqrt_r_2,force_tmp)
+subroutine dpd_forces(inv_sqrt_r_2,force_tmp, press_tensor_tmp)
     use commons
 #ifdef _OPENMP
       use omp_lib
@@ -12,7 +12,7 @@ use ziggurat, only: rnor,uni
     implicit none
     real(kind=8) , intent(in) :: inv_sqrt_r_2
     real(kind=8) :: g_rand,r_versor(3),delta_v(3),rrc
-    real(kind=8) , intent(inout) :: force_tmp(3,n_part)
+    real(kind=8) , intent(inout) :: force_tmp(3,n_part), press_tensor_tmp(3,3)
 
     integer :: i,j 
 !    integer, intent(in) :: q_part
@@ -95,7 +95,16 @@ use ziggurat, only: rnor,uni
       force_tmp(:,j_part) =  force_tmp(:,j_part) - vec_dummy(:)   
       endif
 #   endif
-     
+
+!Added by Kevo
+! potential part of press tensor (see viscosity.f90) ~ virial contribution
+        do i = 1,3
+            do j = 1,3
+                
+                press_tensor_tmp(i,j) =  press_tensor_tmp(i,j) + vec_dummy(i)*delta_r(j)
+             
+            end do 
+        end do     
 ! Dissipative force computation      
 
       delta_v(:) = v(:,q_part) - v(:,j_part)
@@ -115,15 +124,15 @@ use ziggurat, only: rnor,uni
 #     endif      
 
 
-#if SYMMETRY == 1
+!#if SYMMETRY == 1 */
 ! potential part of press tensor (see viscosity.f90) ~ virial contribution
         do i = 1,3
             do j = 1,3
                 
-                press_tensor(i,j) =  press_tensor(i,j) + vec_dummy(i)*delta_r(j)
+                press_tensor_tmp(i,j) =  press_tensor_tmp(i,j) + vec_dummy(i)*delta_r(j)
              
             end do 
         end do 
-#endif
+!#endif
 
 end subroutine dpd_forces

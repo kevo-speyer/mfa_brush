@@ -51,23 +51,23 @@
 
 !Warning: Paralelization not adapted for SYMMETRY=1 
 # if BIN_TYPE == 0 || BIN_TYPE == 1
-!$OMP PARALLEL DEFAULT(PRIVATE) SHARED(r_2_min,force,v_fluid_fluid,n_part,a_type,ff_list, range_2, r0,inv_boundary, boundary, epsil, sigma_2, e_shift,sig,mass,friction,v, inv_range_2, r_cut_dpd_2)
+!$OMP PARALLEL DEFAULT(PRIVATE) SHARED(r_2_min,force,v_fluid_fluid,press_tensor,n_part,a_type,ff_list, range_2, r0,inv_boundary, boundary, epsil, sigma_2, e_shift,sig,mass,friction,v, inv_range_2, r_cut_dpd_2)
 #ifdef _OPENMP
     ith=omp_get_thread_num()
 #endif
 
 
-!$OMP DO SCHEDULE(STATIC,10) REDUCTION(+:force,v_fluid_fluid)     
+!$OMP DO SCHEDULE(STATIC,10) REDUCTION(+:force,v_fluid_fluid,press_tensor)     
     do i_part = 1,n_part  !n_mon_tot= brushes + droplet/melt
           i_dummy = ff_list(0,i_part)
 
 # elif BIN_TYPE == 2  /* cell_list.f90 */
-!$OMP PARALLEL DEFAULT(PRIVATE) SHARED(r_2_min,force,v_fluid_fluid,n_part,a_type,l_cell,n_cells_tot,n_nei_cells,part_in_cell,n_cells,r_nei,l_nei,cell_neigh_ls, range_2, r0,inv_boundary, boundary, epsil, sigma_2, e_shift,sig,mass,friction,v, inv_range_2, r_cut_dpd_2)
+!$OMP PARALLEL DEFAULT(PRIVATE) SHARED(r_2_min,force,v_fluid_fluid,press_tensor,n_part,a_type,l_cell,n_cells_tot,n_nei_cells,part_in_cell,n_cells,r_nei,l_nei,cell_neigh_ls, range_2, r0,inv_boundary, boundary, epsil, sigma_2, e_shift,sig,mass,friction,v, inv_range_2, r_cut_dpd_2)
 #ifdef _OPENMP
     ith=omp_get_thread_num()
 #endif
 
-!$OMP DO SCHEDULE(STATIC,10) REDUCTION(+:force,v_fluid_fluid)
+!$OMP DO SCHEDULE(STATIC,10) REDUCTION(+:force,v_fluid_fluid,press_tensor)
     do i_cell = 1, n_cells_tot ! loop over all cells
         i_part = part_in_cell(i_cell) ! get first particle in i_cell
         
@@ -153,7 +153,7 @@
                   force(2,j_part) = force(2,j_part) + force_loc(2)
                   force(3,j_part) = force(3,j_part) + force_loc(3)
 
-#   if SYMMETRY == 1 /* bulk */                  
+!# ##   if SYMMETRY == 1 /* bulk */                  
 ! Does not work with OMP
 ! Potential part of press tensor (see viscosity.f90) ~ virial contribution
          do i = 1,3
@@ -163,7 +163,7 @@
          end do 
 !WRONG?  end if
     
-#   endif
+!###   endif
 
 !
 !  --- DPD calculation if DPD has not its own cut-off  
@@ -194,7 +194,7 @@
 #                  endif 
 #         endif /* SYMMETRY */
 
-                  call dpd_forces(inv_sqrt_r_2,force)
+                  call dpd_forces(inv_sqrt_r_2,force, press_tensor)
 
 #       endif /* not DPD_CUT_OFF */
 #endif /*THERMOSTAT = 0 */
@@ -253,7 +253,7 @@
               if(r_2 < r_cut_dpd_2 ) then 
                   
                   
-                  call dpd_forces(inv_sqrt_r_2,force)
+                  call dpd_forces(inv_sqrt_r_2,force, press_tensor)
 
               end if
 
@@ -329,7 +329,7 @@
                   force(2,j_part) = force(2,j_part) + force_loc(2)
                   force(3,j_part) = force(3,j_part) + force_loc(3)
 
-#   if SYMMETRY == 1 /* bulk */                  
+!###   if SYMMETRY == 1 /* bulk */                  
 ! Does not work with OMP
 ! Potential part of press tensor (see viscosity.f90) ~ virial contribution
          do i = 1,3
@@ -339,7 +339,7 @@
          end do 
 !WRONG?  end if
     
-#   endif
+!###   endif
  
 !
 !  --- DPD calculation if DPD has not its own cut-off  
@@ -370,7 +370,7 @@
 #                  endif 
 #         endif /* SYMMETRY */
 
-                  call dpd_forces(inv_sqrt_r_2,force)
+                  call dpd_forces(inv_sqrt_r_2, force, press_tensor)
 
 #       endif /* not DPD_CUT_OFF */
 #endif /*THERMOSTAT = 0 */
@@ -428,7 +428,7 @@
               if(r_2 < r_cut_dpd_2 ) then 
                   
                   
-                  call dpd_forces(inv_sqrt_r_2,force)
+                  call dpd_forces(inv_sqrt_r_2,force, press_tensor)
 
               end if
 
@@ -454,7 +454,7 @@
 
 #   if THERMOSTAT == 1 /* Langevin */
 ! COMMENT to check NVE ensemble          
-! call lgv_forces(force)
+ call lgv_forces(force)
 #   endif /* Langevin */
 
 #if BIN_TYPE == 0 || BIN_TYPE == 1

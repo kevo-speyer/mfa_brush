@@ -117,9 +117,9 @@
 ! the pressure tensor is put to zero in each time step. IF this is not the first
 ! routine computing forces. 
 ! this should not be here.
-#   if SYMMETRY == 1
+!###   if SYMMETRY == 1
    press_tensor(:,:) = 0.
-#   endif
+!   ###   endif
 
  
 ! NOTE: fluid-fluid calculates LJ always, DPD and LGV forces and calls ewald in

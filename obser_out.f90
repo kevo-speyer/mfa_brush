@@ -303,7 +303,7 @@ inv_count_obs = 1./count_obs
 #       endif /*profiles*/
 #   endif /*system=1: droplets*/
 
-# if SYMMETRY == 1 
+!# if SYMMETRY == 1 
 ! Pressure tensor stuff 
  
 press_tensor_mean(:,:) = press_tensor_mean(:,:) / count_obs
@@ -316,7 +316,7 @@ write(20,'(10x,3f16.7)') press_tensor_mean(3,:)
 
 ! Pressure given as tr(press_tensor) / 3.
 write (20,'(/a,f16.7/)') " Mean pressure=", (press_tensor_mean(1,1) +press_tensor_mean(2,2) +press_tensor_mean(3,3) ) /3.
-#endif 
+!#endif 
 
 
 

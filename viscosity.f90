@@ -9,7 +9,7 @@ integer :: i,j
 real(kind=8) :: delta_f(3), visc_t = 0., norm_press_t_corr(3,3) = 0.
 real(kind=8),save :: press_tensor_0(3,3),press_ten_f(3,3)
  
-#if SYMMETRY == 1 /* Bulk simulation */
+!#if SYMMETRY == 1 /* Bulk simulation */
 
 ! Add Kinetic part of pressure tensor
 
@@ -108,7 +108,7 @@ press_ten_f(:,:) =  press_tensor(:,:)
       press_tensor_mean(:,:) =  press_tensor_mean(:,:) +  press_tensor(:,:) 
 
        
-#endif /*Bulk: SYMMETRY == 1 */
+!#endif /*Bulk: SYMMETRY == 1 */
 ! Note: the pressure tensor is calculated WITHOUT the factor 1/V, because is then cancelled out
 ! in the correlation function for viscosity calculation
 

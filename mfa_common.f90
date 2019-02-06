@@ -559,7 +559,7 @@ real (kind=8) ,allocatable :: force_or(:,:)
 
       real (kind=8), allocatable :: r_cms(:,:)
       
-#if SYMMETRY == 1 
+!### if SYMMETRY == 1 
     
 ! Difussion coeficient variables 
 !not yet logical :: ref_file, unfold_file  ! for difussion we need global acces of this 
@@ -573,7 +573,7 @@ real (kind=8) ,allocatable :: force_or(:,:)
 real (kind=8) :: press_tensor(3,3),press_tensor_mean(3,3) 
 
 
-#endif
+!#### endif
 
 #   ifdef MAGNETIC
    real (kind=8), save :: mag_m_z,V_part,r_loop_min,r_loop_max,i_loop,cte,mag_force

@@ -520,9 +520,9 @@ end if ! mod(i_time-n_relax,5).eq.0
 
 #       endif /* profiles */
 #endif /* droplets */
-#       if SYMMETRY == 1 
+!#       if SYMMETRY == 1 
           ! Calculates viscosity, pressure and presure tensor
           call viscosity()
-#endif
+!#endif
 
  end subroutine observation
