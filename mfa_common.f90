@@ -593,4 +593,10 @@ integer,dimension(8) :: values
         real(kind=8) :: thermal_skin,top_thermal_wall,bottom_thermal_wall 
         real(kind=8), parameter :: kb=1.0
 #endif 
+#ifdef HEAT
+! Variables to compute some heat properties 
+        real(kind=8), allocatable :: p_energy(:)
+#endif
+
+
       end module commons

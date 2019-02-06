@@ -298,6 +298,14 @@ print '(/a/)',"  *  Writing the very first generated configuration to conf0.xyz 
 #   if THERMOSTAT == 2 
         call thermal_walls(0)
 #   endif
+!
+!       Inits to calculate  some heat properties
+! 
+#ifdef HEAT
+       allocate(p_energy(n_part)) 
+#endif
+
+
 
 
       end subroutine init_obser
