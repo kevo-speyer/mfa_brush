@@ -118,7 +118,7 @@
 ! routine computing forces. 
 ! this should not be here.
 #   if SYMMETRY == 1
-   press_tensor(:,:) = 0.
+           press_tensor(:,:) = 0.
 #   endif
 
  

@@ -302,7 +302,10 @@ print '(/a/)',"  *  Writing the very first generated configuration to conf0.xyz 
 !       Inits to calculate  some heat properties
 ! 
 #ifdef HEAT
-       allocate(p_energy(n_part)) 
+       part_in_vol(:) = 0
+       call heat_flux_computation(0,1,1)
+       mean_q = 0.0
+
 #endif
 
 

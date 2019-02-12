@@ -17,9 +17,9 @@ flags = -fpp # -vec-report0    # -fpe0: stops prog after first fp exception
 #  sheldon: -axW
 #  core 2 duo -axT
 flags+=  -O3 -ip #-i-static   -align all  -axSSSE3  # -axSSE4.1   # optimization
-flags+=  -openmp # multi-platform shared-memory parallel programming
+flags+=  #-openmp # multi-platform shared-memory parallel programming
 #flags+=  -warn unused
-#flags+=  -g -check bounds -traceback
+flags+=  -g -check bounds -traceback
 #flags+=     -pg # profiling
 ref_dir = REF # reference directory for patching
 
@@ -110,7 +110,7 @@ init_config.o : init_config.f90 mfa_common.o control_simulation.h
 conf_default.o : conf_default.f90 mfa_common.o control_simulation.h
 init_obser.o : init_obser.f90 mfa_common.o functions.o control_simulation.h
 predict.o : predict.f90 mfa_common.o
-fluid_fluid.o : fluid_fluid.f90 ewald_real.o dpd_forces.o mfa_common.o control_simulation.h
+fluid_fluid.o : fluid_fluid.f90 ewald_real.o dpd_forces.o mfa_common.o functions.o control_simulation.h
 fluid_fluid_test.o : fluid_fluid_test.f90 mfa_common.o control_simulation.h
 wall_wall.o : wall_wall.f90 mfa_common.o
 init_force_switch_on.o: init_force_switch_on.f90 mfa_common.o

@@ -257,6 +257,12 @@
           call my_binning()
 #       endif        
   
+#       ifdef HEAT
+!Note: these vars must be allocated before first call to fluid_fluid
+!note:  part_in_vol could be less than n_part. control volume << V
+       allocate(p_energy(n_part),part_in_vol(n_part)) 
+#       endif
+          
           call fluid_fluid()
           print '(/a,f16.5/)',"    * V_fluid_fluid for the first configuration = ",v_fluid_fluid
           force(:,:)= 0.

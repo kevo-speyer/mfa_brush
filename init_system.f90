@@ -298,7 +298,8 @@ allocate (  ff_list(0:n_neigh_fl+n_layer*n_wall,n_part) ) ! ,             &
 
         allocate (force_d(3,n_mon_tot) , force_r(3,n_mon_tot) )
 
-!TO OPRIMIZE PARALLEL VERSION
+
+!TO OPTIMIZE PARALLEL VERSION
 #ifdef _OPENMP
 !$OMP PARALLEL 
         numth=omp_get_num_threads() !Define parellel variables for each thread

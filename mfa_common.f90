@@ -596,6 +596,9 @@ integer,dimension(8) :: values
 #ifdef HEAT
 ! Variables to compute some heat properties 
         real(kind=8), allocatable :: p_energy(:)
+        integer(kind=4), allocatable :: part_in_vol(:)
+        real(kind=8)              :: zv_min,zv_max,xvf,ev_term,mean_q
+        integer(kind=4)           :: n_heat_vol
 #endif
 
 

@@ -1,12 +1,15 @@
       subroutine fluid_fluid()
 #include 'control_simulation.h'
       use commons
-#ifdef _OPENMP
+#   ifdef _OPENMP
       use omp_lib
       use Par_Zig_mod, only: par_rnor,par_uni
-#else
+#   else
       use ziggurat, only: rnor,uni
-#endif
+#   endif
+#   ifdef HEAT
+        use functions
+#   endif
 
      implicit none
      real (kind=8) :: delta_v(3),r_versor(3),g_rand,rrc,f_ipart(3) ! Needed for DPD_EMBEDDED only
@@ -47,6 +50,8 @@
 
 #   ifdef  HEAT
         p_energy(:) = 0.
+        xvf = 0.0
+        n_heat_vol = 0  ! number of particle in volume control for heat calculation
 #   endif
 
 !BEGIN PARALLEL ZONE
@@ -126,6 +131,13 @@
                   f_ipart(2) = f_ipart(2) -  force_loc(2)
                   f_ipart(3) = f_ipart(3) -  force_loc(3)
 #       endif
+
+#           ifdef HEAT
+! Compute contribution to heat flux. 
+! NOTE: watch the sign fij(i_part)=-force_loc and fij(j_part)=force_loc
+
+                   call heat_flux_computation(1,i_part,j_part,-force_loc(:)) 
+#           endif
 
                   force(1,j_part) = force(1,j_part) + force_loc(1)
                   force(2,j_part) = force(2,j_part) + force_loc(2)
@@ -243,6 +255,9 @@
 
 !$OMP END DO 
 !$OMP END PARALLEL 
+
+!                          
+
 !END PARALLEL ZONE
 
 #ifdef FLUKT 

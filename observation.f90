@@ -523,6 +523,23 @@ end if ! mod(i_time-n_relax,5).eq.0
 #       if SYMMETRY == 1 
           ! Calculates viscosity, pressure and presure tensor
           call viscosity()
-#endif
+#       endif
+#       ifdef HEAT
+! Go through particles in the volume control ( (zv_max-zv_min)*Lx*Lz ) to calculate ev_term
+            ev_term = 0.0
+! Note: the heat flow is calculated in z direction            
+            do i_dummy = 1,n_heat_vol
+                i_part = part_in_vol(i_dummy)
+!       Add kinetic term to Ev                
+                ev_term =  ev_term +     &
+                        0.5*mass(i_part)*(v(1,i_part)*v(1,i_part)+v(3,i_part)*v(2,i_part)+v(3,i_part)*v(3,i_part))* &
+                        v(3,i_part) 
+!       Add potential term to Ev
+                ev_term = ev_term + p_energy(i_part)*v(3,i_part)
+
+            end do
+!       Add-up contributions to  heat flux in z direction, in the given volume control
+          mean_q = mean_q + xvf + ev_term 
+#       endif
 
  end subroutine observation

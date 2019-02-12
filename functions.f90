@@ -1985,7 +1985,84 @@ subroutine coor_refold(mode)
 end subroutine coor_refold
 
 #   endif /*SYSTEM==1; droplets*/
+#   ifdef HEAT
 
+subroutine heat_flux_computation(mode,ii,jj,f_ij)
+
+#include 'control_simulation.h'
+use commons
+integer, intent(in) :: mode,ii,jj
+real(kind=8), intent(in), optional :: f_ij(3)
+integer , save :: kk 
+real(kind=8) :: z_i,z_j,z_in
+! ii = ipart ith-particle
+! jj =  j_part jth-particle 
+    select case (mode)
+    case(0)  ! Init
+! Locate the volume for measurement close to de the bottom wall
+       zv_min = 1.2  
+       zv_max = 2.2
+       kk = 0 ! counter for particles inside the control volume
+    case(1)  ! Compute. Called from fluid_fluid 
+
+    z_i = r0(3,ii)
+    z_j = r0(3,jj)
+
+    if(z_i>zv_min.and.z_i<zv_max) then ! z_i in volume control 
+! add particle index to zone 
+        !kk = kk + 1
+        n_heat_vol = n_heat_vol + 1 ! a counter of particles inside the control volume in current time step. warn with kk
+        part_in_vol(n_heat_vol) = ii ! collect particles labels for particles inside volume control for heat calc 
+
+        if(z_j > zv_max ) then 
+            z_in = zv_max - z_i
+            xvf = xvf + z_in*(v(1,i_part)*f_ij(1)+v(2,i_part)*f_ij(2)+v(3,i_part)*f_ij(3)) ! add i_part
+        end if
+        if(z_j > zv_min ) then 
+            z_in = -zv_min + z_i
+            xvf = xvf + z_in*(v(1,i_part)*f_ij(1)+v(2,i_part)*f_ij(2)+v(3,i_part)*f_ij(3)) ! add i_part
+        end if
+        if(z_j<zv_max.and.z_j>zv_min) then 
+            z_in = abs(z_j-z_i)
+            xvf = xvf + z_in*(v(1,i_part)*f_ij(1)+v(2,i_part)*f_ij(2)+v(3,i_part)*f_ij(3)) ! add i_part
+        end if
+    end if ! z_in volume control
+    if(z_i<zv_min) then ! z_i out of volume control
+!does not add to xvf        if(z_j<zv_min) then 
+!does not add to xvf            z_in = 0.
+!does not add to xvf        end if
+        if(z_j>zv_min.and.z_j<zv_max) then 
+            z_in = z_j - zv_min
+! Think this better !            
+            xvf = xvf - z_in*(v(1,j_part)*f_ij(1)+v(2,j_part)*f_ij(2)+v(3,j_part)*f_ij(3)) ! add to j_part 
+        end if
+        if(z_j>zv_max) then 
+            z_in = zv_max - zv_min
+            xvf = xvf + z_in*(v(1,i_part)*f_ij(1)+v(2,i_part)*f_ij(2)+v(3,i_part)*f_ij(3)) ! add i_part
+        end if 
+    end if
+    if(z_i>zv_max) then ! z_i out of volume control
+!does not add        if(z_j>zv_max) then
+!does not add            z_in = 0.
+!does not add        end if
+        if(z_j>zv_min.and.z_j<zv_max) then 
+            z_in =  zv_max - z_j
+! minus sign comes from f_ij = -f_ji            
+            xvf = xvf - z_in*(v(1,j_part)*f_ij(1)+v(2,j_part)*f_ij(2)+v(3,j_part)*f_ij(3)) ! add j_part
+        end if
+        if(z_j<zv_min) then 
+            z_in = zv_max - zv_min
+            xvf = xvf + z_in*(v(1,i_part)*f_ij(1)+v(2,i_part)*f_ij(2)+v(3,i_part)*f_ij(3)) ! add i_part
+        end if
+    end if
+
+!    xvf = xvf + z_in*(v(1,i_part)*f_ij(1)+v(2,i_part)*f_ij(2)+v(3,i_part)*f_ij(3))
+
+    end select ! mode
+
+
+end subroutine
+#   endif
 
 !
 !  ENDS MODULE        
