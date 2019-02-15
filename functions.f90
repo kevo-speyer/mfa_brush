@@ -2012,7 +2012,7 @@ real(kind=8) :: z_i,z_j,z_in
 ! add particle index to zone 
         !kk = kk + 1
         n_heat_vol = n_heat_vol + 1 ! a counter of particles inside the control volume in current time step. warn with kk
-        part_in_vol(n_heat_vol) = ii ! collect particles labels for particles inside volume control for heat calc 
+        part_in_vol(n_heat_vol) = ii ! collect particle labels for particles inside volume control for heat calc 
 
         if(z_j > zv_max ) then 
             z_in = zv_max - z_i
