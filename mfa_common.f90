@@ -4,6 +4,7 @@ module commons
 
 #include 'control_simulation.h'
       
+!
 !---  conventions about variables:
 !---------------------------------
 
