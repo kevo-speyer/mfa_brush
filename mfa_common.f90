@@ -599,7 +599,7 @@ integer,dimension(8) :: values
         real(kind=8), allocatable :: p_energy(:)
         integer(kind=4), allocatable :: part_in_vol(:)
         !real(kind=8)              :: zv_min,zv_max,xvf,ev_term,mean_q
-        real(kind=8)              :: zv_min,zv_max,xvf,ev_term,mean_q_k,mean_q_conf,mean_q !change Maria Fiora
+        real(kind=8)              :: zv_min,zv_max,xvf,ev_term,mean_q_k,mean_q_conf,mean_q,dz_control !change Maria Fiora
         integer(kind=4)           :: n_heat_vol
 #endif
 

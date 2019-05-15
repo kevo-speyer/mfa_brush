@@ -330,9 +330,9 @@ write (20,'(/a,f16.7/)') " Mean pressure=", (press_tensor_mean(1,1) +press_tenso
 
 #ifdef HEAT
 !write (20,'(/a,f16.7)') " Mean heat flow (z)=",mean_q*inv_count_obs*inv_boundary(1)*inv_boundary(2)
-write (20,'(/a,f16.7)') " Mean heat flow (z)=",(mean_q_conf+mean_q_k)*inv_count_obs*inv_boundary(1)*inv_boundary(2) !change Maria Fiora 
-write (20,'(/a,f16.7)') " Mean heat flow conf (z)=",mean_q_conf*inv_count_obs*inv_boundary(1)*inv_boundary(2) !change Maria Fiora
-write (20,'(/a,f16.7)') " Mean heat flow kinetic (z) =",mean_q_k*inv_count_obs*inv_boundary(1)*inv_boundary(2) !change Maria Fiora
+write (20,'(/a,f16.7)') " Mean heat flow (z)=",(mean_q_conf+mean_q_k)*inv_count_obs*inv_boundary(1)*inv_boundary(2)/dz_control 
+write (20,'(/a,f16.7)') " Mean heat flow conf (z)=",mean_q_conf*inv_count_obs*inv_boundary(1)*inv_boundary(2)/dz_control 
+write (20,'(/a,f16.7)') " Mean heat flow kinetic (z) =",mean_q_k*inv_count_obs*inv_boundary(1)*inv_boundary(2)/dz_control
 write (20,'(a,3(a,2f6.2)/)') " Volume control:"," x:",0,boundary(1)," y: ", &
         0,boundary(2)," z: ",zv_min,zv_max 
 

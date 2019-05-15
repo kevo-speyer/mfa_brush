@@ -540,9 +540,11 @@ end if ! mod(i_time-n_relax,5).eq.0
 
             end do
 !       Add-up contributions to  heat flux in z direction, in the given volume control
+
           !mean_q = mean_q + ev_term + xvf
           mean_q_k = mean_q_k + ev_term !change Maria Fiora
           mean_q_conf = mean_q_conf + xvf !change Maria Fiora
+
 #       endif
 
  end subroutine observation
