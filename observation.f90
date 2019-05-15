@@ -532,14 +532,17 @@ end if ! mod(i_time-n_relax,5).eq.0
                 i_part = part_in_vol(i_dummy)
 !       Add kinetic term to Ev                
                 ev_term =  ev_term +     &
-                        0.5*mass(i_part)*(v(1,i_part)*v(1,i_part)+v(3,i_part)*v(2,i_part)+v(3,i_part)*v(3,i_part))* &
+                        !0.5*mass(i_part)*(v(1,i_part)*v(1,i_part)+v(3,i_part)*v(2,i_part)+v(3,i_part)*v(3,i_part))* &
+                        0.5*mass(i_part)*(v(1,i_part)*v(1,i_part)+v(2,i_part)*v(2,i_part)+v(3,i_part)*v(3,i_part))* & !Maria Fiora
                         v(3,i_part) 
 !       Add potential term to Ev
                 ev_term = ev_term + p_energy(i_part)*v(3,i_part)
 
             end do
 !       Add-up contributions to  heat flux in z direction, in the given volume control
-          mean_q = mean_q + xvf + ev_term 
+          !mean_q = mean_q + ev_term + xvf
+          mean_q_k = mean_q_k + ev_term !change Maria Fiora
+          mean_q_conf = mean_q_conf + xvf !change Maria Fiora
 #       endif
 
  end subroutine observation

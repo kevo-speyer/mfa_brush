@@ -8,6 +8,7 @@
       
 !---  xy plane
 
+
       x_max = x_space * dble(n_cell_w_x)
       y_max = y_space * dble(n_cell_w_y)
       surface = x_max*y_max
@@ -20,7 +21,6 @@
       inv_boundary(:) = 1./boundary(:)
       inv_V=inv_boundary(1)*inv_boundary(2)*inv_boundary(3)
       half_boundary(:) = boundary(:)/2.
-
 
 #if SYSTEM == 1 /* Droplets */
 !
@@ -76,6 +76,11 @@
 
         call make_binning_boxes
 
+#       ifdef HEAT
+!Note: these vars must be allocated before first call to fluid_fluid
+!note:  part_in_vol could be less than n_part. control volume << V
+       allocate(p_energy(n_part),part_in_vol(n_part)) 
+#       endif
 
 ! Checks existence of the old config file
 
@@ -257,11 +262,6 @@
           call my_binning()
 #       endif        
   
-#       ifdef HEAT
-!Note: these vars must be allocated before first call to fluid_fluid
-!note:  part_in_vol could be less than n_part. control volume << V
-       allocate(p_energy(n_part),part_in_vol(n_part)) 
-#       endif
           
           call fluid_fluid()
           print '(/a,f16.5/)',"    * V_fluid_fluid for the first configuration = ",v_fluid_fluid

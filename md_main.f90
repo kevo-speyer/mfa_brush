@@ -52,10 +52,11 @@
 ! ---- Inizialization  routines
 
            call init_system() ! physical system. Reads system_input
+
            call init_params()   ! md simulation parameters, box dimensions. Read mfa_input
            call init_config()   ! initial conf or read an old one
+! print *, " Stopping here" ; stop          
            call init_obser()    ! Measurable variables init.
-           
 #ifdef BENDING     
           call bending(0) ! writes brush bending constants  to log
 #endif

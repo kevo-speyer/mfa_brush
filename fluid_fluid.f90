@@ -64,6 +64,7 @@
     ith=omp_get_thread_num()
 #endif
 
+!print *, " Stopping here" ; stop
 !$OMP DO SCHEDULE(STATIC,10) REDUCTION(+:force,v_fluid_fluid,p_energy,xvf,n_heat_vol)     
     do i_part = 1,n_part  !n_mon_tot= brushes + droplet/melt
         q_part=i_part !dummy variable for OpenMP paralelization

@@ -2000,8 +2000,8 @@ real(kind=8) :: z_i,z_j,z_in
     select case (mode)
     case(0)  ! Init
 ! Locate the volume for measurement close to de the bottom wall
-       zv_min = 1.2  
-       zv_max = 2.2
+       zv_min = 5  
+       zv_max = 6
        kk = 0 ! counter for particles inside the control volume
     case(1)  ! Compute. Called from fluid_fluid 
 
@@ -2015,7 +2015,8 @@ real(kind=8) :: z_i,z_j,z_in
         part_in_vol(n_heat_vol) = ii ! collect particle labels for particles inside volume control for heat calc 
 
         if(z_j > zv_max ) then 
-            z_in = zv_max - z_i
+            !z_in = zv_max - z_i
+             z_in=z_i-zv_max !change Maria Fiora
             xvf = xvf + z_in*(v(1,i_part)*f_ij(1)+v(2,i_part)*f_ij(2)+v(3,i_part)*f_ij(3)) ! add i_part
         end if
         if(z_j > zv_min ) then 
@@ -2023,7 +2024,8 @@ real(kind=8) :: z_i,z_j,z_in
             xvf = xvf + z_in*(v(1,i_part)*f_ij(1)+v(2,i_part)*f_ij(2)+v(3,i_part)*f_ij(3)) ! add i_part
         end if
         if(z_j<zv_max.and.z_j>zv_min) then 
-            z_in = abs(z_j-z_i)
+            !z_in = abs(z_j-z_i)
+            z_in=z_i-z_j !change Maria Fiora
             xvf = xvf + z_in*(v(1,i_part)*f_ij(1)+v(2,i_part)*f_ij(2)+v(3,i_part)*f_ij(3)) ! add i_part
         end if
     end if ! z_in volume control
@@ -2032,13 +2034,15 @@ real(kind=8) :: z_i,z_j,z_in
 !does not add to xvf            z_in = 0.
 !does not add to xvf        end if
         if(z_j>zv_min.and.z_j<zv_max) then 
-            z_in = z_j - zv_min
+            !z_in = z_j - zv_min
+             z_in=zv_min-z_j  !change Maria Fiora
 ! Think this better !            
             xvf = xvf - z_in*(v(1,j_part)*f_ij(1)+v(2,j_part)*f_ij(2)+v(3,j_part)*f_ij(3)) ! add to j_part 
         end if
         if(z_j>zv_max) then 
-            z_in = zv_max - zv_min
-            xvf = xvf + z_in*(v(1,i_part)*f_ij(1)+v(2,i_part)*f_ij(2)+v(3,i_part)*f_ij(3)) ! add i_part
+            !z_in = zv_max - zv_min
+             z_in=zv_min-zv_max !change Maria Fiora
+             xvf = xvf + z_in*(v(1,i_part)*f_ij(1)+v(2,i_part)*f_ij(2)+v(3,i_part)*f_ij(3)) ! add i_part
         end if 
     end if
     if(z_i>zv_max) then ! z_i out of volume control

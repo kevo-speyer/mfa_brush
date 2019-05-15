@@ -163,20 +163,20 @@ subroutine init_system()
 ! Write out some read parameters
 #   if SYMMETRY != 1 
 #         if WALL==2
-#          ifndef ASYM_WALL        
+#          ifndef ASYM_WALLS        
         print '(/a)', "   ------- Wall fluid parameters for implicit wall--------" 
         print '(/a,2f8.4)', "  * LJ wall params: sigma_w,a_w =",sigma_w,A_w
 #           ifdef PARTICLE_4        
                print '(a,2f8.4/)', "  * LJ wall params (particle 4): sigma_w,a_w =",sigma_w4,A_w4
 #           endif
-#          else /* ifdef ASYM_WALL */
+#          else /* ifdef ASYM_WALLS */
                 print '(/a)', "   ------- Wall fluid parameters for implicit wall--------" 
-                print '(/a,2f8.4)', "  *    Top wall: LJ wall params: sigma_w,a_w =",sigma_w(1),A_w(1)
-                print '(a,2f8.4)', "  * Bottom wall: LJ wall params: sigma_w,a_w =",sigma_w(2),A_w(2)
+                print '(/a,2f8.4)', "  *   Top wall: LJ wall params: sigma_w,a_w =",sigma_w(1),A_w(1)
+                print '(a,2f8.4)',  " * Bottom wall: LJ wall params: sigma_w,a_w =",sigma_w(2),A_w(2)
 #               ifdef PARTICLE_4        
-                print '(a,2f8.4)', "   Top wall:  * LJ wall params (particle 4): sigma_w,a_w =",sigma_w4(1),A_w4(1)
-                print '(a,2f8.4/)', "Bottom wall:  * LJ wall params (particle 4): sigma_w,a_w =",sigma_w4(2),A_w4(2)
-                print *,'stop' ; stop ! debug
+                print '(a,2f8.4)', "  *  Top wall:  * LJ wall params (particle 4): sigma_w,a_w =",sigma_w4(1),A_w4(1)
+                print '(a,2f8.4/)', "  * Bottom wall:  * LJ wall params (particle 4): sigma_w,a_w =",sigma_w4(2),A_w4(2)
+!                print *,'stop' ; stop ! debug
 #               endif
 #          endif
 #   elif WALL==1

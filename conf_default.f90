@@ -207,6 +207,7 @@ subroutine conf_default()
        force(:,:) = 0.
        call fluid_fluid()
 
+!print *, " Stopping here" ; stop
 #if SYMMETRY == 0
 #       if WALL !=1 /* not explicit wall*/
          call fluid_wall(wall_flag) ! 2= wall potential 9-3 (without atoms)
