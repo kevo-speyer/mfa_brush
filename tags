@@ -64,7 +64,9 @@
 800	INR250.f90	/^ 800  CONTINUE$/;"	l	subroutine:INR250	file:
 DP	par_ziggurat.f90	/^    INTEGER, PARAMETER :: DP /;"	v	module:Par_Zig_mod
 DP	ziggurat.f90	/^   INTEGER,  PARAMETER  ::  DP=/;"	v	module:Ziggurat
+D_coeff	f.f90	/^       real (kind=8) :: D_coeff,/;"	v	module:commons
 D_coeff	mfa_common.f90	/^       real (kind=8) :: D_coeff,/;"	v	module:commons
+D_coeff_cm	f.f90	/^       real (kind=8) :: D_coeff,D_coeff_cm$/;"	v	module:commons
 D_coeff_cm	mfa_common.f90	/^       real (kind=8) :: D_coeff,D_coeff_cm$/;"	v	module:commons
 GRAND	grand.f90	/^      FUNCTION GRAND(/;"	f
 INR250	INR250.f90	/^      SUBROUTINE INR250(/;"	s
@@ -72,73 +74,120 @@ Lx_o_2	mfa_common.f90	/^      real (kind=8) :: binning_box_length,guessed_drop_c
 Par_Zig_mod	par_ziggurat.f90	/^MODULE Par_Zig_mod$/;"	m
 R250	R250.f90	/^      SUBROUTINE R250(/;"	s
 SUN	SUN.f90	/^      SUBROUTINE SUN(/;"	s
+V_part	f.f90	/^   real (kind=8), save :: m_sat,mag_m_z,V_part,/;"	v	module:commons
 V_part	mfa_common.f90	/^   real (kind=8), save :: m_sat,mag_m_z,V_part,/;"	v	module:commons
 Ziggurat	ziggurat.f90	/^MODULE Ziggurat$/;"	m
+a	f.f90	/^       real/;"	v	module:commons
 a	mfa_common.f90	/^       real/;"	v	module:commons
+a_eff	f.f90	/^   real (kind=8), save :: m_sat,mag_m_z,V_part,r_loop_min,r_loop_max,i_loop,cte,mag_force,a_eff,/;"	v	module:commons
 a_eff	mfa_common.f90	/^   real (kind=8), save :: m_sat,mag_m_z,V_part,r_loop_min,r_loop_max,i_loop,cte,mag_force,a_eff,/;"	v	module:commons
+a_type	f.f90	/^      integer,allocatable  :: a_type(/;"	v	module:commons
 a_type	mfa_common.f90	/^      integer,allocatable  :: a_type(/;"	v	module:commons
-a_w	mfa_common.f90	/^      real (kind=8) :: sigma_w,/;"	v	module:commons
-a_w4	mfa_common.f90	/^      real (kind=8) :: sigma_w,a_w,sigma_w4,/;"	v	module:commons
-a_wall	mfa_common.f90	/^      real (kind=8) :: sigma_w,a_w,sigma_w4,a_w4, sigma_wall(/;"	v	module:commons
+a_w	f.f90	/^        real (kind=8) :: sigma_w,/;"	v	module:commons
+a_w	mfa_common.f90	/^        real (kind=8) :: sigma_w(/;"	v	module:commons
+a_w	mfa_common.f90	/^        real (kind=8) :: sigma_w,/;"	v	module:commons
+a_w4	f.f90	/^        real (kind=8) :: sigma_w,a_w,sigma_w4,/;"	v	module:commons
+a_w4	mfa_common.f90	/^        real (kind=8) :: sigma_w(2),a_w(2),sigma_w4(/;"	v	module:commons
+a_w4	mfa_common.f90	/^        real (kind=8) :: sigma_w,a_w,sigma_w4,/;"	v	module:commons
+a_wall	f.f90	/^        real (kind=8) :: sigma_w,a_w,sigma_w4,a_w4, sigma_wall(/;"	v	module:commons
+a_wall	mfa_common.f90	/^        real (kind=8) :: sigma_w(2),a_w(2),sigma_w4(2),a_w4(2), sigma_wall(/;"	v	module:commons
+a_wall	mfa_common.f90	/^        real (kind=8) :: sigma_w,a_w,sigma_w4,a_w4, sigma_wall(/;"	v	module:commons
 alpha_c	mfa_common.f90	/^        real(kind=8) :: v_coul,v_coul_self,alpha_c,/;"	v	module:commons
 alpha_eq	mfa_common.f90	/^real (kind=8) :: k_bend, alpha_eq,/;"	v	module:commons
 alpha_or	mfa_common.f90	/^real (kind=8) :: k_or, alpha_or,/;"	v	module:commons
+angle	f.f90	/^      real(kind=8)            :: crdna(1:3),crdnb(1:3),rend(1:3),rendtot,angle,/;"	v	module:commons
 angle	mfa_common.f90	/^      real(kind=8)            :: crdna(1:3),crdnb(1:3),rend(1:3),rendtot,angle,/;"	v	module:commons
+angle2	f.f90	/^      real(kind=8)            :: crdna2(1:3),crdnb2(1:3),rend2(1:3),rendtot2,angle2,/;"	v	module:commons
 angle2	mfa_common.f90	/^      real(kind=8)            :: crdna2(1:3),crdnb2(1:3),rend2(1:3),rendtot2,angle2,/;"	v	module:commons
 angle_plane	functions.f90	/^        function  angle_plane(/;"	f	module:functions
+appl_acc	f.f90	/^      real (kind=8) appl_acc(/;"	v	module:commons
 appl_acc	mfa_common.f90	/^      real (kind=8) appl_acc(/;"	v	module:commons
+appl_acc_bw	f.f90	/^      real (kind=8) appl_acc(n_dim),appl_acc_bw(/;"	v	module:commons
 appl_acc_bw	mfa_common.f90	/^      real (kind=8) appl_acc(n_dim),appl_acc_bw(/;"	v	module:commons
+appl_acc_tw	f.f90	/^      real (kind=8) appl_acc(n_dim),appl_acc_bw(n_dim),appl_acc_tw(/;"	v	module:commons
 appl_acc_tw	mfa_common.f90	/^      real (kind=8) appl_acc(n_dim),appl_acc_bw(n_dim),appl_acc_tw(/;"	v	module:commons
+appl_vel	f.f90	/^      real (kind=8) appl_vel(/;"	v	module:commons
 appl_vel	mfa_common.f90	/^      real (kind=8) appl_vel(/;"	v	module:commons
+appl_vel_bw	f.f90	/^      real (kind=8) appl_vel(n_dim),appl_vel_bw(/;"	v	module:commons
 appl_vel_bw	mfa_common.f90	/^      real (kind=8) appl_vel(n_dim),appl_vel_bw(/;"	v	module:commons
+appl_vel_tw	f.f90	/^      real (kind=8) appl_vel(n_dim),appl_vel_bw(n_dim),appl_vel_tw(/;"	v	module:commons
 appl_vel_tw	mfa_common.f90	/^      real (kind=8) appl_vel(n_dim),appl_vel_bw(n_dim),appl_vel_tw(/;"	v	module:commons
 bending	bending.f90	/^subroutine bending(/;"	s
 bending_melt	bending_melt.f90	/^subroutine bending_melt(/;"	s
+bin	f.f90	/^    integer,allocatable :: bin(/;"	v	module:commons
 bin	mfa_common.f90	/^    integer,allocatable :: bin(/;"	v	module:commons
+bin_bwall	f.f90	/^      integer , allocatable ::  bin_bwall(/;"	v	module:commons
 bin_bwall	mfa_common.f90	/^      integer , allocatable ::  bin_bwall(/;"	v	module:commons
+bin_fluid	f.f90	/^      integer , allocatable ::  bin_fluid(/;"	v	module:commons
 bin_fluid	mfa_common.f90	/^      integer , allocatable ::  bin_fluid(/;"	v	module:commons
+bin_twall	f.f90	/^      integer , allocatable ::  bin_twall(/;"	v	module:commons
 bin_twall	mfa_common.f90	/^      integer , allocatable ::  bin_twall(/;"	v	module:commons
+binbox	f.f90	/^      real(kind=8)            :: binbox,/;"	v	module:commons
 binbox	mfa_common.f90	/^      real(kind=8)            :: binbox,/;"	v	module:commons
+binbox_2	f.f90	/^      real(kind=8)            :: binbox_2,/;"	v	module:commons
 binbox_2	mfa_common.f90	/^      real(kind=8)            :: binbox_2,/;"	v	module:commons
+bingyr	f.f90	/^      integer            :: bingyr,/;"	v	module:commons
 bingyr	mfa_common.f90	/^      integer            :: bingyr,/;"	v	module:commons
 binning	binning.f90	/^      subroutine binning$/;"	s
 binning_box_length	mfa_common.f90	/^      real (kind=8) :: binning_box_length,/;"	v	module:commons
+binning_box_skin	f.f90	/^      real (kind=8) :: binning_box_skin /;"	v	module:commons
 binning_box_skin	mfa_common.f90	/^      real (kind=8) :: binning_box_skin /;"	v	module:commons
+binpnt	f.f90	/^    integer,allocatable :: bin(:),binpnt(/;"	v	module:commons
 binpnt	mfa_common.f90	/^    integer,allocatable :: bin(:),binpnt(/;"	v	module:commons
+binstep	f.f90	/^      real(kind=8)            :: binbox,binstep,/;"	v	module:commons
 binstep	mfa_common.f90	/^      real(kind=8)            :: binbox,binstep,/;"	v	module:commons
+binstep_2	f.f90	/^      real(kind=8)            :: binbox_2,binstep_2 /;"	v	module:commons
 binstep_2	mfa_common.f90	/^      real(kind=8)            :: binbox_2,binstep_2 /;"	v	module:commons
 bond_orientation	functions.f90	/^  subroutine bond_orientation(/;"	s	module:functions
+bottom_thermal_wall	f.f90	/^        real(kind=8) :: thermal_skin,top_thermal_wall,bottom_thermal_wall /;"	v	module:commons
 bottom_thermal_wall	mfa_common.f90	/^        real(kind=8) :: thermal_skin,top_thermal_wall,bottom_thermal_wall /;"	v	module:commons
+boundary	f.f90	/^      real (kind=8) :: boundary(/;"	v	module:commons
 boundary	mfa_common.f90	/^      real (kind=8) :: boundary(/;"	v	module:commons
 boundary_d	mfa_common.f90	/^      real (kind=8) :: boundary_d(/;"	v	module:commons
+c4	f.f90	/^      integer                 :: c4$/;"	v	module:commons
 c4	mfa_common.f90	/^      integer                 :: c4$/;"	v	module:commons
+c_dummy	f.f90	/^      character (len=64) ::  c_dummy /;"	v	module:commons
 c_dummy	mfa_common.f90	/^      character (len=64) ::  c_dummy /;"	v	module:commons
 calc_cms	functions.f90	/^subroutine calc_cms(/;"	s	module:functions
 calc_drop_rg	functions.f90	/^subroutine calc_drop_rg(/;"	s	module:functions
 charge	mfa_common.f90	/^        real(kind=8) :: v_coul,v_coul_self,alpha_c,sqrt_alpha_c,charge(/;"	v	module:commons
 check_fluid_fluid	util.f90	/^      subroutine check_fluid_fluid$/;"	s	module:util
 check_skin	check_skin.f90	/^      subroutine check_skin$/;"	s
+commons	f.f90	/^module commons$/;"	m
 commons	mfa_common.f90	/^module commons$/;"	m
 conf_default	conf_default.f90	/^subroutine conf_default(/;"	s
+const_force	f.f90	/^       real(kind=8) :: const_force(/;"	v	module:commons
 const_force	mfa_common.f90	/^       real(kind=8) :: const_force(/;"	v	module:commons
 constant_force	constant_force.f90	/^subroutine constant_force$/;"	s
 coor_refold	functions.f90	/^subroutine coor_refold(/;"	s	module:functions
+correct_coef	f.f90	/^      real predict_coef(0:n_order-1,0:n_order),correct_coef(/;"	v	module:commons
 correct_coef	mfa_common.f90	/^      real predict_coef(0:n_order-1,0:n_order),correct_coef(/;"	v	module:commons
 coulomb	~coulomb.f90	/^        subroutine coulomb$/;"	s
+count_obs	f.f90	/^      integer           :: count_obs$/;"	v	module:commons
 count_obs	mfa_common.f90	/^      integer           :: count_obs$/;"	v	module:commons
+countgyr	f.f90	/^      integer            :: bingyr,countgyr(/;"	v	module:commons
 countgyr	mfa_common.f90	/^      integer            :: bingyr,countgyr(/;"	v	module:commons
+crdna	f.f90	/^      real(kind=8)            :: crdna(/;"	v	module:commons
 crdna	mfa_common.f90	/^      real(kind=8)            :: crdna(/;"	v	module:commons
+crdna2	f.f90	/^      real(kind=8)            :: crdna2(/;"	v	module:commons
 crdna2	mfa_common.f90	/^      real(kind=8)            :: crdna2(/;"	v	module:commons
+crdnb	f.f90	/^      real(kind=8)            :: crdna(1:3),crdnb(/;"	v	module:commons
 crdnb	mfa_common.f90	/^      real(kind=8)            :: crdna(1:3),crdnb(/;"	v	module:commons
+crdnb2	f.f90	/^      real(kind=8)            :: crdna2(1:3),crdnb2(/;"	v	module:commons
 crdnb2	mfa_common.f90	/^      real(kind=8)            :: crdna2(1:3),crdnb2(/;"	v	module:commons
+cte	f.f90	/^   real (kind=8), save :: m_sat,mag_m_z,V_part,r_loop_min,r_loop_max,i_loop,cte,/;"	v	module:commons
 cte	mfa_common.f90	/^   real (kind=8), save :: m_sat,mag_m_z,V_part,r_loop_min,r_loop_max,i_loop,cte,/;"	v	module:commons
 d_part	mfa_common.f90	/^      integer ::  n_mon_arm, n_arms, n_stars, i_star, i_arm, i_mon_arm, d_part$/;"	v	module:commons
 de	ziggurat.f90	/^                            q,                    de=/;"	v	module:Ziggurat
 de0	par_ziggurat.f90	/^    q, de0 /;"	v	module:Par_Zig_mod
 debug	md_main.f90	/^      logical,parameter :: debug /;"	v	program:md_pb
+delta_bin_x	f.f90	/^      integer            :: delta_bin_x,/;"	v	module:commons
 delta_bin_x	mfa_common.f90	/^      integer            :: delta_bin_x,/;"	v	module:commons
+delta_bin_y	f.f90	/^      integer            :: delta_bin_x,delta_bin_y,/;"	v	module:commons
 delta_bin_y	mfa_common.f90	/^      integer            :: delta_bin_x,delta_bin_y,/;"	v	module:commons
+delta_bin_z	f.f90	/^      integer            :: delta_bin_x,delta_bin_y,delta_bin_z,/;"	v	module:commons
 delta_bin_z	mfa_common.f90	/^      integer            :: delta_bin_x,delta_bin_y,delta_bin_z,/;"	v	module:commons
+delta_r	f.f90	/^       real (kind=8)  :: delta_r(/;"	v	module:commons
 delta_r	mfa_common.f90	/^       real (kind=8)  :: delta_r(/;"	v	module:commons
 delta_sig	mfa_common.f90	/^        real (kind=8) :: delta_sig(/;"	v	module:commons
 dens_drop	mfa_common.f90	/^      real (kind=8) :: z_max_d,z_min_d,x_box_min,x_box_max,vol_drop,dens_drop$/;"	v	module:commons
@@ -148,51 +197,82 @@ dens_xz_2	mfa_common.f90	/^      real (kind=8),allocatable :: dens_xz(:,:,:),den
 dens_xz_b	mfa_common.f90	/^      real (kind=8),allocatable :: dens_xz(:,:,:),dens_xz_b(/;"	v	module:commons
 dens_xz_b_2	mfa_common.f90	/^      real (kind=8),allocatable :: dens_xz(:,:,:),dens_xz_b(:,:,:),dens_xz_2(:,:,:),dens_xz_b_2(/;"	v	module:commons
 diff_coef	functions.f90	/^    subroutine diff_coef(/;"	s	module:functions
+dim_prof_dens	f.f90	/^      integer            :: dim_prof_dens$/;"	v	module:commons
 dim_prof_dens	mfa_common.f90	/^      integer            :: dim_prof_dens$/;"	v	module:commons
 dipolar_correction	dipolar_correction.f90	/^subroutine dipolar_correction(/;"	s
 dist_pinned	mfa_common.f90	/^      real(kind= 8) ::  dist_pinned,/;"	v	module:commons
 dn	ziggurat.f90	/^   REAL(DP)             ::  dn=/;"	v	module:Ziggurat
 dn0	par_ziggurat.f90	/^    REAL(DP) :: dn0 /;"	v	module:Par_Zig_mod
 dpd_forces	dpd_forces.f90	/^subroutine dpd_forces(/;"	s
+drop_cell_x	f.f90	/^      real (kind=8)     :: drop_cell_x,/;"	v	module:commons
 drop_cell_x	mfa_common.f90	/^      real (kind=8)     :: drop_cell_x,/;"	v	module:commons
+drop_cell_y	f.f90	/^      real (kind=8)     :: drop_cell_x,drop_cell_y /;"	v	module:commons
 drop_cell_y	mfa_common.f90	/^      real (kind=8)     :: drop_cell_x,drop_cell_y /;"	v	module:commons
 drop_cm	mfa_common.f90	/^      real (kind=8) :: drop_cm(/;"	v	module:commons
 drop_v_end	functions.f90	/^  subroutine drop_v_end(/;"	s	module:functions
+dt	f.f90	/^      real(kind=8)   ::  dt,/;"	v	module:commons
 dt	mfa_common.f90	/^      real(kind=8)   ::  dt,/;"	v	module:commons
+dt_2	f.f90	/^      real(kind=8)   ::  dt,dt_2,/;"	v	module:commons
 dt_2	mfa_common.f90	/^      real(kind=8)   ::  dt,dt_2,/;"	v	module:commons
+e_fluid_fluid_1	f.f90	/^                        t_fluid_1,t_fluid_2,e_fluid_fluid_1,/;"	v	module:commons
 e_fluid_fluid_1	mfa_common.f90	/^                        t_fluid_1,t_fluid_2,e_fluid_fluid_1,/;"	v	module:commons
+e_fluid_fluid_2	f.f90	/^                        t_fluid_1,t_fluid_2,e_fluid_fluid_1,e_fluid_fluid_2$/;"	v	module:commons
 e_fluid_fluid_2	mfa_common.f90	/^                        t_fluid_1,t_fluid_2,e_fluid_fluid_1,e_fluid_fluid_2$/;"	v	module:commons
+e_shift	f.f90	/^      epsil(n_type,n_type),sigma(n_type,n_type),range_2(n_type,n_type),e_shift(/;"	v	module:commons
 e_shift	mfa_common.f90	/^      epsil(n_type,n_type),sigma(n_type,n_type),range_2(n_type,n_type),e_shift(/;"	v	module:commons
+e_total	f.f90	/^      real (kind=8) ::  v_total,v_total_1,v_total_2,t_total,t_total_1, t_total_2,e_total,/;"	v	module:commons
 e_total	mfa_common.f90	/^      real (kind=8) ::  v_total,v_total_1,v_total_2,t_total,t_total_1, t_total_2,e_total,/;"	v	module:commons
+e_total_1	f.f90	/^      real (kind=8) ::  v_total,v_total_1,v_total_2,t_total,t_total_1, t_total_2,e_total,e_total_1,/;"	v	module:commons
 e_total_1	mfa_common.f90	/^      real (kind=8) ::  v_total,v_total_1,v_total_2,t_total,t_total_1, t_total_2,e_total,e_total_1,/;"	v	module:commons
+e_total_2	f.f90	/^      real (kind=8) ::  v_total,v_total_1,v_total_2,t_total,t_total_1, t_total_2,e_total,e_total_1,e_total_2$/;"	v	module:commons
 e_total_2	mfa_common.f90	/^      real (kind=8) ::  v_total,v_total_1,v_total_2,t_total,t_total_1, t_total_2,e_total,e_total_1,e_total_2$/;"	v	module:commons
+e_wall_wall_1	f.f90	/^      real (kind=8) ::  v_wall_wall_1,t_wall_1,v_wall_wall_2,t_wall_2,e_wall_wall_1,/;"	v	module:commons
 e_wall_wall_1	mfa_common.f90	/^      real (kind=8) ::  v_wall_wall_1,t_wall_1,v_wall_wall_2,t_wall_2,e_wall_wall_1,/;"	v	module:commons
+e_wall_wall_2	f.f90	/^      real (kind=8) ::  v_wall_wall_1,t_wall_1,v_wall_wall_2,t_wall_2,e_wall_wall_1,e_wall_wall_2$/;"	v	module:commons
 e_wall_wall_2	mfa_common.f90	/^      real (kind=8) ::  v_wall_wall_1,t_wall_1,v_wall_wall_2,t_wall_2,e_wall_wall_1,e_wall_wall_2$/;"	v	module:commons
+epsil	f.f90	/^      epsil(/;"	v	module:commons
 epsil	mfa_common.f90	/^      epsil(/;"	v	module:commons
+ev_term	mfa_common.f90	/^        real(kind=8)              :: zv_min,zv_max,xvf,ev_term,/;"	v	module:commons
 ewald_k	ewald_k.f90	/^    subroutine ewald_k(/;"	s
 ewald_real	ewald_real.f90	/^    subroutine ewald_real(/;"	s
+ext_force	f.f90	/^       real(kind=8) , allocatable :: ext_force(/;"	v	module:commons
 ext_force	mfa_common.f90	/^       real(kind=8) , allocatable :: ext_force(/;"	v	module:commons
+f0_spring_1	f.f90	/^      real(kind=8)            :: r0_twall_1(n_dim),f0_spring_1(/;"	v	module:commons
 f0_spring_1	mfa_common.f90	/^      real(kind=8)            :: r0_twall_1(n_dim),f0_spring_1(/;"	v	module:commons
+f_on_heads	f.f90	/^      real (kind=8), allocatable :: f_on_heads(/;"	v	module:commons
 f_on_heads	mfa_common.f90	/^      real (kind=8), allocatable :: f_on_heads(/;"	v	module:commons
+f_skin	f.f90	/^       integer           :: f_skin$/;"	v	module:commons
 f_skin	mfa_common.f90	/^       integer           :: f_skin$/;"	v	module:commons
+f_twall	f.f90	/^      integer           :: f_twall(/;"	v	module:commons
 f_twall	mfa_common.f90	/^      integer           :: f_twall(/;"	v	module:commons
+fbw	f.f90	/^      real (kind=8) shifttw(n_dim),shiftbw(n_dim), fbw(/;"	v	module:commons
 fbw	mfa_common.f90	/^      real (kind=8) shifttw(n_dim),shiftbw(n_dim), fbw(/;"	v	module:commons
 fe	ziggurat.f90	/^   REAL(DP), SAVE       ::  wn(0:127), fn(0:127), we(0:255), fe(/;"	v	module:Ziggurat
+ff_list	f.f90	/^      integer, allocatable  ::   ff_list(/;"	v	module:commons
 ff_list	mfa_common.f90	/^      integer, allocatable  ::   ff_list(/;"	v	module:commons
 fix_shift	mfa_common.f90	/^      real (kind=8) :: drop_cm(3),x_droplet_shift,fix_shift$/;"	v	module:commons
 fluid_fluid	fluid_fluid.f90	/^      subroutine fluid_fluid(/;"	s
 fluid_wall	fluid_wall.f90	/^      subroutine fluid_wall(/;"	s
 fn	ziggurat.f90	/^   REAL(DP), SAVE       ::  wn(0:127), fn(/;"	v	module:Ziggurat
+fo_last_pinned	f.f90	/^      real(kind=8)            :: r0_last_pinned(n_dim),fo_last_pinned(/;"	v	module:commons
 fo_last_pinned	mfa_common.f90	/^      real(kind=8)            :: r0_last_pinned(n_dim),fo_last_pinned(/;"	v	module:commons
+fo_last_unpinned	f.f90	/^      real(kind=8)            :: r0_last_pinned(n_dim),fo_last_pinned(n_dim) ,fo_last_unpinned(/;"	v	module:commons
 fo_last_unpinned	mfa_common.f90	/^      real(kind=8)            :: r0_last_pinned(n_dim),fo_last_pinned(n_dim) ,fo_last_unpinned(/;"	v	module:commons
+force	f.f90	/^      real (kind=8), allocatable :: force(/;"	v	module:commons
 force	mfa_common.f90	/^      real (kind=8), allocatable :: force(/;"	v	module:commons
 force_bend	mfa_common.f90	/^real (kind=8) ,allocatable :: force_bend(/;"	v	module:commons
+force_d	f.f90	/^      real (kind=8), allocatable :: force_d(/;"	v	module:commons
 force_d	mfa_common.f90	/^      real (kind=8), allocatable :: force_d(/;"	v	module:commons
+force_loc	f.f90	/^       real (kind=8)  :: delta_r(n_dim),force_loc(/;"	v	module:commons
 force_loc	mfa_common.f90	/^       real (kind=8)  :: delta_r(n_dim),force_loc(/;"	v	module:commons
 force_or	mfa_common.f90	/^real (kind=8) ,allocatable :: force_or(/;"	v	module:commons
+force_r	f.f90	/^      real (kind=8), allocatable :: force_d(:,:), force_r(/;"	v	module:commons
 force_r	mfa_common.f90	/^      real (kind=8), allocatable :: force_d(:,:), force_r(/;"	v	module:commons
+force_twall	f.f90	/^      real(kind=8)            :: va_spring_twall(n_dim),k_spring_twall(n_dim), force_twall(/;"	v	module:commons
 force_twall	mfa_common.f90	/^      real(kind=8)            :: va_spring_twall(n_dim),k_spring_twall(n_dim), force_twall(/;"	v	module:commons
+friction	f.f90	/^              friction(/;"	v	module:commons
 friction	mfa_common.f90	/^              friction(/;"	v	module:commons
+ftw	f.f90	/^      real(kind=8)            :: ftw(/;"	v	module:commons
 ftw	mfa_common.f90	/^      real(kind=8)            :: ftw(/;"	v	module:commons
 functions	functions.f90	/^module functions$/;"	m
 gen_brush	gen_brush.f90	/^  subroutine gen_brush(/;"	s
@@ -204,42 +284,70 @@ grainsize	mfa_common.f90	/^integer :: ith, numth, grainsize=/;"	v	module:commons
 guessed_drop_cm	mfa_common.f90	/^      real (kind=8) :: binning_box_length,guessed_drop_cm(/;"	v	module:commons
 half	par_ziggurat.f90	/^    half /;"	v	module:Par_Zig_mod
 half	ziggurat.f90	/^                            half=/;"	v	module:Ziggurat
+half_boundary	f.f90	/^      real (kind=8) :: boundary(3),inv_boundary(3),half_boundary(/;"	v	module:commons
 half_boundary	mfa_common.f90	/^      real (kind=8) :: boundary(3),inv_boundary(3),half_boundary(/;"	v	module:commons
+heat_flux_computation	functions.f90	/^subroutine heat_flux_computation(/;"	s	module:functions
+hist_dim	f.f90	/^      integer, parameter :: hist_dim /;"	v	module:commons
 hist_dim	mfa_common.f90	/^      integer, parameter :: hist_dim /;"	v	module:commons
 histo	functions.f90	/^subroutine histo(/;"	s	module:functions
+histo_b	f.f90	/^      real (kind=8) :: histo_b(/;"	v	module:commons
 histo_b	mfa_common.f90	/^      real (kind=8) :: histo_b(/;"	v	module:commons
 histo_cm	functions.f90	/^subroutine histo_cm(/;"	s	module:functions
+histo_d	f.f90	/^      real (kind=8) :: histo_b(hist_dim),histo_d(/;"	v	module:commons
 histo_d	mfa_common.f90	/^      real (kind=8) :: histo_b(hist_dim),histo_d(/;"	v	module:commons
+histo_out	f.f90	/^       real (kind=8) ,allocatable :: v_prof(:,:,:),v_prof_2(:,:,:),histo_out(/;"	v	module:commons
 histo_out	mfa_common.f90	/^       real (kind=8) ,allocatable :: v_prof(:,:,:),v_prof_2(:,:,:),histo_out(/;"	v	module:commons
 histo_vec	functions.f90	/^subroutine histo_vec(/;"	s	module:functions
 histo_vec	util.f90	/^subroutine histo_vec(/;"	s	module:util
 hz	ziggurat.f90	/^                            ke(0:255), hz$/;"	v	module:Ziggurat
+i1_bin_part	f.f90	/^      integer            :: i1_bin_part,/;"	v	module:commons
 i1_bin_part	mfa_common.f90	/^      integer            :: i1_bin_part,/;"	v	module:commons
+i2_bin_part	f.f90	/^      integer            :: i1_bin_part,i2_bin_part,/;"	v	module:commons
 i2_bin_part	mfa_common.f90	/^      integer            :: i1_bin_part,i2_bin_part,/;"	v	module:commons
 i_arm	mfa_common.f90	/^      integer ::  n_mon_arm, n_arms, n_stars, i_star, i_arm,/;"	v	module:commons
+i_bin_fl	f.f90	/^      integer  :: i_bin_fl,/;"	v	module:commons
 i_bin_fl	mfa_common.f90	/^      integer  :: i_bin_fl,/;"	v	module:commons
+i_bin_x	f.f90	/^      integer           :: i_bin_x,/;"	v	module:commons
 i_bin_x	mfa_common.f90	/^      integer           :: i_bin_x,/;"	v	module:commons
+i_bin_y	f.f90	/^      integer           :: i_bin_y,/;"	v	module:commons
 i_bin_y	mfa_common.f90	/^      integer           :: i_bin_y,/;"	v	module:commons
+i_bin_z	f.f90	/^      integer           :: i_bin_z,/;"	v	module:commons
 i_bin_z	mfa_common.f90	/^      integer           :: i_bin_z,/;"	v	module:commons
+i_cell_w_x	f.f90	/^      integer :: i_cell_w_x,/;"	v	module:commons
 i_cell_w_x	mfa_common.f90	/^      integer :: i_cell_w_x,/;"	v	module:commons
+i_cell_w_y	f.f90	/^      integer :: i_cell_w_x,i_cell_w_y /;"	v	module:commons
 i_cell_w_y	mfa_common.f90	/^      integer :: i_cell_w_x,i_cell_w_y /;"	v	module:commons
+i_chain	f.f90	/^      integer :: i_mon,i_chain,/;"	v	module:commons
 i_chain	mfa_common.f90	/^      integer :: i_mon,i_chain,/;"	v	module:commons
 i_chain_d	mfa_common.f90	/^      integer :: i_mon_d, i_chain_d$/;"	v	module:commons
+i_dim	f.f90	/^      integer           ::  i_dim,/;"	v	module:commons
 i_dim	mfa_common.f90	/^      integer           ::  i_dim,/;"	v	module:commons
+i_dummy	f.f90	/^      integer :: i_dummy$/;"	v	module:commons
 i_dummy	mfa_common.f90	/^      integer :: i_dummy$/;"	v	module:commons
+i_histodown	f.f90	/^      real(kind=8)            :: binbox,binstep,i_histodown(/;"	v	module:commons
 i_histodown	mfa_common.f90	/^      real(kind=8)            :: binbox,binstep,i_histodown(/;"	v	module:commons
+i_histoup	f.f90	/^      real(kind=8)            :: binbox,binstep,i_histodown(0:110),i_histoup(/;"	v	module:commons
 i_histoup	mfa_common.f90	/^      real(kind=8)            :: binbox,binstep,i_histodown(0:110),i_histoup(/;"	v	module:commons
+i_loop	f.f90	/^   real (kind=8), save :: m_sat,mag_m_z,V_part,r_loop_min,r_loop_max,i_loop,/;"	v	module:commons
 i_loop	mfa_common.f90	/^   real (kind=8), save :: m_sat,mag_m_z,V_part,r_loop_min,r_loop_max,i_loop,/;"	v	module:commons
+i_mon	f.f90	/^      integer :: i_mon,/;"	v	module:commons
 i_mon	mfa_common.f90	/^      integer :: i_mon,/;"	v	module:commons
 i_mon_arm	mfa_common.f90	/^      integer ::  n_mon_arm, n_arms, n_stars, i_star, i_arm, i_mon_arm,/;"	v	module:commons
 i_mon_d	mfa_common.f90	/^      integer :: i_mon_d,/;"	v	module:commons
+i_mon_tot	f.f90	/^      integer :: i_mon,i_chain,i_mon_tot /;"	v	module:commons
 i_mon_tot	mfa_common.f90	/^      integer :: i_mon,i_chain,i_mon_tot /;"	v	module:commons
+i_neigh	f.f90	/^      integer            :: i_neigh,/;"	v	module:commons
 i_neigh	mfa_common.f90	/^      integer            :: i_neigh,/;"	v	module:commons
+i_order	f.f90	/^      integer           :: i_order,/;"	v	module:commons
 i_order	mfa_common.f90	/^      integer           :: i_order,/;"	v	module:commons
+i_part	f.f90	/^      integer :: i_wall,i_part,/;"	v	module:commons
 i_part	mfa_common.f90	/^      integer :: i_wall,i_part,/;"	v	module:commons
 i_star	mfa_common.f90	/^      integer ::  n_mon_arm, n_arms, n_stars, i_star,/;"	v	module:commons
+i_time	f.f90	/^      integer :: i_time,/;"	v	module:commons
 i_time	mfa_common.f90	/^      integer :: i_time,/;"	v	module:commons
+i_type	f.f90	/^      integer i_type,/;"	v	module:commons
 i_type	mfa_common.f90	/^      integer i_type,/;"	v	module:commons
+i_wall	f.f90	/^      integer :: i_wall,/;"	v	module:commons
 i_wall	mfa_common.f90	/^      integer :: i_wall,/;"	v	module:commons
 inclination_rigidity	inclination_rigidity.f90	/^subroutine inclination_rigidity(/;"	s
 init_config	init_config.f90	/^     subroutine init_config$/;"	s
@@ -248,47 +356,78 @@ init_obser	init_obser.f90	/^      subroutine init_obser$/;"	s
 init_params	init_params.f90	/^     subroutine init_params$/;"	s
 init_system	init_system.f90	/^subroutine init_system(/;"	s
 initialized	ziggurat.f90	/^   LOGICAL,  SAVE       ::  initialized=/;"	v	module:Ziggurat
+inter4	f.f90	/^      integer :: inter4$/;"	v	module:commons
 inter4	mfa_common.f90	/^      integer :: inter4$/;"	v	module:commons
 intra_molec	intra_molec.f90	/^      subroutine intra_molec(/;"	s
 intra_wall	intra_wall.f90	/^      subroutine intra_wall$/;"	s
+inv_N	f.f90	/^      real (kind=8) :: v_fluid_wall,v_fluid_wall_1,v_fluid_wall_2,inv_N,/;"	v	module:commons
 inv_N	mfa_common.f90	/^      real (kind=8) :: v_fluid_wall,v_fluid_wall_1,v_fluid_wall_2,inv_N,/;"	v	module:commons
+inv_V	f.f90	/^      real (kind=8) :: v_fluid_wall,v_fluid_wall_1,v_fluid_wall_2,inv_N,inv_V,/;"	v	module:commons
 inv_V	mfa_common.f90	/^      real (kind=8) :: v_fluid_wall,v_fluid_wall_1,v_fluid_wall_2,inv_N,inv_V,/;"	v	module:commons
+inv_boundary	f.f90	/^      real (kind=8) :: boundary(3),inv_boundary(/;"	v	module:commons
 inv_boundary	mfa_common.f90	/^      real (kind=8) :: boundary(3),inv_boundary(/;"	v	module:commons
+inv_dt	f.f90	/^      real(kind=8)   ::  dt,dt_2,inv_dt,/;"	v	module:commons
 inv_dt	mfa_common.f90	/^      real(kind=8)   ::  dt,dt_2,inv_dt,/;"	v	module:commons
+inv_dt_2	f.f90	/^      real(kind=8)   ::  dt,dt_2,inv_dt,inv_dt_2$/;"	v	module:commons
 inv_dt_2	mfa_common.f90	/^      real(kind=8)   ::  dt,dt_2,inv_dt,inv_dt_2$/;"	v	module:commons
+inv_mass	f.f90	/^      real (kind=8), allocatable :: mass(:),inv_mass(/;"	v	module:commons
 inv_mass	mfa_common.f90	/^      real (kind=8), allocatable :: mass(:),inv_mass(/;"	v	module:commons
+inv_n_chain	f.f90	/^      real (kind=8) :: v_fluid_wall,v_fluid_wall_1,v_fluid_wall_2,inv_N,inv_V,inv_n_mon,inv_n_chain$/;"	v	module:commons
 inv_n_chain	mfa_common.f90	/^      real (kind=8) :: v_fluid_wall,v_fluid_wall_1,v_fluid_wall_2,inv_N,inv_V,inv_n_mon,inv_n_chain$/;"	v	module:commons
+inv_n_mon	f.f90	/^      real (kind=8) :: v_fluid_wall,v_fluid_wall_1,v_fluid_wall_2,inv_N,inv_V,inv_n_mon,/;"	v	module:commons
 inv_n_mon	mfa_common.f90	/^      real (kind=8) :: v_fluid_wall,v_fluid_wall_1,v_fluid_wall_2,inv_N,inv_V,inv_n_mon,/;"	v	module:commons
+inv_r_bin_x	f.f90	/^      real(kind=8)            :: inv_r_bin_x,/;"	v	module:commons
 inv_r_bin_x	mfa_common.f90	/^      real(kind=8)            :: inv_r_bin_x,/;"	v	module:commons
+inv_r_bin_y	f.f90	/^      real(kind=8)            :: inv_r_bin_x,inv_r_bin_y,/;"	v	module:commons
 inv_r_bin_y	mfa_common.f90	/^      real(kind=8)            :: inv_r_bin_x,inv_r_bin_y,/;"	v	module:commons
+inv_r_bin_z	f.f90	/^      real(kind=8)            :: inv_r_bin_x,inv_r_bin_y,inv_r_bin_z /;"	v	module:commons
 inv_r_bin_z	mfa_common.f90	/^      real(kind=8)            :: inv_r_bin_x,inv_r_bin_y,inv_r_bin_z /;"	v	module:commons
+inv_r_chain_2	f.f90	/^      real (kind=8)   :: r_chain,k_chain,r_chain_2,v_intra_molec,v_intra_molec_d,v_intra_molec_e,inv_r_chain_2$/;"	v	module:commons
 inv_r_chain_2	mfa_common.f90	/^      real (kind=8)   :: r_chain,k_chain,r_chain_2,v_intra_molec,v_intra_molec_d,v_intra_molec_e,inv_r_chain_2$/;"	v	module:commons
+inv_range_2	f.f90	/^      real (kind=8) :: inv_range_2(/;"	v	module:commons
 inv_range_2	mfa_common.f90	/^      real (kind=8) :: inv_range_2(/;"	v	module:commons
 inv_sqrt_pi	mfa_common.f90	/^        real(kind=8) :: v_coul,v_coul_self,alpha_c,sqrt_alpha_c,charge(n_type) ,inv_sqrt_pi$/;"	v	module:commons
+iseed	f.f90	/^      integer           :: iseed,/;"	v	module:commons
 iseed	mfa_common.f90	/^      integer           :: iseed,/;"	v	module:commons
 ith	mfa_common.f90	/^integer :: ith,/;"	v	module:commons
 iz	ziggurat.f90	/^   INTEGER,  SAVE       ::  iz,/;"	v	module:Ziggurat
+j_bin_fl	f.f90	/^      integer  :: i_bin_fl,j_bin_fl /;"	v	module:commons
 j_bin_fl	mfa_common.f90	/^      integer  :: i_bin_fl,j_bin_fl /;"	v	module:commons
+j_bin_x	f.f90	/^      integer           :: i_bin_x,j_bin_x,/;"	v	module:commons
 j_bin_x	mfa_common.f90	/^      integer           :: i_bin_x,j_bin_x,/;"	v	module:commons
+j_bin_y	f.f90	/^      integer           :: i_bin_y,j_bin_y,/;"	v	module:commons
 j_bin_y	mfa_common.f90	/^      integer           :: i_bin_y,j_bin_y,/;"	v	module:commons
+j_bin_z	f.f90	/^      integer           :: i_bin_z,j_bin_z,/;"	v	module:commons
 j_bin_z	mfa_common.f90	/^      integer           :: i_bin_z,j_bin_z,/;"	v	module:commons
+j_dim	f.f90	/^      integer           ::  i_dim,j_dim$/;"	v	module:commons
 j_dim	mfa_common.f90	/^      integer           ::  i_dim,j_dim$/;"	v	module:commons
+j_order	f.f90	/^      integer           :: i_order,j_order /;"	v	module:commons
 j_order	mfa_common.f90	/^      integer           :: i_order,j_order /;"	v	module:commons
+j_part	f.f90	/^      integer :: i_wall,i_part,j_part,/;"	v	module:commons
 j_part	mfa_common.f90	/^      integer :: i_wall,i_part,j_part,/;"	v	module:commons
+j_type	f.f90	/^      integer i_type,j_type /;"	v	module:commons
 j_type	mfa_common.f90	/^      integer i_type,j_type /;"	v	module:commons
 jsr	ziggurat.f90	/^   INTEGER,  SAVE       ::  iz, jz, jsr=/;"	v	module:Ziggurat
 jz	ziggurat.f90	/^   INTEGER,  SAVE       ::  iz, jz,/;"	v	module:Ziggurat
 k_bend	mfa_common.f90	/^real (kind=8) :: k_bend,/;"	v	module:commons
+k_bin_x	f.f90	/^      integer           :: i_bin_x,j_bin_x,k_bin_x$/;"	v	module:commons
 k_bin_x	mfa_common.f90	/^      integer           :: i_bin_x,j_bin_x,k_bin_x$/;"	v	module:commons
+k_bin_y	f.f90	/^      integer           :: i_bin_y,j_bin_y,k_bin_y /;"	v	module:commons
 k_bin_y	mfa_common.f90	/^      integer           :: i_bin_y,j_bin_y,k_bin_y /;"	v	module:commons
+k_bin_z	f.f90	/^      integer           :: i_bin_z,j_bin_z,k_bin_z /;"	v	module:commons
 k_bin_z	mfa_common.f90	/^      integer           :: i_bin_z,j_bin_z,k_bin_z /;"	v	module:commons
+k_chain	f.f90	/^      real (kind=8)   :: r_chain,k_chain,/;"	v	module:commons
 k_chain	mfa_common.f90	/^      real (kind=8)   :: r_chain,k_chain,/;"	v	module:commons
 k_or	mfa_common.f90	/^real (kind=8) :: k_or,/;"	v	module:commons
+k_spring_twall	f.f90	/^      real(kind=8)            :: va_spring_twall(n_dim),k_spring_twall(/;"	v	module:commons
 k_spring_twall	mfa_common.f90	/^      real(kind=8)            :: va_spring_twall(n_dim),k_spring_twall(/;"	v	module:commons
+k_spring_wall	f.f90	/^      real(kind=8)   ::  k_spring_wall$/;"	v	module:commons
 k_spring_wall	mfa_common.f90	/^      real(kind=8)   ::  k_spring_wall$/;"	v	module:commons
+kb	f.f90	/^        real(kind=8), parameter :: kb=/;"	v	module:commons
 kb	mfa_common.f90	/^        real(kind=8), parameter :: kb=/;"	v	module:commons
 ke	ziggurat.f90	/^                            ke(/;"	v	module:Ziggurat
 kn	ziggurat.f90	/^   INTEGER,  SAVE       ::  iz, jz, jsr=123456789, kn(/;"	v	module:Ziggurat
+kptr	f.f90	/^      integer           :: iseed,mz(250),kptr$/;"	v	module:commons
 kptr	mfa_common.f90	/^      integer           :: iseed,mz(250),kptr$/;"	v	module:commons
 lgv_forces	lgv_forces.f90	/^subroutine lgv_forces(/;"	s
 lz_half	mfa_common.f90	/^        real(kind=8) :: sqrt_alpha,lz_half,/;"	v	module:commons
@@ -296,79 +435,134 @@ m1	par_ziggurat.f90	/^    REAL(DP), PARAMETER :: m1 /;"	v	module:Par_Zig_mod
 m1	ziggurat.f90	/^   REAL(DP), PARAMETER  ::  m1=/;"	v	module:Ziggurat
 m2	par_ziggurat.f90	/^    REAL(DP), PARAMETER :: m1 = 2147483648.0_DP, m2 /;"	v	module:Par_Zig_mod
 m2	ziggurat.f90	/^   REAL(DP), PARAMETER  ::  m1=2147483648.0_DP,   m2=/;"	v	module:Ziggurat
+m_sat	f.f90	/^   real (kind=8), save :: m_sat,/;"	v	module:commons
 m_sat	mfa_common.f90	/^   real (kind=8), save :: m_sat,/;"	v	module:commons
+mag_force	f.f90	/^   real (kind=8), save :: m_sat,mag_m_z,V_part,r_loop_min,r_loop_max,i_loop,cte,mag_force,/;"	v	module:commons
 mag_force	mfa_common.f90	/^   real (kind=8), save :: m_sat,mag_m_z,V_part,r_loop_min,r_loop_max,i_loop,cte,mag_force,/;"	v	module:commons
+mag_m_z	f.f90	/^   real (kind=8), save :: m_sat,mag_m_z,/;"	v	module:commons
 mag_m_z	mfa_common.f90	/^   real (kind=8), save :: m_sat,mag_m_z,/;"	v	module:commons
+mag_model	f.f90	/^      integer :: n_loop,mag_model$/;"	v	module:commons
 mag_model	mfa_common.f90	/^      integer :: n_loop,mag_model$/;"	v	module:commons
 magnetic_force	magnetic_force.f90	/^subroutine magnetic_force(/;"	s
 make_binning_boxes	make_binning_boxes.f90	/^subroutine make_binning_boxes(/;"	s
+mass	f.f90	/^      real (kind=8), allocatable :: mass(/;"	v	module:commons
 mass	mfa_common.f90	/^      real (kind=8), allocatable :: mass(/;"	v	module:commons
+mass_twall	f.f90	/^      real(kind=8)            :: rx_twall(n_dim,n_order),mass_twall$/;"	v	module:commons
 mass_twall	mfa_common.f90	/^      real(kind=8)            :: rx_twall(n_dim,n_order),mass_twall$/;"	v	module:commons
+mass_type	f.f90	/^      real (kind=8) :: mass_type(/;"	v	module:commons
 mass_type	mfa_common.f90	/^      real (kind=8) :: mass_type(/;"	v	module:commons
 md_pb	md_main.f90	/^      program md_pb /;"	p
 mean_R_center_box	functions.f90	/^subroutine mean_R_center_box(/;"	s	module:functions
+mean_f_on_heads	f.f90	/^      real (kind=8) :: mean_f_on_heads(/;"	v	module:commons
 mean_f_on_heads	mfa_common.f90	/^      real (kind=8) :: mean_f_on_heads(/;"	v	module:commons
+mean_q	mfa_common.f90	/^        real(kind=8)              :: zv_min,zv_max,xvf,ev_term,mean_q$/;"	v	module:commons
 messages	messages.f90	/^subroutine messages /;"	s
+mic_count	f.f90	/^     integer,allocatable ::  mic_count(/;"	v	module:commons
 mic_count	mfa_common.f90	/^     integer,allocatable ::  mic_count(/;"	v	module:commons
 mpi_initialize	mpi_module.f90	/^subroutine mpi_initialize(/;"	s	module:mpi_module
 mpi_module	mpi_module.f90	/^    module mpi_module$/;"	m
+mu_0	f.f90	/^      real (kind=8), parameter :: mu_0 /;"	v	module:commons
 mu_0	mfa_common.f90	/^      real (kind=8), parameter :: mu_0 /;"	v	module:commons
 my_binning	my_binning.f90	/^    subroutine my_binning(/;"	s
 my_binning3	my_binning3.f90	/^subroutine my_binning3(/;"	s
+mz	f.f90	/^      integer           :: iseed,mz(/;"	v	module:commons
 mz	mfa_common.f90	/^      integer           :: iseed,mz(/;"	v	module:commons
+n1_bin_part	f.f90	/^      integer            :: i1_bin_part,i2_bin_part,n1_bin_part,/;"	v	module:commons
 n1_bin_part	mfa_common.f90	/^      integer            :: i1_bin_part,i2_bin_part,n1_bin_part,/;"	v	module:commons
+n2_bin_part	f.f90	/^      integer            :: i1_bin_part,i2_bin_part,n1_bin_part,n2_bin_part$/;"	v	module:commons
 n2_bin_part	mfa_common.f90	/^      integer            :: i1_bin_part,i2_bin_part,n1_bin_part,n2_bin_part$/;"	v	module:commons
 n_arms	mfa_common.f90	/^      integer ::  n_mon_arm, n_arms,/;"	v	module:commons
+n_bin_fl	f.f90	/^                            n_bin_fl=/;"	v	module:commons
 n_bin_fl	mfa_common.f90	/^                            n_bin_fl=/;"	v	module:commons
+n_bin_wa	f.f90	/^      integer, parameter :: n_bin_wa=/;"	v	module:commons
 n_bin_wa	mfa_common.f90	/^      integer, parameter :: n_bin_wa=/;"	v	module:commons
+n_bin_x	f.f90	/^      integer           ::  n_bin_x,/;"	v	module:commons
 n_bin_x	mfa_common.f90	/^      integer           ::  n_bin_x,/;"	v	module:commons
+n_bin_y	f.f90	/^      integer           ::  n_bin_x, n_bin_y,/;"	v	module:commons
 n_bin_y	mfa_common.f90	/^      integer           ::  n_bin_x, n_bin_y,/;"	v	module:commons
+n_bin_z	f.f90	/^      integer           ::  n_bin_x, n_bin_y,n_bin_z /;"	v	module:commons
 n_bin_z	mfa_common.f90	/^      integer           ::  n_bin_x, n_bin_y,n_bin_z /;"	v	module:commons
 n_box	mfa_common.f90	/^      integer :: n_free_chain,n_box(/;"	v	module:commons
 n_box_xz	mfa_common.f90	/^      integer :: n_free_chain,n_box(3),n_box_xz(/;"	v	module:commons
+n_cell	f.f90	/^    integer :: n_cell /;"	v	module:commons
 n_cell	mfa_common.f90	/^    integer :: n_cell /;"	v	module:commons
+n_cell_w_x	f.f90	/^      integer ::            n_cell_w_x,/;"	v	module:commons
 n_cell_w_x	mfa_common.f90	/^      integer ::            n_cell_w_x,/;"	v	module:commons
+n_cell_w_y	f.f90	/^      integer ::            n_cell_w_x,n_cell_w_y,/;"	v	module:commons
 n_cell_w_y	mfa_common.f90	/^      integer ::            n_cell_w_x,n_cell_w_y,/;"	v	module:commons
+n_chain	f.f90	/^      integer :: n_mon,n_chain,/;"	v	module:commons
 n_chain	mfa_common.f90	/^      integer :: n_mon,n_chain,/;"	v	module:commons
+n_chain_2	f.f90	/^      integer :: n_chain_2$/;"	v	module:commons
 n_chain_2	mfa_common.f90	/^      integer :: n_chain_2$/;"	v	module:commons
+n_chain_d	f.f90	/^      integer :: n_mon_d,n_chain_d,/;"	v	module:commons
 n_chain_d	mfa_common.f90	/^      integer :: n_mon_d,n_chain_d,/;"	v	module:commons
+n_chain_e	f.f90	/^      integer :: n_mon_d,n_chain_d,part_init_d,n_chain_e,/;"	v	module:commons
 n_chain_e	mfa_common.f90	/^      integer :: n_mon_d,n_chain_d,part_init_d,n_chain_e,/;"	v	module:commons
 n_chain_vap	mfa_common.f90	/^      integer :: n_mon_tot_v,n_mon_vap,n_chain_vap$/;"	v	module:commons
 n_cm	mfa_common.f90	/^      integer :: n_cm,/;"	v	module:commons
+n_diff_time	f.f90	/^      integer, parameter :: n_diff_time=/;"	v	module:commons
 n_diff_time	mfa_common.f90	/^      integer, parameter :: n_diff_time=/;"	v	module:commons
+n_dim	f.f90	/^      integer, parameter  ::  n_dim=/;"	v	module:commons
 n_dim	mfa_common.f90	/^      integer, parameter  ::  n_dim=/;"	v	module:commons
+n_fcell_max	f.f90	/^      integer            :: delta_bin_x,delta_bin_y,delta_bin_z,n_fcell_max,/;"	v	module:commons
 n_fcell_max	mfa_common.f90	/^      integer            :: delta_bin_x,delta_bin_y,delta_bin_z,n_fcell_max,/;"	v	module:commons
 n_free_chain	mfa_common.f90	/^      integer :: n_free_chain,/;"	v	module:commons
+n_heat_vol	mfa_common.f90	/^        integer(kind=4)           :: n_heat_vol$/;"	v	module:commons
 n_kmax	mfa_common.f90	/^        integer ::  n_kmax$/;"	v	module:commons
+n_layer	f.f90	/^      integer, parameter  :: n_layer /;"	v	module:commons
 n_layer	mfa_common.f90	/^      integer, parameter  :: n_layer /;"	v	module:commons
+n_layers	f.f90	/^      integer,parameter ::  n_layers /;"	v	module:commons
 n_layers	mfa_common.f90	/^      integer,parameter ::  n_layers /;"	v	module:commons
+n_loop	f.f90	/^      integer :: n_loop,/;"	v	module:commons
 n_loop	mfa_common.f90	/^      integer :: n_loop,/;"	v	module:commons
+n_mon	f.f90	/^      integer :: n_mon,/;"	v	module:commons
 n_mon	mfa_common.f90	/^      integer :: n_mon,/;"	v	module:commons
 n_mon_arm	mfa_common.f90	/^      integer ::  n_mon_arm,/;"	v	module:commons
+n_mon_d	f.f90	/^      integer :: n_mon_d,/;"	v	module:commons
 n_mon_d	mfa_common.f90	/^      integer :: n_mon_d,/;"	v	module:commons
+n_mon_e	f.f90	/^      integer :: n_mon_d,n_chain_d,part_init_d,n_chain_e,n_mon_e,/;"	v	module:commons
 n_mon_e	mfa_common.f90	/^      integer :: n_mon_d,n_chain_d,part_init_d,n_chain_e,n_mon_e,/;"	v	module:commons
+n_mon_tot	f.f90	/^      integer :: n_mon,n_chain,n_mon_tot,/;"	v	module:commons
 n_mon_tot	mfa_common.f90	/^      integer :: n_mon,n_chain,n_mon_tot,/;"	v	module:commons
 n_mon_tot_v	mfa_common.f90	/^      integer :: n_mon_tot_v,/;"	v	module:commons
 n_mon_vap	mfa_common.f90	/^      integer :: n_mon_tot_v,n_mon_vap,/;"	v	module:commons
+n_neigh_fl	f.f90	/^      integer, parameter :: n_neigh_fl=/;"	v	module:commons
 n_neigh_fl	mfa_common.f90	/^      integer, parameter :: n_neigh_fl=/;"	v	module:commons
+n_neigh_fl_max	f.f90	/^      integer            :: i_neigh, n_neigh_fl_max,/;"	v	module:commons
 n_neigh_fl_max	mfa_common.f90	/^      integer            :: i_neigh, n_neigh_fl_max,/;"	v	module:commons
+n_neigh_fw_max	f.f90	/^      integer            :: i_neigh, n_neigh_fl_max,n_neigh_fw_max,/;"	v	module:commons
 n_neigh_fw_max	mfa_common.f90	/^      integer            :: i_neigh, n_neigh_fl_max,n_neigh_fw_max,/;"	v	module:commons
+n_neigh_wa	f.f90	/^                            n_neigh_wa=/;"	v	module:commons
 n_neigh_wa	mfa_common.f90	/^                            n_neigh_wa=/;"	v	module:commons
+n_neigh_ww	f.f90	/^                            n_neigh_ww=/;"	v	module:commons
 n_neigh_ww	mfa_common.f90	/^                            n_neigh_ww=/;"	v	module:commons
+n_neigh_ww_max	f.f90	/^      integer            :: i_neigh, n_neigh_fl_max,n_neigh_fw_max,n_neigh_ww_max$/;"	v	module:commons
 n_neigh_ww_max	mfa_common.f90	/^      integer            :: i_neigh, n_neigh_fl_max,n_neigh_fw_max,n_neigh_ww_max$/;"	v	module:commons
+n_obser	f.f90	/^      integer :: i_time,s_time,n_relax,n_obser /;"	v	module:commons
 n_obser	mfa_common.f90	/^      integer :: i_time,s_time,n_relax,n_obser /;"	v	module:commons
+n_order	f.f90	/^      integer, parameter  :: n_order=/;"	v	module:commons
 n_order	mfa_common.f90	/^      integer, parameter  :: n_order=/;"	v	module:commons
+n_part	f.f90	/^      integer :: n_mon,n_chain,n_mon_tot,n_part /;"	v	module:commons
 n_part	mfa_common.f90	/^      integer :: n_mon,n_chain,n_mon_tot,n_part /;"	v	module:commons
+n_relax	f.f90	/^      integer :: i_time,s_time,n_relax,/;"	v	module:commons
 n_relax	mfa_common.f90	/^      integer :: i_time,s_time,n_relax,/;"	v	module:commons
+n_safe	f.f90	/^      integer :: n_safe$/;"	v	module:commons
 n_safe	mfa_common.f90	/^      integer :: n_safe$/;"	v	module:commons
 n_stars	mfa_common.f90	/^      integer ::  n_mon_arm, n_arms, n_stars,/;"	v	module:commons
+n_time_ave	f.f90	/^      integer           :: time_ave_count,time_ave_count_2,n_time_ave,/;"	v	module:commons
 n_time_ave	mfa_common.f90	/^      integer           :: time_ave_count,time_ave_count_2,n_time_ave,/;"	v	module:commons
+n_time_ave2	f.f90	/^      integer           :: time_ave_count,time_ave_count_2,n_time_ave,n_time_ave2$/;"	v	module:commons
 n_time_ave2	mfa_common.f90	/^      integer           :: time_ave_count,time_ave_count_2,n_time_ave,n_time_ave2$/;"	v	module:commons
+n_tot_e	f.f90	/^      integer :: n_mon_d,n_chain_d,part_init_d,n_chain_e,n_mon_e,part_init_e,n_tot_e,/;"	v	module:commons
 n_tot_e	mfa_common.f90	/^      integer :: n_mon_d,n_chain_d,part_init_d,n_chain_e,n_mon_e,part_init_e,n_tot_e,/;"	v	module:commons
+n_type	f.f90	/^              integer, parameter  :: n_type=/;"	v	module:commons
 n_type	mfa_common.f90	/^              integer, parameter  :: n_type=/;"	v	module:commons
 n_type	mfa_common.f90	/^         integer, parameter  :: n_type=/;"	v	module:commons
+n_wall	f.f90	/^      integer ::            n_cell_w_x,n_cell_w_y, n_wall /;"	v	module:commons
 n_wall	mfa_common.f90	/^      integer ::            n_cell_w_x,n_cell_w_y, n_wall /;"	v	module:commons
+n_wcell_max	f.f90	/^      integer            :: delta_bin_x,delta_bin_y,delta_bin_z,n_fcell_max,n_wcell_max$/;"	v	module:commons
 n_wcell_max	mfa_common.f90	/^      integer            :: delta_bin_x,delta_bin_y,delta_bin_z,n_fcell_max,n_wcell_max$/;"	v	module:commons
+name	f.f90	/^      character (len=20) ::  name$/;"	v	module:commons
 name	mfa_common.f90	/^      character (len=20) ::  name$/;"	v	module:commons
 new_dpd_fd	new_dpd_fd.f90	/^subroutine new_dpd_fd(/;"	s
 nm	mfa_common.f90	/^      integer :: n_cm,nm$/;"	v	module:commons
@@ -376,6 +570,7 @@ numth	mfa_common.f90	/^integer :: ith, numth,/;"	v	module:commons
 obser_out	obser_out.f90	/^      subroutine obser_out$/;"	s
 observation	observation.f90	/^      subroutine observation$/;"	s
 orientation	orientation.f90	/^subroutine orientation(/;"	s
+p_energy	mfa_common.f90	/^        real(kind=8), allocatable :: p_energy(/;"	v	module:commons
 p_time	mfa_common.f90	/^      integer :: turn_time(3), p_time$/;"	v	module:commons
 par_fe	par_ziggurat.f90	/^    real(DP), allocatable, save :: par_wn(:,:), par_fn(:,:), par_we(:,:), par_fe(/;"	v	module:Par_Zig_mod
 par_fn	par_ziggurat.f90	/^    real(DP), allocatable, save :: par_wn(:,:), par_fn(/;"	v	module:Par_Zig_mod
@@ -390,13 +585,22 @@ par_uni	par_ziggurat.f90	/^    real(dp) FUNCTION par_uni(/;"	f	module:Par_Zig_mo
 par_we	par_ziggurat.f90	/^    real(DP), allocatable, save :: par_wn(:,:), par_fn(:,:), par_we(/;"	v	module:Par_Zig_mod
 par_wn	par_ziggurat.f90	/^    real(DP), allocatable, save :: par_wn(/;"	v	module:Par_Zig_mod
 par_zigset	par_ziggurat.f90	/^    SUBROUTINE par_zigset(/;"	s	module:Par_Zig_mod
+part_in_vol	mfa_common.f90	/^        integer(kind=4), allocatable :: part_in_vol(/;"	v	module:commons
+part_init_d	f.f90	/^      integer :: n_mon_d,n_chain_d,part_init_d,/;"	v	module:commons
 part_init_d	mfa_common.f90	/^      integer :: n_mon_d,n_chain_d,part_init_d,/;"	v	module:commons
+part_init_e	f.f90	/^      integer :: n_mon_d,n_chain_d,part_init_d,n_chain_e,n_mon_e,part_init_e,/;"	v	module:commons
 part_init_e	mfa_common.f90	/^      integer :: n_mon_d,n_chain_d,part_init_d,n_chain_e,n_mon_e,part_init_e,/;"	v	module:commons
+part_init_star	f.f90	/^      integer :: n_mon_d,n_chain_d,part_init_d,n_chain_e,n_mon_e,part_init_e,n_tot_e, part_init_star$/;"	v	module:commons
 part_init_star	mfa_common.f90	/^      integer :: n_mon_d,n_chain_d,part_init_d,n_chain_e,n_mon_e,part_init_e,n_tot_e, part_init_star$/;"	v	module:commons
+pbc_bwall	f.f90	/^      integer           :: pbc_bwall(/;"	v	module:commons
 pbc_bwall	mfa_common.f90	/^      integer           :: pbc_bwall(/;"	v	module:commons
+pbc_twall	f.f90	/^      integer           :: pbc_twall(/;"	v	module:commons
 pbc_twall	mfa_common.f90	/^      integer           :: pbc_twall(/;"	v	module:commons
+pi	f.f90	/^      real(kind=8), parameter :: pi=/;"	v	module:commons
 pi	mfa_common.f90	/^      real(kind=8), parameter :: pi=/;"	v	module:commons
+pot_loc	f.f90	/^       real (kind=8)  :: delta_r(n_dim),force_loc(n_dim),r_2,r_6,r_12,pot_loc$/;"	v	module:commons
 pot_loc	mfa_common.f90	/^       real (kind=8)  :: delta_r(n_dim),force_loc(n_dim),r_2,r_6,r_12,pot_loc$/;"	v	module:commons
+predict_coef	f.f90	/^      real predict_coef(/;"	v	module:commons
 predict_coef	mfa_common.f90	/^      real predict_coef(/;"	v	module:commons
 press_tensor	mfa_common.f90	/^real (kind=8) :: press_tensor(/;"	v	module:commons
 press_tensor_mean	mfa_common.f90	/^real (kind=8) :: press_tensor(3,3),press_tensor_mean(/;"	v	module:commons
@@ -404,148 +608,260 @@ profile_orient	functions.f90	/^   subroutine profile_orient(/;"	s	module:functio
 q	mfa_common.f90	/^        real(kind=8), allocatable  :: q(/;"	v	module:commons
 q	par_ziggurat.f90	/^    q,/;"	v	module:Par_Zig_mod
 q	ziggurat.f90	/^                            q,/;"	v	module:Ziggurat
+q_part	f.f90	/^      integer :: i_wall,i_part,j_part,q_part /;"	v	module:commons
 q_part	mfa_common.f90	/^      integer :: i_wall,i_part,j_part,q_part /;"	v	module:commons
+r0	f.f90	/^      real (kind=8) ,allocatable ,target :: r0(/;"	v	module:commons
 r0	mfa_common.f90	/^      real (kind=8) ,allocatable ,target :: r0(/;"	v	module:commons
+r0_bwall	f.f90	/^      real (kind=8) ::  r0_bwall(/;"	v	module:commons
 r0_bwall	mfa_common.f90	/^      real (kind=8) ::  r0_bwall(/;"	v	module:commons
+r0_last_pinned	f.f90	/^      real(kind=8)            :: r0_last_pinned(/;"	v	module:commons
 r0_last_pinned	mfa_common.f90	/^      real(kind=8)            :: r0_last_pinned(/;"	v	module:commons
+r0_old	f.f90	/^      real(kind=8) ,allocatable:: r0_old(/;"	v	module:commons
 r0_old	mfa_common.f90	/^      real(kind=8) ,allocatable:: r0_old(/;"	v	module:commons
+r0_pinned_twall	f.f90	/^      real(kind=8)            :: va_spring_twall(n_dim),k_spring_twall(n_dim), force_twall(n_dim),r0_pinned_twall(/;"	v	module:commons
 r0_pinned_twall	mfa_common.f90	/^      real(kind=8)            :: va_spring_twall(n_dim),k_spring_twall(n_dim), force_twall(n_dim),r0_pinned_twall(/;"	v	module:commons
 r0_ref	mfa_common.f90	/^      real(kind=8),  allocatable ::  r0_ref(/;"	v	module:commons
+r0_spring_twall	f.f90	/^      real (kind=8) :: r0_spring_twall(/;"	v	module:commons
 r0_spring_twall	mfa_common.f90	/^      real (kind=8) :: r0_spring_twall(/;"	v	module:commons
 r0_star	mfa_common.f90	/^      real (kind=8) ,allocatable  :: r0_star(/;"	v	module:commons
+r0_twall	f.f90	/^      real (kind=8) :: r0_twall(/;"	v	module:commons
 r0_twall	mfa_common.f90	/^      real (kind=8) :: r0_twall(/;"	v	module:commons
+r0_twall_1	f.f90	/^      real(kind=8)            :: r0_twall_1(/;"	v	module:commons
 r0_twall_1	mfa_common.f90	/^      real(kind=8)            :: r0_twall_1(/;"	v	module:commons
+r0_unfold	f.f90	/^      real (kind=8) ,allocatable  :: r0_unfold(/;"	v	module:commons
 r0_unfold	mfa_common.f90	/^      real (kind=8) ,allocatable  :: r0_unfold(/;"	v	module:commons
+r_12	f.f90	/^       real (kind=8)  :: delta_r(n_dim),force_loc(n_dim),r_2,r_6,r_12,/;"	v	module:commons
 r_12	mfa_common.f90	/^       real (kind=8)  :: delta_r(n_dim),force_loc(n_dim),r_2,r_6,r_12,/;"	v	module:commons
+r_2	f.f90	/^       real (kind=8)  :: delta_r(n_dim),force_loc(n_dim),r_2,/;"	v	module:commons
 r_2	mfa_common.f90	/^       real (kind=8)  :: delta_r(n_dim),force_loc(n_dim),r_2,/;"	v	module:commons
+r_2_min	f.f90	/^      real(kind=8)   :: r_2_min_/;"	v	module:commons
 r_2_min	mfa_common.f90	/^      real(kind=8)   :: r_2_min_/;"	v	module:commons
+r_2_min_init	f.f90	/^      real(kind=8)   :: r_2_min_init,/;"	v	module:commons
 r_2_min_init	mfa_common.f90	/^      real(kind=8)   :: r_2_min_init,/;"	v	module:commons
+r_2_min_time	f.f90	/^      real(kind=8)   :: r_2_min_init, r_2_min_time,/;"	v	module:commons
 r_2_min_time	mfa_common.f90	/^      real(kind=8)   :: r_2_min_init, r_2_min_time,/;"	v	module:commons
+r_6	f.f90	/^       real (kind=8)  :: delta_r(n_dim),force_loc(n_dim),r_2,r_6,/;"	v	module:commons
 r_6	mfa_common.f90	/^       real (kind=8)  :: delta_r(n_dim),force_loc(n_dim),r_2,r_6,/;"	v	module:commons
+r_bin_x	f.f90	/^      real(kind=8)            :: r_bin_x,/;"	v	module:commons
 r_bin_x	mfa_common.f90	/^      real(kind=8)            :: r_bin_x,/;"	v	module:commons
+r_bin_y	f.f90	/^      real(kind=8)            :: r_bin_x,r_bin_y,/;"	v	module:commons
 r_bin_y	mfa_common.f90	/^      real(kind=8)            :: r_bin_x,r_bin_y,/;"	v	module:commons
+r_bin_z	f.f90	/^      real(kind=8)            :: r_bin_x,r_bin_y,r_bin_z /;"	v	module:commons
 r_bin_z	mfa_common.f90	/^      real(kind=8)            :: r_bin_x,r_bin_y,r_bin_z /;"	v	module:commons
 r_box_xz	mfa_common.f90	/^      real (kind=8) :: binning_box_length,guessed_drop_cm(3),r_box_xz(/;"	v	module:commons
+r_chain	f.f90	/^      real (kind=8)   :: r_chain,/;"	v	module:commons
 r_chain	mfa_common.f90	/^      real (kind=8)   :: r_chain,/;"	v	module:commons
+r_chain_2	f.f90	/^      real (kind=8)   :: r_chain,k_chain,r_chain_2,/;"	v	module:commons
 r_chain_2	mfa_common.f90	/^      real (kind=8)   :: r_chain,k_chain,r_chain_2,/;"	v	module:commons
+r_cm	f.f90	/^      real (kind=8) :: r_cm(/;"	v	module:commons
 r_cm	mfa_common.f90	/^      real (kind=8) :: r_cm(/;"	v	module:commons
+r_cms	f.f90	/^      real (kind=8), allocatable :: r_cms(/;"	v	module:commons
 r_cms	mfa_common.f90	/^      real (kind=8), allocatable :: r_cms(/;"	v	module:commons
+r_cut_dpd	f.f90	/^      real (kind=8) :: r_cut_max,vec_dummy(3),z_skin,r_cut_dpd,/;"	v	module:commons
 r_cut_dpd	mfa_common.f90	/^      real (kind=8) :: r_cut_max,vec_dummy(3),z_skin,r_cut_dpd,/;"	v	module:commons
+r_cut_dpd_2	f.f90	/^      real (kind=8) :: r_cut_max,vec_dummy(3),z_skin,r_cut_dpd,r_cut_max_2,r_cut_dpd_2$/;"	v	module:commons
 r_cut_dpd_2	mfa_common.f90	/^      real (kind=8) :: r_cut_max,vec_dummy(3),z_skin,r_cut_dpd,r_cut_max_2,r_cut_dpd_2$/;"	v	module:commons
+r_cut_max	f.f90	/^      real (kind=8) :: r_cut_max,/;"	v	module:commons
 r_cut_max	mfa_common.f90	/^      real (kind=8) :: r_cut_max,/;"	v	module:commons
+r_cut_max_2	f.f90	/^      real (kind=8) :: r_cut_max,vec_dummy(3),z_skin,r_cut_dpd,r_cut_max_2,/;"	v	module:commons
 r_cut_max_2	mfa_common.f90	/^      real (kind=8) :: r_cut_max,vec_dummy(3),z_skin,r_cut_dpd,r_cut_max_2,/;"	v	module:commons
+r_dummy	f.f90	/^      real(kind=8)   ::  r_dummy,/;"	v	module:commons
 r_dummy	mfa_common.f90	/^      real(kind=8)   ::  r_dummy,/;"	v	module:commons
+r_dummy1	f.f90	/^      real(kind=8)   ::  r_dummy,r_dummy1,/;"	v	module:commons
 r_dummy1	mfa_common.f90	/^      real(kind=8)   ::  r_dummy,r_dummy1,/;"	v	module:commons
+r_dummy2	f.f90	/^      real(kind=8)   ::  r_dummy,r_dummy1,r_dummy2$/;"	v	module:commons
 r_dummy2	mfa_common.f90	/^      real(kind=8)   ::  r_dummy,r_dummy1,r_dummy2$/;"	v	module:commons
 r_end_to_end	functions.f90	/^        subroutine r_end_to_end(/;"	s	module:functions
 r_end_to_end_2v	functions.f90	/^        subroutine r_end_to_end_2v(/;"	s	module:functions
+r_g2	f.f90	/^      real (kind=8) :: r_cm(3),r_g2(/;"	v	module:commons
 r_g2	mfa_common.f90	/^      real (kind=8) :: r_cm(3),r_g2(/;"	v	module:commons
+r_g2_mean	f.f90	/^      real (kind=8) :: r_cm(3),r_g2(2,3),r_g2_mean(/;"	v	module:commons
 r_g2_mean	mfa_common.f90	/^      real (kind=8) :: r_cm(3),r_g2(2,3),r_g2_mean(/;"	v	module:commons
 r_gyr	functions.f90	/^        subroutine r_gyr(/;"	s	module:functions
 r_gyr_2v	functions.f90	/^        subroutine r_gyr_2v(/;"	s	module:functions
+r_head_old	f.f90	/^      real (kind=8) , allocatable :: r_head_old(/;"	v	module:commons
 r_head_old	mfa_common.f90	/^      real (kind=8) , allocatable :: r_head_old(/;"	v	module:commons
+r_loop_max	f.f90	/^   real (kind=8), save :: m_sat,mag_m_z,V_part,r_loop_min,r_loop_max,/;"	v	module:commons
 r_loop_max	mfa_common.f90	/^   real (kind=8), save :: m_sat,mag_m_z,V_part,r_loop_min,r_loop_max,/;"	v	module:commons
+r_loop_min	f.f90	/^   real (kind=8), save :: m_sat,mag_m_z,V_part,r_loop_min,/;"	v	module:commons
 r_loop_min	mfa_common.f90	/^   real (kind=8), save :: m_sat,mag_m_z,V_part,r_loop_min,/;"	v	module:commons
+r_par_per2	f.f90	/^      real (kind=8) :: r_cm(3),r_g2(2,3),r_g2_mean(3,3),r_par_per2(/;"	v	module:commons
 r_par_per2	mfa_common.f90	/^      real (kind=8) :: r_cm(3),r_g2(2,3),r_g2_mean(3,3),r_par_per2(/;"	v	module:commons
 r_start	mfa_common.f90	/^      real(kind= 8) ::  dist_pinned, r_start(/;"	v	module:commons
+r_time	f.f90	/^      real (kind=8)     ::   r_time$/;"	v	module:commons
 r_time	mfa_common.f90	/^      real (kind=8)     ::   r_time$/;"	v	module:commons
+r_wall_equi	f.f90	/^      real(kind=8), allocatable ::  r_wall_equi(/;"	v	module:commons
 r_wall_equi	mfa_common.f90	/^      real(kind=8), allocatable ::  r_wall_equi(/;"	v	module:commons
+random	f.f90	/^      real, allocatable :: random(/;"	v	module:commons
 random	mfa_common.f90	/^      real, allocatable :: random(/;"	v	module:commons
+range_2	f.f90	/^      epsil(n_type,n_type),sigma(n_type,n_type),range_2(/;"	v	module:commons
 range_2	mfa_common.f90	/^      epsil(n_type,n_type),sigma(n_type,n_type),range_2(/;"	v	module:commons
+re_2_mean	f.f90	/^      real (kind=8) :: r_cm(3),r_g2(2,3),r_g2_mean(3,3),r_par_per2(3),v_dummy(3),re_2_mean(/;"	v	module:commons
 re_2_mean	mfa_common.f90	/^      real (kind=8) :: r_cm(3),r_g2(2,3),r_g2_mean(3,3),r_par_per2(3),v_dummy(3),re_2_mean(/;"	v	module:commons
 rebuild_drop	functions.f90	/^subroutine rebuild_drop(/;"	s	module:functions
 rebuild_drop2	functions.f90	/^subroutine rebuild_drop2(/;"	s	module:functions
 refold	functions.f90	/^        subroutine refold(/;"	s	module:functions
+rend	f.f90	/^      real(kind=8)            :: crdna(1:3),crdnb(1:3),rend(/;"	v	module:commons
 rend	mfa_common.f90	/^      real(kind=8)            :: crdna(1:3),crdnb(1:3),rend(/;"	v	module:commons
+rend2	f.f90	/^      real(kind=8)            :: crdna2(1:3),crdnb2(1:3),rend2(/;"	v	module:commons
 rend2	mfa_common.f90	/^      real(kind=8)            :: crdna2(1:3),crdnb2(1:3),rend2(/;"	v	module:commons
+rendl2	f.f90	/^      real(kind=8)            :: crdna(1:3),crdnb(1:3),rend(1:3),rendtot,angle, rendl2,/;"	v	module:commons
 rendl2	mfa_common.f90	/^      real(kind=8)            :: crdna(1:3),crdnb(1:3),rend(1:3),rendtot,angle, rendl2,/;"	v	module:commons
+rendl22	f.f90	/^      real(kind=8)            :: crdna2(1:3),crdnb2(1:3),rend2(1:3),rendtot2,angle2, rendl22,/;"	v	module:commons
 rendl22	mfa_common.f90	/^      real(kind=8)            :: crdna2(1:3),crdnb2(1:3),rend2(1:3),rendtot2,angle2, rendl22,/;"	v	module:commons
+rendtot	f.f90	/^      real(kind=8)            :: crdna(1:3),crdnb(1:3),rend(1:3),rendtot,/;"	v	module:commons
 rendtot	mfa_common.f90	/^      real(kind=8)            :: crdna(1:3),crdnb(1:3),rend(1:3),rendtot,/;"	v	module:commons
+rendtot2	f.f90	/^      real(kind=8)            :: crdna2(1:3),crdnb2(1:3),rend2(1:3),rendtot2,/;"	v	module:commons
 rendtot2	mfa_common.f90	/^      real(kind=8)            :: crdna2(1:3),crdnb2(1:3),rend2(1:3),rendtot2,/;"	v	module:commons
 rexp	ziggurat.f90	/^FUNCTION rexp(/;"	f	module:Ziggurat
+rf_width	f.f90	/^              friction(n_type),rf_width(/;"	v	module:commons
 rf_width	mfa_common.f90	/^              friction(n_type),rf_width(/;"	v	module:commons
 rnor	ziggurat.f90	/^FUNCTION rnor(/;"	f	module:Ziggurat
+rx_twall	f.f90	/^      real(kind=8)            :: rx_twall(/;"	v	module:commons
 rx_twall	mfa_common.f90	/^      real(kind=8)            :: rx_twall(/;"	v	module:commons
+s_force_grad	f.f90	/^      integer           :: s_force_grad(/;"	v	module:commons
 s_force_grad	mfa_common.f90	/^      integer           :: s_force_grad(/;"	v	module:commons
+s_time	f.f90	/^      integer :: i_time,s_time,/;"	v	module:commons
 s_time	mfa_common.f90	/^      integer :: i_time,s_time,/;"	v	module:commons
+shiftbw	f.f90	/^      real (kind=8) shifttw(n_dim),shiftbw(/;"	v	module:commons
 shiftbw	mfa_common.f90	/^      real (kind=8) shifttw(n_dim),shiftbw(/;"	v	module:commons
+shifttw	f.f90	/^      real (kind=8) shifttw(/;"	v	module:commons
 shifttw	mfa_common.f90	/^      real (kind=8) shifttw(/;"	v	module:commons
 shr3	ziggurat.f90	/^FUNCTION shr3(/;"	f	module:Ziggurat
+sig	f.f90	/^       real(kind=8) :: sig /;"	v	module:commons
 sig	mfa_common.f90	/^       real(kind=8) :: sig /;"	v	module:commons
+sigma	f.f90	/^      epsil(n_type,n_type),sigma(/;"	v	module:commons
 sigma	mfa_common.f90	/^      epsil(n_type,n_type),sigma(/;"	v	module:commons
+sigma_2	f.f90	/^              friction(n_type),rf_width(n_type),sigma_2(/;"	v	module:commons
 sigma_2	mfa_common.f90	/^              friction(n_type),rf_width(n_type),sigma_2(/;"	v	module:commons
-sigma_w	mfa_common.f90	/^      real (kind=8) :: sigma_w,/;"	v	module:commons
-sigma_w4	mfa_common.f90	/^      real (kind=8) :: sigma_w,a_w,sigma_w4,/;"	v	module:commons
-sigma_wall	mfa_common.f90	/^      real (kind=8) :: sigma_w,a_w,sigma_w4,a_w4, sigma_wall(/;"	v	module:commons
+sigma_w	f.f90	/^        real (kind=8) :: sigma_w,/;"	v	module:commons
+sigma_w	mfa_common.f90	/^        real (kind=8) :: sigma_w(/;"	v	module:commons
+sigma_w	mfa_common.f90	/^        real (kind=8) :: sigma_w,/;"	v	module:commons
+sigma_w4	f.f90	/^        real (kind=8) :: sigma_w,a_w,sigma_w4,/;"	v	module:commons
+sigma_w4	mfa_common.f90	/^        real (kind=8) :: sigma_w(2),a_w(2),sigma_w4(/;"	v	module:commons
+sigma_w4	mfa_common.f90	/^        real (kind=8) :: sigma_w,a_w,sigma_w4,/;"	v	module:commons
+sigma_wall	f.f90	/^        real (kind=8) :: sigma_w,a_w,sigma_w4,a_w4, sigma_wall(/;"	v	module:commons
+sigma_wall	mfa_common.f90	/^        real (kind=8) :: sigma_w(2),a_w(2),sigma_w4(2),a_w4(2), sigma_wall(/;"	v	module:commons
+sigma_wall	mfa_common.f90	/^        real (kind=8) :: sigma_w,a_w,sigma_w4,a_w4, sigma_wall(/;"	v	module:commons
+skin	f.f90	/^      real(kind=8)            :: skin,/;"	v	module:commons
 skin	mfa_common.f90	/^      real(kind=8)            :: skin,/;"	v	module:commons
+skin_2	f.f90	/^      real(kind=8)            :: skin,skin_2$/;"	v	module:commons
 skin_2	mfa_common.f90	/^      real(kind=8)            :: skin,skin_2$/;"	v	module:commons
+spabs	f.f90	/^      real (kind=8) ,allocatable ,target :: r0(:,:),spabs(/;"	v	module:commons
 spabs	mfa_common.f90	/^      real (kind=8) ,allocatable ,target :: r0(:,:),spabs(/;"	v	module:commons
+sqrt2	f.f90	/^      real(kind=8), parameter :: pi=3.1415926536,twopi=2*pi,sqrt2=/;"	v	module:commons
 sqrt2	mfa_common.f90	/^      real(kind=8), parameter :: pi=3.1415926536,twopi=2*pi,sqrt2=/;"	v	module:commons
+sqrt3	f.f90	/^      real(kind=8), parameter :: pi=3.1415926536,twopi=2*pi,sqrt2=1.41421356237,sqrt3=/;"	v	module:commons
 sqrt3	mfa_common.f90	/^      real(kind=8), parameter :: pi=3.1415926536,twopi=2*pi,sqrt2=1.41421356237,sqrt3=/;"	v	module:commons
 sqrt_alpha	mfa_common.f90	/^        real(kind=8) :: sqrt_alpha,/;"	v	module:commons
 sqrt_alpha_c	mfa_common.f90	/^        real(kind=8) :: v_coul,v_coul_self,alpha_c,sqrt_alpha_c,/;"	v	module:commons
 store_config	store_config.f90	/^      subroutine store_config(/;"	s
 store_obser	store_obser.f90	/^      subroutine store_obser$/;"	s
+surface	f.f90	/^      real (kind=8)     ::  x_space,y_space,x_max,y_max,surface$/;"	v	module:commons
 surface	mfa_common.f90	/^      real (kind=8)     ::  x_space,y_space,x_max,y_max,surface$/;"	v	module:commons
 t0	md_main.f90	/^      real (kind=8) :: t0,/;"	v	program:md_pb
 t1	md_main.f90	/^      real (kind=8) :: t0,t1$/;"	v	program:md_pb
+t_fluid	f.f90	/^      real(kind=8)  ::  v_fluid_fluid,v_fluid_fluid_1,v_fluid_fluid_2,t_fluid,/;"	v	module:commons
 t_fluid	mfa_common.f90	/^      real(kind=8)  ::  v_fluid_fluid,v_fluid_fluid_1,v_fluid_fluid_2,t_fluid,/;"	v	module:commons
+t_fluid_1	f.f90	/^                        t_fluid_1,/;"	v	module:commons
 t_fluid_1	mfa_common.f90	/^                        t_fluid_1,/;"	v	module:commons
+t_fluid_2	f.f90	/^                        t_fluid_1,t_fluid_2,/;"	v	module:commons
 t_fluid_2	mfa_common.f90	/^                        t_fluid_1,t_fluid_2,/;"	v	module:commons
+t_total	f.f90	/^      real (kind=8) ::  v_total,v_total_1,v_total_2,t_total,/;"	v	module:commons
 t_total	mfa_common.f90	/^      real (kind=8) ::  v_total,v_total_1,v_total_2,t_total,/;"	v	module:commons
+t_total_1	f.f90	/^      real (kind=8) ::  v_total,v_total_1,v_total_2,t_total,t_total_1,/;"	v	module:commons
 t_total_1	mfa_common.f90	/^      real (kind=8) ::  v_total,v_total_1,v_total_2,t_total,t_total_1,/;"	v	module:commons
+t_total_2	f.f90	/^      real (kind=8) ::  v_total,v_total_1,v_total_2,t_total,t_total_1, t_total_2,/;"	v	module:commons
 t_total_2	mfa_common.f90	/^      real (kind=8) ::  v_total,v_total_1,v_total_2,t_total,t_total_1, t_total_2,/;"	v	module:commons
+t_wall	f.f90	/^      real(kind=8)   ::  v_wall_wall,t_wall$/;"	v	module:commons
 t_wall	mfa_common.f90	/^      real(kind=8)   ::  v_wall_wall,t_wall$/;"	v	module:commons
+t_wall_1	f.f90	/^      real (kind=8) ::  v_wall_wall_1,t_wall_1,/;"	v	module:commons
 t_wall_1	mfa_common.f90	/^      real (kind=8) ::  v_wall_wall_1,t_wall_1,/;"	v	module:commons
+t_wall_2	f.f90	/^      real (kind=8) ::  v_wall_wall_1,t_wall_1,v_wall_wall_2,t_wall_2,/;"	v	module:commons
 t_wall_2	mfa_common.f90	/^      real (kind=8) ::  v_wall_wall_1,t_wall_1,v_wall_wall_2,t_wall_2,/;"	v	module:commons
 te	ziggurat.f90	/^                            te=/;"	v	module:Ziggurat
 te0	par_ziggurat.f90	/^    te0 /;"	v	module:Par_Zig_mod
+temp	f.f90	/^      real(kind=8)   :: temp /;"	v	module:commons
 temp	mfa_common.f90	/^      real(kind=8)   :: temp /;"	v	module:commons
+thermal_skin	f.f90	/^        real(kind=8) :: thermal_skin,/;"	v	module:commons
 thermal_skin	mfa_common.f90	/^        real(kind=8) :: thermal_skin,/;"	v	module:commons
 thermal_walls	thermal_walls.f90	/^subroutine thermal_walls(/;"	s
+time_ave_count	f.f90	/^      integer           :: time_ave_count,/;"	v	module:commons
 time_ave_count	mfa_common.f90	/^      integer           :: time_ave_count,/;"	v	module:commons
+time_ave_count_2	f.f90	/^      integer           :: time_ave_count,time_ave_count_2,/;"	v	module:commons
 time_ave_count_2	mfa_common.f90	/^      integer           :: time_ave_count,time_ave_count_2,/;"	v	module:commons
 tn	ziggurat.f90	/^   REAL(DP)             ::  dn=3.442619855899_DP, tn=/;"	v	module:Ziggurat
 tn0	par_ziggurat.f90	/^    REAL(DP) :: dn0 = 3.442619855899_DP, tn0 /;"	v	module:Par_Zig_mod
+top_thermal_wall	f.f90	/^        real(kind=8) :: thermal_skin,top_thermal_wall,/;"	v	module:commons
 top_thermal_wall	mfa_common.f90	/^        real(kind=8) :: thermal_skin,top_thermal_wall,/;"	v	module:commons
+tot_P	f.f90	/^       real(kind=8) :: tot_P(/;"	v	module:commons
 tot_P	mfa_common.f90	/^       real(kind=8) :: tot_P(/;"	v	module:commons
+tot_P_2	f.f90	/^       real(kind=8) :: tot_P(3),tot_P_2(/;"	v	module:commons
 tot_P_2	mfa_common.f90	/^       real(kind=8) :: tot_P(3),tot_P_2(/;"	v	module:commons
 tot_time	md_main.f90	/^      integer  :: tot_time$/;"	v	program:md_pb
 turn_time	mfa_common.f90	/^      integer :: turn_time(/;"	v	module:commons
+twopi	f.f90	/^      real(kind=8), parameter :: pi=3.1415926536,twopi=/;"	v	module:commons
 twopi	mfa_common.f90	/^      real(kind=8), parameter :: pi=3.1415926536,twopi=/;"	v	module:commons
 uni	ziggurat.f90	/^FUNCTION uni(/;"	f	module:Ziggurat
 util	util.f90	/^module util$/;"	m
+v	f.f90	/^       real (kind=8) ,allocatable :: v(/;"	v	module:commons
 v	mfa_common.f90	/^       real (kind=8) ,allocatable :: v(/;"	v	module:commons
+v4_mean	f.f90	/^      real(kind=8)            :: v4_mean(/;"	v	module:commons
 v4_mean	mfa_common.f90	/^      real(kind=8)            :: v4_mean(/;"	v	module:commons
+v4_mean2	f.f90	/^      real(kind=8)            :: v4_mean(3),v4_mean2(/;"	v	module:commons
 v4_mean2	mfa_common.f90	/^      real(kind=8)            :: v4_mean(3),v4_mean2(/;"	v	module:commons
 v_bend	mfa_common.f90	/^real (kind=8) :: k_bend, alpha_eq, v_bend,/;"	v	module:commons
 v_bend_melt	mfa_common.f90	/^real (kind=8) :: k_bend, alpha_eq, v_bend,v_bend_melt /;"	v	module:commons
 v_coul	mfa_common.f90	/^        real(kind=8) :: v_coul,/;"	v	module:commons
 v_coul_self	mfa_common.f90	/^        real(kind=8) :: v_coul,v_coul_self,/;"	v	module:commons
+v_dummy	f.f90	/^      real (kind=8) :: r_cm(3),r_g2(2,3),r_g2_mean(3,3),r_par_per2(3),v_dummy(/;"	v	module:commons
 v_dummy	mfa_common.f90	/^      real (kind=8) :: r_cm(3),r_g2(2,3),r_g2_mean(3,3),r_par_per2(3),v_dummy(/;"	v	module:commons
+v_fluid_fluid	f.f90	/^      real(kind=8)  ::  v_fluid_fluid,/;"	v	module:commons
 v_fluid_fluid	mfa_common.f90	/^      real(kind=8)  ::  v_fluid_fluid,/;"	v	module:commons
+v_fluid_fluid_1	f.f90	/^      real(kind=8)  ::  v_fluid_fluid,v_fluid_fluid_1,/;"	v	module:commons
 v_fluid_fluid_1	mfa_common.f90	/^      real(kind=8)  ::  v_fluid_fluid,v_fluid_fluid_1,/;"	v	module:commons
+v_fluid_fluid_2	f.f90	/^      real(kind=8)  ::  v_fluid_fluid,v_fluid_fluid_1,v_fluid_fluid_2,/;"	v	module:commons
 v_fluid_fluid_2	mfa_common.f90	/^      real(kind=8)  ::  v_fluid_fluid,v_fluid_fluid_1,v_fluid_fluid_2,/;"	v	module:commons
+v_fluid_wall	f.f90	/^      real (kind=8) :: v_fluid_wall,/;"	v	module:commons
 v_fluid_wall	mfa_common.f90	/^      real (kind=8) :: v_fluid_wall,/;"	v	module:commons
+v_fluid_wall_1	f.f90	/^      real (kind=8) :: v_fluid_wall,v_fluid_wall_1,/;"	v	module:commons
 v_fluid_wall_1	mfa_common.f90	/^      real (kind=8) :: v_fluid_wall,v_fluid_wall_1,/;"	v	module:commons
+v_fluid_wall_2	f.f90	/^      real (kind=8) :: v_fluid_wall,v_fluid_wall_1,v_fluid_wall_2,/;"	v	module:commons
 v_fluid_wall_2	mfa_common.f90	/^      real (kind=8) :: v_fluid_wall,v_fluid_wall_1,v_fluid_wall_2,/;"	v	module:commons
+v_half	f.f90	/^       real (kind=8) ,allocatable :: v(:,:),a(:,:),v_half(/;"	v	module:commons
 v_half	mfa_common.f90	/^       real (kind=8) ,allocatable :: v(:,:),a(:,:),v_half(/;"	v	module:commons
+v_intra_molec	f.f90	/^      real (kind=8)   :: r_chain,k_chain,r_chain_2,v_intra_molec,/;"	v	module:commons
 v_intra_molec	mfa_common.f90	/^      real (kind=8)   :: r_chain,k_chain,r_chain_2,v_intra_molec,/;"	v	module:commons
+v_intra_molec_d	f.f90	/^      real (kind=8)   :: r_chain,k_chain,r_chain_2,v_intra_molec,v_intra_molec_d,/;"	v	module:commons
 v_intra_molec_d	mfa_common.f90	/^      real (kind=8)   :: r_chain,k_chain,r_chain_2,v_intra_molec,v_intra_molec_d,/;"	v	module:commons
+v_intra_molec_e	f.f90	/^      real (kind=8)   :: r_chain,k_chain,r_chain_2,v_intra_molec,v_intra_molec_d,v_intra_molec_e,/;"	v	module:commons
 v_intra_molec_e	mfa_common.f90	/^      real (kind=8)   :: r_chain,k_chain,r_chain_2,v_intra_molec,v_intra_molec_d,v_intra_molec_e,/;"	v	module:commons
 v_or	mfa_common.f90	/^real (kind=8) :: k_or, alpha_or,v_or /;"	v	module:commons
+v_prof	f.f90	/^       real (kind=8) ,allocatable :: v_prof(/;"	v	module:commons
 v_prof	mfa_common.f90	/^       real (kind=8) ,allocatable :: v_prof(/;"	v	module:commons
+v_prof_2	f.f90	/^       real (kind=8) ,allocatable :: v_prof(:,:,:),v_prof_2(/;"	v	module:commons
 v_prof_2	mfa_common.f90	/^       real (kind=8) ,allocatable :: v_prof(:,:,:),v_prof_2(/;"	v	module:commons
+v_tot_intra_1	f.f90	/^      real (kind=8) ::  v_tot_intra_1,/;"	v	module:commons
 v_tot_intra_1	mfa_common.f90	/^      real (kind=8) ::  v_tot_intra_1,/;"	v	module:commons
+v_tot_intra_2	f.f90	/^      real (kind=8) ::  v_tot_intra_1,v_tot_intra_2,/;"	v	module:commons
 v_tot_intra_2	mfa_common.f90	/^      real (kind=8) ::  v_tot_intra_1,v_tot_intra_2,/;"	v	module:commons
+v_tot_intra_d_1	f.f90	/^      real (kind=8) ::  v_tot_intra_1,v_tot_intra_2,v_tot_intra_d_1,/;"	v	module:commons
 v_tot_intra_d_1	mfa_common.f90	/^      real (kind=8) ::  v_tot_intra_1,v_tot_intra_2,v_tot_intra_d_1,/;"	v	module:commons
+v_tot_intra_d_2	f.f90	/^      real (kind=8) ::  v_tot_intra_1,v_tot_intra_2,v_tot_intra_d_1,v_tot_intra_d_2$/;"	v	module:commons
 v_tot_intra_d_2	mfa_common.f90	/^      real (kind=8) ::  v_tot_intra_1,v_tot_intra_2,v_tot_intra_d_1,v_tot_intra_d_2$/;"	v	module:commons
+v_total	f.f90	/^      real (kind=8) ::  v_total,/;"	v	module:commons
 v_total	mfa_common.f90	/^      real (kind=8) ::  v_total,/;"	v	module:commons
+v_total_1	f.f90	/^      real (kind=8) ::  v_total,v_total_1,/;"	v	module:commons
 v_total_1	mfa_common.f90	/^      real (kind=8) ::  v_total,v_total_1,/;"	v	module:commons
+v_total_2	f.f90	/^      real (kind=8) ::  v_total,v_total_1,v_total_2,/;"	v	module:commons
 v_total_2	mfa_common.f90	/^      real (kind=8) ::  v_total,v_total_1,v_total_2,/;"	v	module:commons
+v_wall_wall	f.f90	/^      real(kind=8)   ::  v_wall_wall,/;"	v	module:commons
 v_wall_wall	mfa_common.f90	/^      real(kind=8)   ::  v_wall_wall,/;"	v	module:commons
+v_wall_wall_1	f.f90	/^      real (kind=8) ::  v_wall_wall_1,/;"	v	module:commons
 v_wall_wall_1	mfa_common.f90	/^      real (kind=8) ::  v_wall_wall_1,/;"	v	module:commons
+v_wall_wall_2	f.f90	/^      real (kind=8) ::  v_wall_wall_1,t_wall_1,v_wall_wall_2,/;"	v	module:commons
 v_wall_wall_2	mfa_common.f90	/^      real (kind=8) ::  v_wall_wall_1,t_wall_1,v_wall_wall_2,/;"	v	module:commons
+va_spring_twall	f.f90	/^      real(kind=8)            :: va_spring_twall(/;"	v	module:commons
 va_spring_twall	mfa_common.f90	/^      real(kind=8)            :: va_spring_twall(/;"	v	module:commons
 values	mfa_common.f90	/^integer,dimension(8) :: values$/;"	v	module:commons
 vap_dens	mfa_common.f90	/^      real (kind=8) :: vap_dens,/;"	v	module:commons
@@ -555,6 +871,7 @@ vcm_d	mfa_common.f90	/^      real(kind=8) :: vcm_d(/;"	v	module:commons
 vcm_d2	mfa_common.f90	/^      real(kind=8) :: vcm_d(3), vcm_d2(/;"	v	module:commons
 ve	par_ziggurat.f90	/^    ve /;"	v	module:Par_Zig_mod
 ve	ziggurat.f90	/^                            ve=/;"	v	module:Ziggurat
+vec_dummy	f.f90	/^      real (kind=8) :: r_cut_max,vec_dummy(/;"	v	module:commons
 vec_dummy	mfa_common.f90	/^      real (kind=8) :: r_cut_max,vec_dummy(/;"	v	module:commons
 vel_prof_2d	functions.f90	/^   subroutine  vel_prof_2d /;"	s	module:functions
 vel_xz	mfa_common.f90	/^      real (kind=8),allocatable :: vel_xz(/;"	v	module:commons
@@ -568,8 +885,11 @@ viscosity	viscosity.f90	/^subroutine viscosity(/;"	s
 vn	par_ziggurat.f90	/^    vn /;"	v	module:Par_Zig_mod
 vn	ziggurat.f90	/^                            vn=/;"	v	module:Ziggurat
 vol_drop	mfa_common.f90	/^      real (kind=8) :: z_max_d,z_min_d,x_box_min,x_box_max,vol_drop,/;"	v	module:commons
+w_d	f.f90	/^       real (kind=8) :: w_d,/;"	v	module:commons
 w_d	mfa_common.f90	/^       real (kind=8) :: w_d,/;"	v	module:commons
+w_r	f.f90	/^       real (kind=8) :: w_d, w_r$/;"	v	module:commons
 w_r	mfa_common.f90	/^       real (kind=8) :: w_d, w_r$/;"	v	module:commons
+wall_flag	f.f90	/^      integer, parameter         :: wall_flag /;"	v	module:commons
 wall_flag	mfa_common.f90	/^      integer, parameter         :: wall_flag /;"	v	module:commons
 wall_wall	wall_wall.f90	/^      subroutine wall_wall(/;"	s
 we	ziggurat.f90	/^   REAL(DP), SAVE       ::  wn(0:127), fn(0:127), we(/;"	v	module:Ziggurat
@@ -580,26 +900,46 @@ write_file	functions.f90	/^   subroutine write_file(/;"	s	module:functions
 x_box_max	mfa_common.f90	/^      real (kind=8) :: z_max_d,z_min_d,x_box_min,x_box_max,/;"	v	module:commons
 x_box_min	mfa_common.f90	/^      real (kind=8) :: z_max_d,z_min_d,x_box_min,/;"	v	module:commons
 x_droplet_shift	mfa_common.f90	/^      real (kind=8) :: drop_cm(3),x_droplet_shift,/;"	v	module:commons
+x_max	f.f90	/^      real (kind=8)     ::  x_space,y_space,x_max,/;"	v	module:commons
 x_max	mfa_common.f90	/^      real (kind=8)     ::  x_space,y_space,x_max,/;"	v	module:commons
 x_max_d	mfa_common.f90	/^      real(kind=8) :: x_max_d,/;"	v	module:commons
+x_space	f.f90	/^      real (kind=8)     ::  x_space,/;"	v	module:commons
 x_space	mfa_common.f90	/^      real (kind=8)     ::  x_space,/;"	v	module:commons
+xcomp	f.f90	/^      real(kind=8)            :: crdna(1:3),crdnb(1:3),rend(1:3),rendtot,angle, rendl2,zcomp,xcomp,/;"	v	module:commons
 xcomp	mfa_common.f90	/^      real(kind=8)            :: crdna(1:3),crdnb(1:3),rend(1:3),rendtot,angle, rendl2,zcomp,xcomp,/;"	v	module:commons
+xcomp2	f.f90	/^      real(kind=8)            :: crdna2(1:3),crdnb2(1:3),rend2(1:3),rendtot2,angle2, rendl22,zcomp2,xcomp2,/;"	v	module:commons
 xcomp2	mfa_common.f90	/^      real(kind=8)            :: crdna2(1:3),crdnb2(1:3),rend2(1:3),rendtot2,angle2, rendl22,zcomp2,xcomp2,/;"	v	module:commons
+xvf	mfa_common.f90	/^        real(kind=8)              :: zv_min,zv_max,xvf,/;"	v	module:commons
+y_max	f.f90	/^      real (kind=8)     ::  x_space,y_space,x_max,y_max,/;"	v	module:commons
 y_max	mfa_common.f90	/^      real (kind=8)     ::  x_space,y_space,x_max,y_max,/;"	v	module:commons
 y_max_d	mfa_common.f90	/^      real(kind=8) :: x_max_d,y_max_d /;"	v	module:commons
+y_space	f.f90	/^      real (kind=8)     ::  x_space,y_space,/;"	v	module:commons
 y_space	mfa_common.f90	/^      real (kind=8)     ::  x_space,y_space,/;"	v	module:commons
+z_1	f.f90	/^      real(kind=8)            :: z_1,/;"	v	module:commons
 z_1	mfa_common.f90	/^      real(kind=8)            :: z_1,/;"	v	module:commons
+z_2	f.f90	/^      real(kind=8)            :: z_1,z_2$/;"	v	module:commons
 z_2	mfa_common.f90	/^      real(kind=8)            :: z_1,z_2$/;"	v	module:commons
+z_head	f.f90	/^      real (kind=8) :: z_head /;"	v	module:commons
 z_head	mfa_common.f90	/^      real (kind=8) :: z_head /;"	v	module:commons
 z_max_d	mfa_common.f90	/^      real (kind=8) :: z_max_d,/;"	v	module:commons
 z_min_d	mfa_common.f90	/^      real (kind=8) :: z_max_d,z_min_d,/;"	v	module:commons
+z_sk	f.f90	/^   real (kind=8), save :: m_sat,mag_m_z,V_part,r_loop_min,r_loop_max,i_loop,cte,mag_force,a_eff,z_sk$/;"	v	module:commons
 z_sk	mfa_common.f90	/^   real (kind=8), save :: m_sat,mag_m_z,V_part,r_loop_min,r_loop_max,i_loop,cte,mag_force,a_eff,z_sk$/;"	v	module:commons
+z_skin	f.f90	/^      real (kind=8) :: r_cut_max,vec_dummy(3),z_skin,/;"	v	module:commons
 z_skin	mfa_common.f90	/^      real (kind=8) :: r_cut_max,vec_dummy(3),z_skin,/;"	v	module:commons
 z_slab	mfa_common.f90	/^        real(kind=8) :: sqrt_alpha,lz_half,z_slab$/;"	v	module:commons
+z_space_wall	f.f90	/^      real (kind=8) :: z_space_wall$/;"	v	module:commons
 z_space_wall	mfa_common.f90	/^      real (kind=8) :: z_space_wall$/;"	v	module:commons
+zcomp	f.f90	/^      real(kind=8)            :: crdna(1:3),crdnb(1:3),rend(1:3),rendtot,angle, rendl2,zcomp,/;"	v	module:commons
 zcomp	mfa_common.f90	/^      real(kind=8)            :: crdna(1:3),crdnb(1:3),rend(1:3),rendtot,angle, rendl2,zcomp,/;"	v	module:commons
+zcomp2	f.f90	/^      real(kind=8)            :: crdna2(1:3),crdnb2(1:3),rend2(1:3),rendtot2,angle2, rendl22,zcomp2,/;"	v	module:commons
 zcomp2	mfa_common.f90	/^      real(kind=8)            :: crdna2(1:3),crdnb2(1:3),rend2(1:3),rendtot2,angle2, rendl22,zcomp2,/;"	v	module:commons
+zcoord	f.f90	/^      real(kind=8)            :: crdna(1:3),crdnb(1:3),rend(1:3),rendtot,angle, rendl2,zcomp,xcomp,zcoord$/;"	v	module:commons
 zcoord	mfa_common.f90	/^      real(kind=8)            :: crdna(1:3),crdnb(1:3),rend(1:3),rendtot,angle, rendl2,zcomp,xcomp,zcoord$/;"	v	module:commons
+zcoord2	f.f90	/^      real(kind=8)            :: crdna2(1:3),crdnb2(1:3),rend2(1:3),rendtot2,angle2, rendl22,zcomp2,xcomp2,zcoord2$/;"	v	module:commons
 zcoord2	mfa_common.f90	/^      real(kind=8)            :: crdna2(1:3),crdnb2(1:3),rend2(1:3),rendtot2,angle2, rendl22,zcomp2,xcomp2,zcoord2$/;"	v	module:commons
 zigset	ziggurat.f90	/^SUBROUTINE zigset(/;"	s	module:Ziggurat
+zv_max	mfa_common.f90	/^        real(kind=8)              :: zv_min,zv_max,/;"	v	module:commons
+zv_min	mfa_common.f90	/^        real(kind=8)              :: zv_min,/;"	v	module:commons
+zz_min	f.f90	/^       real (kind=8) :: zz_min$/;"	v	module:commons
 zz_min	mfa_common.f90	/^       real (kind=8) :: zz_min$/;"	v	module:commons
