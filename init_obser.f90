@@ -306,6 +306,7 @@ print '(/a/)',"  *  Writing the very first generated configuration to conf0.xyz 
        call heat_flux_computation(0,1,1)
        mean_q = 0.0
        mean_q_k = 0.0
+       mean_q_p = 0.0
        mean_q_conf = 0.0
 
 #endif

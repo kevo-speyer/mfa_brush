@@ -108,7 +108,7 @@
 
                   inv_r_2 = 1./r_2
                   inv_sqrt_r_2 = sqrt(1./r_2)
-                  l_eps = epsil(i_type,j_type)
+                  l_eps = 4*epsil(i_type,j_type)   !!!!!CHANGE MARIA FIORA
 
 
                   r_61= sigma_2(i_type,j_type)*inv_r_2 
@@ -138,7 +138,8 @@
 ! Compute contribution to heat flux. 
 ! NOTE: watch the sign fij(i_part)=-force_loc and fij(j_part)=force_loc
 
-                   call heat_flux_computation(1,i_part,j_part,-force_loc(:)) 
+                   !!call heat_flux_computation(1,i_part,j_part,-force_loc(:))
+                   call heat_flux_computation(1,i_part,j_part,force_loc(:)) !!CHANGE SIGN IN FORCE_LOC TO VERIFY SMITH AND DAIVIS PAPER!!!!                 
 #           endif
 
                   force(1,j_part) = force(1,j_part) + force_loc(1)
