@@ -2010,7 +2010,7 @@ real(kind=8) :: z_i,z_j,z_in
     z_j = r0(3,jj)
 ! NOTE: the sign convention is rij=rj-ri
     if(z_i>zv_min.and.z_i<zv_max) then ! z_i in volume control 
-! add particle index to zone 
+! add particle index to store particles in the volume control 
         n_heat_vol = n_heat_vol + 1 ! a counter of particles inside the control volume in current time step. 
         part_in_vol(n_heat_vol) = ii ! collect particle labels for particles inside volume control for heat calc 
 
@@ -2027,7 +2027,7 @@ real(kind=8) :: z_i,z_j,z_in
             xvf = xvf - z_in*(v(1,j_part)*f_ij(1)+v(2,j_part)*f_ij(2)+v(3,j_part)*f_ij(3)) ! add j_part
         end if
         if(z_j<zv_max.and.z_j>zv_min) then 
-            !z_in = abs(z_j-z_i)
+          !  z_in = abs(z_j-z_i)
           !  z_in=z_i-z_j !change Maria Fiora. Rev 1
              z_in=z_j-z_i ! Claudio. Rev 2. 
              

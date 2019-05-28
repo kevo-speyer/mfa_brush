@@ -52,6 +52,7 @@
         p_energy(:) = 0.
         xvf = 0.0
         n_heat_vol = 0  ! number of particle in volume control for heat calculation
+        part_in_vol(:) = 0 ! We set to zero the labels of particles in volume control
 #   endif
 
 !BEGIN PARALLEL ZONE
@@ -119,7 +120,9 @@
 
                   v_fluid_fluid = v_fluid_fluid + l_eps*pot_loc
 #ifdef HEAT
-                  p_energy(i_part) = p_energy(i_part) + l_eps*pot_loc
+!NOTE: Add energy to both members of the interaction pair 
+                  p_energy(i_part) = p_energy(i_part) + 0.5*l_eps*pot_loc
+                  p_energy(j_part) = p_energy(j_part) + 0.5*l_eps*pot_loc
 #endif
                   r_dummy = l_eps*(-12*r_12+6*r_6)*inv_r_2
 
@@ -138,8 +141,10 @@
 ! Compute contribution to heat flux. 
 ! NOTE: watch the sign fij(i_part)=-force_loc and fij(j_part)=force_loc
 
+
                    !!call heat_flux_computation(1,i_part,j_part,-force_loc(:))
                    call heat_flux_computation(1,i_part,j_part,force_loc(:)) !!CHANGE SIGN IN FORCE_LOC TO VERIFY SMITH AND DAIVIS PAPER!!!!                 
+
 #           endif
 
                   force(1,j_part) = force(1,j_part) + force_loc(1)
