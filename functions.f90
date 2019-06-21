@@ -2001,7 +2001,7 @@ real(kind=8) :: z_i,z_j,z_in
     case(0)  ! Init
 ! Locate the volume for measurement close to de the bottom wall
        zv_min = 5.0  
-       zv_max = 6.0
+       zv_max = 7.0
        dz_control = zv_max-zv_min
  !      kk = 0 ! counter for particles inside the control volume
     case(1)  ! Compute. Called from fluid_fluid 
