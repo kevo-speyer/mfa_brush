@@ -16,6 +16,9 @@
      real (kind=8) :: l_eps,r_cut2,r_61
      real (kind=8) :: f_cou_real(3)
      real(kind=8)  :: inv_r_2,inv_sqrt_r_2
+#   ifdef HEAT
+     real(kind=8)  :: z_i
+#   endif
 ! cache blocking 
      integer :: ii_part,ii_neigh,i,j
       logical, parameter :: debug=.false.
