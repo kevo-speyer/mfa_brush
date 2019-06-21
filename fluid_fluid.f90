@@ -53,8 +53,18 @@
         xvf = 0.0
         n_heat_vol = 0  ! number of particle in volume control for heat calculation
         part_in_vol(:) = 0 ! We set to zero the labels of particles in volume control
-#   endif
 
+! Collect particles in the control volume 
+
+        do i_part = 1, n_part
+            z_i = r0(3,i_part)
+            if(z_i>zv_min.and.z_i<zv_max) then ! z_i in volume control 
+                n_heat_vol = n_heat_vol + 1 ! a counter of particles inside the control volume in current time step. 
+                part_in_vol(n_heat_vol) = i_part ! collect particle labels for particles inside volume control for heat calc 
+            end if
+        end do
+
+#   endif
 !BEGIN PARALLEL ZONE
 
 !Warning: Paralelization not adapted for SYMMETRY=1 

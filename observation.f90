@@ -532,10 +532,9 @@ end if ! mod(i_time-n_relax,5).eq.0
             do i_dummy = 1,n_heat_vol
                 i_part = part_in_vol(i_dummy)
 !       Add kinetic term to Ev_k                 
+! Maria Fiora                
                 ev_term_k =  ev_term_k +     &
-                        !0.5*mass(i_part)*(v(1,i_part)*v(1,i_part)+v(3,i_part)*v(2,i_part)+v(3,i_part)*v(3,i_part))* &
-                        0.5*mass(i_part)*(v(1,i_part)*v(1,i_part)+v(2,i_part)*v(2,i_part)+v(3,i_part)*v(3,i_part))* & !Maria Fiora
-                        v(3,i_part) 
+               0.5*mass(i_part)*(v(1,i_part)*v(1,i_part)+v(2,i_part)*v(2,i_part)+v(3,i_part)*v(3,i_part))*v(3,i_part) 
 !       Add potential term to Ev_p
                 ev_term_p = ev_term_p + p_energy(i_part)*v(3,i_part)  !Maria Fiora
 
