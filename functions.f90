@@ -2002,13 +2002,49 @@ real(kind=8) :: z_i,z_j,z_in
     case(0)  ! Init
 ! Locate the volume for measurement close to de the bottom wall
        zv_min = 5.0  
-       zv_max = 7.0
+       zv_max = 6.0
        dz_control = zv_max-zv_min
  !      kk = 0 ! counter for particles inside the control volume
     case(1)  ! Compute. Called from fluid_fluid 
 
     z_i = r0(3,ii)
     z_j = r0(3,jj)
+
+! Nacho's variation 
+
+!! Nacho's tide up     if1=0
+!! Nacho's tide up     if(z_i>zv_min.and.z_i<zv_max) then ! z_i in volume control 
+!! Nacho's tide up         if(z_j < zv_min ) then 
+!! Nacho's tide up             if1=1
+!! Nacho's tide up             z_in = zv_min - z_i
+!! Nacho's tide up             if(z_j < zv_max ) then 
+!! Nacho's tide up                 if1=1
+!! Nacho's tide up                 z_in = z_j - z_i
+!! Nacho's tide up                 if(z_j > zv_max ) then 
+!! Nacho's tide up                     if1=1
+!! Nacho's tide up                     z_in = zv_max - z_i
+!! Nacho's tide up                 end if
+!! Nacho's tide up             end if
+!! Nacho's tide up         end if 
+!! Nacho's tide up 
+!! Nacho's tide up         if(z_i<zv_min.and.z_j>zv_max) then ! 
+!! Nacho's tide up             if1=1
+!! Nacho's tide up             z_in = zv_max - zv_min
+!! Nacho's tide up             if(z_i>zv_max.and.z_j<zv_min) then 
+!! Nacho's tide up                 if1=1
+!! Nacho's tide up                 z_in = zv_min - zv_max
+!! Nacho's tide up             end if 
+!! Nacho's tide up         end if
+!! Nacho's tide up     end if 
+!! Nacho's tide up     if (if1==1) then 
+!! Nacho's tide up         vipvj(:) = v(:,ii) + v(:,jj) 
+!! Nacho's tide up         xvf = xvf - 0.5*z_in*(vipvj(1)*f_ij(1)+vipvj(2)*f_ij(2)+vipvj(3)*f_ij(3)) ! add to i_part 
+!! Nacho's tide up     end if
+
+        ! END Nacho's variation 
+        
+
+
 ! NOTE: the sign convention is rij=rj-ri
     if(z_i>zv_min.and.z_i<zv_max) then ! z_i in volume control 
 
@@ -2021,7 +2057,7 @@ real(kind=8) :: z_i,z_j,z_in
         if(z_j > zv_max ) then 
             z_in = zv_max - z_i
    !claudio rev 2          z_in=z_i-zv_max !change Maria Fiora rev 1
-            xvf = xvf - 0.5*z_in*(vipvj(1)*f_ij(1)+vipvj(2)*f_ij(2)+vipvj(3)*f_ij(3)) ! add to i_part 
+            xvf = xvf - 0.5*z_in*(vipvj(1)*f_ij(1)+vipvj(2)*f_ij(2)+vipvj(3)*f_ij(3)) ! adding i_part and j_part
 !            xvf = xvf - 0.5*z_in*(v(1,i_part)*f_ij(1)+v(2,i_part)*f_ij(2)+v(3,i_part)*f_ij(3)) ! add i_part
 !            xvf = xvf - 0.5*z_in*(v(1,j_part)*f_ij(1)+v(2,j_part)*f_ij(2)+v(3,j_part)*f_ij(3)) ! add j_part
 

@@ -57,7 +57,7 @@
         n_heat_vol = 0  ! number of particle in volume control for heat calculation
         part_in_vol(:) = 0 ! We set to zero the labels of particles in volume control
 
-! Collect particles in the control volume 
+        ! Collect particles in the control volume. [Checkout if goes in observation]
 
         do i_part = 1, n_part
             z_i = r0(3,i_part)
@@ -66,6 +66,9 @@
                 part_in_vol(n_heat_vol) = i_part ! collect particle labels for particles inside volume control for heat calc 
             end if
         end do
+
+
+
 
 #   endif
 !BEGIN PARALLEL ZONE
@@ -259,7 +262,7 @@
 #       endif /* THEMOSTAT = 0 */
 #endif /* DPD_CUT_OFF */
 
-          end do ! loop over particles neighbors (j_part)
+          end do ! loop over particle neighbors (j_part)
 
 #       if BIN_TYPE == 0 /* binning.f90 */
  
