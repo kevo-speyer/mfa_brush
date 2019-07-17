@@ -152,7 +152,7 @@ subroutine init_system()
 #       endif
 #       ifdef HEAT
         read(14,*) !dummy reading
-        read(14,*) zv_min,zv_max; print *,"Control volume:dz_min,dz_max=",zv_min,zv_max
+        read(14,*) zv_min,zv_max; print *,"Control volume:dz_min,dz_max=",z_min,z_max
         if(n_read/=0) then 
             print *," WARN!! parameter missing in system_input. Line for particle 4! "
            stop 
