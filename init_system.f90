@@ -150,15 +150,15 @@ subroutine init_system()
         read(14,*) ! dummy reading
         read(14,*) thermal_skin ; print *,"thermal skin =",thermal_skin
 #       endif
-#       ifdef HEAT
-        read(14,*) !dummy reading
-        read(14,*) zv_min,zv_max; print *,"Control volume:dz_min,dz_max=",zv_min,zv_max
-        if(n_read/=0) then 
-            print *," WARN!! parameter missing in system_input. Line for particle 4! "
-           stop 
-          endif
+!#       ifdef HEAT
+!        read(14,*) !dummy reading
+!        read(14,*) zv_min,zv_max; print *,"Control volume:dz_min,dz_max=",zv_min,zv_max
+!        if(n_read/=0) then 
+!            print *," WARN!! parameter missing in system_input. Line for particle 4! "
+!           stop 
+!          endif
 
-#       endif
+!#       endif
 
         print *,"   Done!"
         close(unit=14)
