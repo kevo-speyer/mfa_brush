@@ -148,11 +148,11 @@ subroutine init_system()
 !            n_loop: Number of turns of the loo
 #       if THERMOSTAT==2
         read(14,*) ! dummy reading
-        read(14,*) thermal_skin ; print *,"thermal skin =",thermal_skin
+        read(14,*) thermal_skin ; print *,"  * thermal skin =",thermal_skin
 #       endif
 #       ifdef HEAT
-        read(14,*) !dummy reading
-        read(14,*) zv_min,zv_max; print *,"Control volume:dz_min,dz_max=",zv_min,zv_max
+        read(14,*)      !dummy reading
+        read(14,*,iostat=n_read) zv_min,zv_max  ; print '(a,2f15.4)',"  * Control volume:dz_min,dz_max=",zv_min,zv_max
         if(n_read/=0) then 
             print *," WARN!! parameter missing in system_input. Line for particle 4! "
            stop 
