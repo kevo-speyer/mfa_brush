@@ -336,6 +336,11 @@ write (20,'(/a,f16.7)') " Mean heat flow kinetic (z)=",mean_q_k*inv_count_obs*in
 write (20,'(/a,f16.7)') " Mean heat flow potential (z)=",mean_q_p*inv_count_obs*inv_boundary(1)*inv_boundary(2)/dz_control
 write (20,'(a,3(a,2f6.2)/)') " Volume control:"," x:",0,boundary(1)," y: ", &
         0,boundary(2)," z: ",zv_min,zv_max 
+! Write out pressure components 
+
+write (20,'(/a,f16.7)') " Pressure (x)=",press_x*inv_count_obs*inv_boundary(1)*inv_boundary(2)/dz_control 
+write (20,'(/a,f16.7)') " Pressure (y)=",press_y*inv_count_obs*inv_boundary(1)*inv_boundary(2)/dz_control 
+write (20,'(/a,f16.7)') " Pressure (z)=",press_z*inv_count_obs*inv_boundary(1)*inv_boundary(2)/dz_control 
 
 
 #endif

@@ -1995,7 +1995,8 @@ integer, intent(in) :: mode,ii,jj
 real(kind=8), intent(in), optional :: f_ij(3)
 real(kind=8) :: vipvj(3)
 !integer , save :: kk 
-real(kind=8) :: z_i,z_j,z_in
+real(kind=8) :: z_i,z_j,z_in,x_in,y_in,x_i,x_j,y_i,y_j
+integer :: if1
 ! ii = ipart ith-particle
 ! jj =  j_part jth-particle 
     select case (mode)
@@ -2010,124 +2011,165 @@ real(kind=8) :: z_i,z_j,z_in
     z_i = r0(3,ii)
     z_j = r0(3,jj)
 
+    y_i = r0(2,ii)
+    y_j = r0(2,jj)
+
+    x_i = r0(1,ii)
+    x_j = r0(1,jj)
+
 ! Nacho's variation 
 
-!! Nacho's tide up     if1=0
-!! Nacho's tide up     if(z_i>zv_min.and.z_i<zv_max) then ! z_i in volume control 
-!! Nacho's tide up         if(z_j < zv_min ) then 
-!! Nacho's tide up             if1=1
-!! Nacho's tide up             z_in = zv_min - z_i
-!! Nacho's tide up             if(z_j < zv_max ) then 
-!! Nacho's tide up                 if1=1
-!! Nacho's tide up                 z_in = z_j - z_i
-!! Nacho's tide up                 if(z_j > zv_max ) then 
-!! Nacho's tide up                     if1=1
-!! Nacho's tide up                     z_in = zv_max - z_i
-!! Nacho's tide up                 end if
-!! Nacho's tide up             end if
-!! Nacho's tide up         end if 
-!! Nacho's tide up 
-!! Nacho's tide up         if(z_i<zv_min.and.z_j>zv_max) then ! 
-!! Nacho's tide up             if1=1
-!! Nacho's tide up             z_in = zv_max - zv_min
-!! Nacho's tide up             if(z_i>zv_max.and.z_j<zv_min) then 
-!! Nacho's tide up                 if1=1
-!! Nacho's tide up                 z_in = zv_min - zv_max
-!! Nacho's tide up             end if 
-!! Nacho's tide up         end if
-!! Nacho's tide up     end if 
-!! Nacho's tide up     if (if1==1) then 
-!! Nacho's tide up         vipvj(:) = v(:,ii) + v(:,jj) 
-!! Nacho's tide up         xvf = xvf - 0.5*z_in*(vipvj(1)*f_ij(1)+vipvj(2)*f_ij(2)+vipvj(3)*f_ij(3)) ! add to i_part 
-!! Nacho's tide up     end if
+     if1=0
+     if(z_i>zv_min.and.z_i<zv_max) then ! z_i in volume control 
+         if(z_j < zv_min ) then 
+             if1=1
+             x_in =  v_fxy(x_i,z_i,x_j,z_j,zv_min) - x_i
+             y_in =  v_fxy(y_i,z_i,y_j,z_j,zv_min) - y_i
+
+             z_in = zv_min - z_i
+             if(z_j < zv_max ) then 
+                 if1=1
+                 x_in = x_j - x_i
+                 y_in = y_j - y_i
+                 z_in = z_j - z_i
+                 if(z_j > zv_max ) then 
+                     if1=1
+                     x_in =  v_fxy(x_i,z_i,x_j,z_j,zv_max) - x_i
+                     y_in =  v_fxy(y_i,z_i,y_j,z_j,zv_max) - y_i
+                     z_in = zv_max - z_i
+                 end if
+             end if
+         end if 
+ 
+         if(z_i<zv_min.and.z_j>zv_max) then ! 
+             if1=1
+             x_in =  v_fxy(x_i,z_i,x_j,z_j,zv_max) - v_fxy(x_i,z_i,x_j,z_j,zv_min) 
+             y_in =  v_fxy(y_i,z_i,y_j,z_j,zv_max) - v_fxy(y_i,z_i,y_j,z_j,zv_min) 
+             z_in = zv_max - zv_min
+
+             if(z_i>zv_max.and.z_j<zv_min) then 
+                 if1=1
+                 x_in =  v_fxy(x_i,z_i,x_j,z_j,zv_min) - v_fxy(x_i,z_i,x_j,z_j,zv_max) 
+                 y_in =  v_fxy(y_i,z_i,y_j,z_j,zv_min) - v_fxy(y_i,z_i,y_j,z_j,zv_max) 
+                 z_in = zv_min - zv_max
+             end if 
+         end if
+     end if 
+     if (if1==1) then 
+         vipvj(:) = v(:,ii) + v(:,jj) 
+         xvf = xvf - 0.5*z_in*(vipvj(1)*f_ij(1)+vipvj(2)*f_ij(2)+vipvj(3)*f_ij(3)) ! add to i_part 
+         xf_x = xf_x - 0.5*x_in*f_ij(1) 
+         xf_y = xf_y - 0.5*y_in*f_ij(2) 
+         xf_z = xf_z - 0.5*z_in*f_ij(3) 
+     end if
 
         ! END Nacho's variation 
         
 
 
-! NOTE: the sign convention is rij=rj-ri
-    if(z_i>zv_min.and.z_i<zv_max) then ! z_i in volume control 
-
-        vipvj(:) = v(:,ii) + v(:,jj) 
-! add particle index to store particles in the volume control 
-! WRONG
-!        n_heat_vol = n_heat_vol + 1 ! a counter of particles inside the control volume in current time step. 
-!        part_in_vol(n_heat_vol) = ii ! collect particle labels for particles inside volume control for heat calc 
-
-        if(z_j > zv_max ) then 
-            z_in = zv_max - z_i
-   !claudio rev 2          z_in=z_i-zv_max !change Maria Fiora rev 1
-            xvf = xvf - 0.5*z_in*(vipvj(1)*f_ij(1)+vipvj(2)*f_ij(2)+vipvj(3)*f_ij(3)) ! adding i_part and j_part
-!            xvf = xvf - 0.5*z_in*(v(1,i_part)*f_ij(1)+v(2,i_part)*f_ij(2)+v(3,i_part)*f_ij(3)) ! add i_part
-!            xvf = xvf - 0.5*z_in*(v(1,j_part)*f_ij(1)+v(2,j_part)*f_ij(2)+v(3,j_part)*f_ij(3)) ! add j_part
-
-      
-        end if
-        if(z_j < zv_min ) then ! Rev. 2, Claudio: it was ">". I think it is "<"
-!            z_in = -zv_min + z_i !ori
-            z_in = zv_min - z_i   ! Rev 3  Nacho Claudio
-            xvf = xvf - 0.5*z_in*(vipvj(1)*f_ij(1)+vipvj(2)*f_ij(2)+vipvj(3)*f_ij(3)) ! add to i_part 
-!            xvf = xvf - 0.5*z_in*(v(1,i_part)*f_ij(1)+v(2,i_part)*f_ij(2)+v(3,i_part)*f_ij(3)) ! add i_part
-!            xvf = xvf - 0.5*z_in*(v(1,j_part)*f_ij(1)+v(2,j_part)*f_ij(2)+v(3,j_part)*f_ij(3)) ! add j_part
-        end if
-        if(z_j<zv_max.and.z_j>zv_min) then 
-          !  z_in = abs(z_j-z_i)
-          !  z_in=z_i-z_j !change Maria Fiora. Rev 1
-             z_in=z_j-z_i ! Claudio. Rev 2. 
-             
-            xvf = xvf - 0.5*z_in*(vipvj(1)*f_ij(1)+vipvj(2)*f_ij(2)+vipvj(3)*f_ij(3)) ! add to i_part 
-!            xvf = xvf - 0.5*z_in*(v(1,i_part)*f_ij(1)+v(2,i_part)*f_ij(2)+v(3,i_part)*f_ij(3)) ! add i_part
-!            xvf = xvf - 0.5*z_in*(v(1,j_part)*f_ij(1)+v(2,j_part)*f_ij(2)+v(3,j_part)*f_ij(3)) ! add j_part
-        end if
-    end if ! z_in volume control
-    if(z_i<zv_min) then ! z_i out of volume control
-        vipvj(:) = v(:,i_part) + v(:,j_part) 
-!does not add to xvf        if(z_j<zv_min) then 
-!does not add to xvf            z_in = 0.
-!does not add to xvf        end if
-        if(z_j>zv_min.and.z_j<zv_max) then 
-            z_in= z_j - zv_min  
-! Think this better !            
-            xvf = xvf - 0.5*z_in*(vipvj(1)*f_ij(1)+vipvj(2)*f_ij(2)+vipvj(3)*f_ij(3)) ! add to i_part 
-!            xvf = xvf - 0.5*z_in*(v(1,j_part)*f_ij(1)+v(2,j_part)*f_ij(2)+v(3,j_part)*f_ij(3)) ! add to j_part 
-!            xvf = xvf - 0.5*z_in*(v(1,j_part)*f_ij(1)+v(2,j_part)*f_ij(2)+v(3,j_part)*f_ij(3)) ! add j_part
-        end if
-        if(z_j>zv_max) then 
-            z_in = zv_max - zv_min
-            ! z_in=zv_min-zv_max !change Maria Fiora
-            xvf = xvf - 0.5*z_in*(vipvj(1)*f_ij(1)+vipvj(2)*f_ij(2)+vipvj(3)*f_ij(3)) ! add to i_part 
-!             xvf = xvf - 0.5*z_in*(v(1,i_part)*f_ij(1)+v(2,i_part)*f_ij(2)+v(3,i_part)*f_ij(3)) ! add i_part
-!             xvf = xvf - 0.5*z_in*(v(1,j_part)*f_ij(1)+v(2,j_part)*f_ij(2)+v(3,j_part)*f_ij(3)) ! add j_part
-        end if 
-    end if
-    if(z_i>zv_max) then ! z_i out of volume control
-        vipvj(:) = v(:,i_part) + v(:,j_part) 
-!does not add        if(z_j>zv_max) then
-!does not add            z_in = 0.
-!does not add        end if
-        if(z_j>zv_min.and.z_j<zv_max) then 
-            z_in =   z_j - zv_max 
-            xvf = xvf - 0.5*z_in*(vipvj(1)*f_ij(1)+vipvj(2)*f_ij(2)+vipvj(3)*f_ij(3)) ! add to i_part 
-!            xvf = xvf - 0.5*z_in*(v(1,i_part)*f_ij(1)+v(2,i_part)*f_ij(2)+v(3,i_part)*f_ij(3)) ! add i_part
-!            xvf = xvf - 0.5*z_in*(v(1,j_part)*f_ij(1)+v(2,j_part)*f_ij(2)+v(3,j_part)*f_ij(3)) ! add j_part
-        end if
-        if(z_j<zv_min) then 
-            z_in = zv_min - zv_max
-            xvf = xvf - 0.5*z_in*(vipvj(1)*f_ij(1)+vipvj(2)*f_ij(2)+vipvj(3)*f_ij(3)) ! add to i_part 
-!            xvf = xvf - 0.5*z_in*(v(1,i_part)*f_ij(1)+v(2,i_part)*f_ij(2)+v(3,i_part)*f_ij(3)) ! add i_part
-!            xvf = xvf - 0.5*z_in*(v(1,j_part)*f_ij(1)+v(2,j_part)*f_ij(2)+v(3,j_part)*f_ij(3)) ! add j_part
-        end if
-    end if
-
-! WRONG             xvf = 0.5*xvf
-
-!    xvf = xvf + z_in*(v(1,i_part)*f_ij(1)+v(2,i_part)*f_ij(2)+v(3,i_part)*f_ij(3))
+!Original, untidy version ! NOTE: the sign convention is rij=rj-ri
+!Original, untidy version     if(z_i>zv_min.and.z_i<zv_max) then ! z_i in volume control 
+!Original, untidy version 
+!Original, untidy version         vipvj(:) = v(:,ii) + v(:,jj) 
+!Original, untidy version ! add particle index to store particles in the volume control 
+!Original, untidy version ! WRONG
+!Original, untidy version !        n_heat_vol = n_heat_vol + 1 ! a counter of particles inside the control volume in current time step. 
+!Original, untidy version !        part_in_vol(n_heat_vol) = ii ! collect particle labels for particles inside volume control for heat calc 
+!Original, untidy version 
+!Original, untidy version         if(z_j > zv_max ) then 
+!Original, untidy version             z_in = zv_max - z_i
+!Original, untidy version    !claudio rev 2          z_in=z_i-zv_max !change Maria Fiora rev 1
+!Original, untidy version             xvf = xvf - 0.5*z_in*(vipvj(1)*f_ij(1)+vipvj(2)*f_ij(2)+vipvj(3)*f_ij(3)) ! adding i_part and j_part
+!Original, untidy version !            xvf = xvf - 0.5*z_in*(v(1,i_part)*f_ij(1)+v(2,i_part)*f_ij(2)+v(3,i_part)*f_ij(3)) ! add i_part
+!Original, untidy version !            xvf = xvf - 0.5*z_in*(v(1,j_part)*f_ij(1)+v(2,j_part)*f_ij(2)+v(3,j_part)*f_ij(3)) ! add j_part
+!Original, untidy version 
+!Original, untidy version       
+!Original, untidy version         end if
+!Original, untidy version         if(z_j < zv_min ) then ! Rev. 2, Claudio: it was ">". I think it is "<"
+!Original, untidy version !            z_in = -zv_min + z_i !ori
+!Original, untidy version             z_in = zv_min - z_i   ! Rev 3  Nacho Claudio
+!Original, untidy version             xvf = xvf - 0.5*z_in*(vipvj(1)*f_ij(1)+vipvj(2)*f_ij(2)+vipvj(3)*f_ij(3)) ! add to i_part 
+!Original, untidy version !            xvf = xvf - 0.5*z_in*(v(1,i_part)*f_ij(1)+v(2,i_part)*f_ij(2)+v(3,i_part)*f_ij(3)) ! add i_part
+!Original, untidy version !            xvf = xvf - 0.5*z_in*(v(1,j_part)*f_ij(1)+v(2,j_part)*f_ij(2)+v(3,j_part)*f_ij(3)) ! add j_part
+!Original, untidy version         end if
+!Original, untidy version         if(z_j<zv_max.and.z_j>zv_min) then 
+!Original, untidy version           !  z_in = abs(z_j-z_i)
+!Original, untidy version           !  z_in=z_i-z_j !change Maria Fiora. Rev 1
+!Original, untidy version              z_in=z_j-z_i ! Claudio. Rev 2. 
+!Original, untidy version              
+!Original, untidy version             xvf = xvf - 0.5*z_in*(vipvj(1)*f_ij(1)+vipvj(2)*f_ij(2)+vipvj(3)*f_ij(3)) ! add to i_part 
+!Original, untidy version !            xvf = xvf - 0.5*z_in*(v(1,i_part)*f_ij(1)+v(2,i_part)*f_ij(2)+v(3,i_part)*f_ij(3)) ! add i_part
+!Original, untidy version !            xvf = xvf - 0.5*z_in*(v(1,j_part)*f_ij(1)+v(2,j_part)*f_ij(2)+v(3,j_part)*f_ij(3)) ! add j_part
+!Original, untidy version         end if
+!Original, untidy version     end if ! z_in volume control
+!Original, untidy version     if(z_i<zv_min) then ! z_i out of volume control
+!Original, untidy version         vipvj(:) = v(:,i_part) + v(:,j_part) 
+!Original, untidy version !does not add to xvf        if(z_j<zv_min) then 
+!Original, untidy version !does not add to xvf            z_in = 0.
+!Original, untidy version !does not add to xvf        end if
+!Original, untidy version         if(z_j>zv_min.and.z_j<zv_max) then 
+!Original, untidy version             z_in= z_j - zv_min  
+!Original, untidy version ! Think this better !            
+!Original, untidy version             xvf = xvf - 0.5*z_in*(vipvj(1)*f_ij(1)+vipvj(2)*f_ij(2)+vipvj(3)*f_ij(3)) ! add to i_part 
+!Original, untidy version !            xvf = xvf - 0.5*z_in*(v(1,j_part)*f_ij(1)+v(2,j_part)*f_ij(2)+v(3,j_part)*f_ij(3)) ! add to j_part 
+!Original, untidy version !            xvf = xvf - 0.5*z_in*(v(1,j_part)*f_ij(1)+v(2,j_part)*f_ij(2)+v(3,j_part)*f_ij(3)) ! add j_part
+!Original, untidy version         end if
+!Original, untidy version         if(z_j>zv_max) then 
+!Original, untidy version             z_in = zv_max - zv_min
+!Original, untidy version             ! z_in=zv_min-zv_max !change Maria Fiora
+!Original, untidy version             xvf = xvf - 0.5*z_in*(vipvj(1)*f_ij(1)+vipvj(2)*f_ij(2)+vipvj(3)*f_ij(3)) ! add to i_part 
+!Original, untidy version !           xvf = xvf - 0.5*z_in*(v(1,i_part)*f_ij(1)+v(2,i_part)*f_ij(2)+v(3,i_part)*f_ij(3)) ! add i_part
+!Original, untidy version !           xvf = xvf - 0.5*z_in*(v(1,j_part)*f_ij(1)+v(2,j_part)*f_ij(2)+v(3,j_part)*f_ij(3)) ! add j_part
+!Original, untidy version         end if 
+!Original, untidy version     end if
+!Original, untidy version     if(z_i>zv_max) then ! z_i out of volume control
+!Original, untidy version         vipvj(:) = v(:,i_part) + v(:,j_part) 
+!Original, untidy version !does not add        if(z_j>zv_max) then
+!Original, untidy version !does not add            z_in = 0.
+!Original, untidy version !does not add        end if
+!Original, untidy version         if(z_j>zv_min.and.z_j<zv_max) then 
+!Original, untidy version             z_in =   z_j - zv_max 
+!Original, untidy version             xvf = xvf - 0.5*z_in*(vipvj(1)*f_ij(1)+vipvj(2)*f_ij(2)+vipvj(3)*f_ij(3)) ! add to i_part 
+!Original, untidy version !            xvf = xvf - 0.5*z_in*(v(1,i_part)*f_ij(1)+v(2,i_part)*f_ij(2)+v(3,i_part)*f_ij(3)) ! add i_part
+!Original, untidy version !            xvf = xvf - 0.5*z_in*(v(1,j_part)*f_ij(1)+v(2,j_part)*f_ij(2)+v(3,j_part)*f_ij(3)) ! add j_part
+!Original, untidy version         end if
+!Original, untidy version         if(z_j<zv_min) then 
+!Original, untidy version             z_in = zv_min - zv_max
+!Original, untidy version             xvf = xvf - 0.5*z_in*(vipvj(1)*f_ij(1)+vipvj(2)*f_ij(2)+vipvj(3)*f_ij(3)) ! add to i_part 
+!Original, untidy version !            xvf = xvf - 0.5*z_in*(v(1,i_part)*f_ij(1)+v(2,i_part)*f_ij(2)+v(3,i_part)*f_ij(3)) ! add i_part
+!Original, untidy version !            xvf = xvf - 0.5*z_in*(v(1,j_part)*f_ij(1)+v(2,j_part)*f_ij(2)+v(3,j_part)*f_ij(3)) ! add j_part
+!Original, untidy version         end if
+!Original, untidy version     end if
+!Original, untidy version 
+!Original, untidy version ! WRONG             xvf = 0.5*xvf
+!Original, untidy version 
+!Original, untidy version !    xvf = xvf + z_in*(v(1,i_part)*f_ij(1)+v(2,i_part)*f_ij(2)+v(3,i_part)*f_ij(3))
 
     end select ! mode
 
 
 end subroutine
 #   endif
+! Auxiliary functions for pressure calculation in the control volume
+
+real(kind=8) function v_fxy(x_i,z_i,x_j,z_j,zz_v)
+    real(kind=8) :: x_i,z_i,x_j,z_j,zz_v
+
+           v_fxy= (x_j-x_i)*(zz_v-z_i)/(z_j-z_i) + x_i
+
+   end function
+!real(kind=8) function v_fy(y_i,z_i,y_j,z_j,zz_v)
+!    real(kind=8) :: y_i,z_i,y_j,z_j,zz_v
+!
+!           v_fy= (y_j-y_i)*(zz_v-z_i)/(z_j-z_i) + y_i
+!
+!   end function
+
+
+
+
+
+
 
 !
 !  ENDS MODULE        

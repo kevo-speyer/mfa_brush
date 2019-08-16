@@ -28,10 +28,6 @@ use commons
             a(3,i_part) = force(3,i_part)*inv_mass(i_part)
 !        end do
 
-!!!! Update velocities 
-!!!#if THERMOSTAT == 2
-!!!    call thermal_walls(2)
-!!!#endif
 !        do i_part = 1 , n_mon_tot
 !            v(1,i_part) = v_half(1,i_part) + 0.5*dt*a(1,i_part)       ! old force(1,i_part)*inv_mass(i_part)
 !            v(2,i_part) = v_half(2,i_part) + 0.5*dt*a(2,i_part)       ! old force(2,i_part)*inv_mass(i_part)
