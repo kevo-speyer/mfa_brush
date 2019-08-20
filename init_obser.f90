@@ -308,10 +308,6 @@ print '(/a/)',"  *  Writing the very first generated configuration to conf0.xyz 
        mean_q_k = 0.0
        mean_q_p = 0.0
        mean_q_conf = 0.0
-! Pressure variables 
-        press_x =0.d0
-        press_y = 0.d0
-        press_z = 0.d0
 
 #endif
 

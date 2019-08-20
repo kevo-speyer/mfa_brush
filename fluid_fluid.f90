@@ -54,10 +54,6 @@
 #   ifdef  HEAT
         p_energy(:) = 0.
         xvf = 0.0
-        xf_x = 0.0
-        xf_y = 0.0
-        xf_z = 0.0
-
         n_heat_vol = 0  ! number of particle in volume control for heat calculation
         part_in_vol(:) = 0 ! We set to zero the labels of particles in volume control
 
@@ -79,14 +75,14 @@
 
 !Warning: Paralelization not adapted for SYMMETRY=1 
 
-!!!!!! !$OMP PARALLEL DEFAULT(PRIVATE) SHARED(r_2_min,force,v_fluid_fluid,n_part,a_type,ff_list, range_2, r0,inv_boundary,boundary, epsil,sigma_2,e_shift,sig,mass,friction,v, inv_range_2, r_cut_dpd_2,p_energy,xvf,n_heat_vol)
+!$OMP PARALLEL DEFAULT(PRIVATE) SHARED(r_2_min,force,v_fluid_fluid,n_part,a_type,ff_list, range_2, r0,inv_boundary,boundary, epsil,sigma_2,e_shift,sig,mass,friction,v, inv_range_2, r_cut_dpd_2,p_energy,xvf,n_heat_vol)
 
-!!! #ifdef _OPENMP
-!!!     ith=omp_get_thread_num()
-!!! #endif
+#ifdef _OPENMP
+    ith=omp_get_thread_num()
+#endif
 
 !print *, " Stopping here" ; stop
-!!!! !$OMP DO SCHEDULE(STATIC,10) REDUCTION(+:force,v_fluid_fluid,p_energy,xvf,n_heat_vol)     
+!$OMP DO SCHEDULE(STATIC,10) REDUCTION(+:force,v_fluid_fluid,p_energy,xvf,n_heat_vol)     
     do i_part = 1,n_part  !n_mon_tot= brushes + droplet/melt
         q_part=i_part !dummy variable for OpenMP paralelization
 

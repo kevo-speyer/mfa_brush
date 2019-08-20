@@ -528,9 +528,6 @@ end if ! mod(i_time-n_relax,5).eq.0
 ! Go through particles in the volume control ( (zv_max-zv_min)*Lx*Lz ) to calculate ev_term
             ev_term_k = 0.0
             ev_term_p = 0.0
-            press_k_x = 0.0 
-            press_k_y = 0.0
-            press_k_z = 0.0
 ! Note: the heat flow is calculated in z direction            
             do i_dummy = 1,n_heat_vol
                 i_part = part_in_vol(i_dummy)
@@ -541,22 +538,13 @@ end if ! mod(i_time-n_relax,5).eq.0
 !       Add potential term to Ev_p
                 ev_term_p = ev_term_p + p_energy(i_part)*v(3,i_part)  !Maria Fiora
 
-                press_k_x = press_k_x + mass(i_part)*v(1,i_part)*v(1,i_part) 
-                press_k_y = press_k_y + mass(i_part)*v(2,i_part)*v(2,i_part) 
-                press_k_z = press_k_z + mass(i_part)*v(3,i_part)*v(3,i_part) 
-!NOTE: we take the absolute velocity: assumes no flow 
             end do
 !       Add-up contributions to  heat flux in z direction, in the given volume control
 
           !mean_q = mean_q + ev_term + xvf
-          mean_q_k = mean_q_k + ev_term_k ! Maria Fiora
+          mean_q_k = mean_q_k + ev_term_k !change Maria Fiora
           mean_q_p = mean_q_p + ev_term_p
-          mean_q_conf = mean_q_conf + xvf ! Maria Fiora
-
-! Diagonal Pressure Tensor components
-          press_x = press_x + press_k_x +  xf_x
-          press_y = press_y + press_k_y +  xf_y
-          press_z = press_z + press_k_z +  xf_z
+          mean_q_conf = mean_q_conf + xvf !change Maria Fiora
 
 #       endif
 
