@@ -600,6 +600,7 @@ integer,dimension(8) :: values
         integer(kind=4), allocatable :: part_in_vol(:)
         !real(kind=8)              :: zv_min,zv_max,xvf,ev_term,mean_q
         real(kind=8)              :: zv_min,zv_max,xvf,ev_term_k,ev_term_p,mean_q_k,mean_q_p,mean_q_conf,mean_q,dz_control !change Maria Fiora
+        real(kind=8)              :: xf_x,xf_y,xf_z,press_k_x,press_k_y,press_k_z,mean_press_x,mean_press_y,mean_press_z
         integer(kind=4)           :: n_heat_vol
 #endif
 

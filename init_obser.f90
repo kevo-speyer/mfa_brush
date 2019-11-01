@@ -308,6 +308,10 @@ print '(/a/)',"  *  Writing the very first generated configuration to conf0.xyz 
        mean_q_k = 0.0
        mean_q_p = 0.0
        mean_q_conf = 0.0
+! Kinetic term for diagonal components of  pressure  tensor
+       press_k_x = 0.0 
+       press_k_y = 0.0 
+       press_k_z = 0.0 
 
 #endif
 

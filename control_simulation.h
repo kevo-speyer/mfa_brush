@@ -39,7 +39,7 @@
  * 0= poor solvent      */
 
 /* NOTE:  WALL is  not used if SYMMETRY /= 1  */
-#define SOLVENT 1    
+#define SOLVENT 1 
 
 /* Some specific system properties */
 
@@ -50,7 +50,7 @@
 #undef ORIENTATION  /* if def the grafted polymers will be oriented through an harmonic potential*//
 #undef MAGNETIC /* ifdef the program includes magnetic partcicles. Particle 4 is treated as magnetic. María Fiora */
 #define ASYM_WALLS /* if not def symmetric walls. Ifdef ... */
-#define HEAT /*if defined, calculates some heat properties.  branch = leidenfrost */
+#define HEAT /*if defined, calculates heat flow and pressure components in a volume control.  branch = leidenfrost */
 
 
 

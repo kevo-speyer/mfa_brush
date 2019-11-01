@@ -211,7 +211,10 @@ print '(/a/)',"  * Doing simulation with profiles calculation (slower) "
 
 #    endif
 #endif
-
+#       ifdef HEAT
+        print *," *  Calculating heat flow in z in a given volume control (defined in input)"
+        print *," *  Calculating pressure in x,y and z in the same volume control"
+#       endif
 
 
 

@@ -1997,7 +1997,7 @@ real(kind=8) :: vipvj(3)
 !integer , save :: kk 
 real(kind=8) :: z_i,z_j,z_in,x_in,y_in,x_i,x_j,y_i,y_j
 integer :: if1
-! ii = ipart ith-particle
+! ii =  i_part ith-particle
 ! jj =  j_part jth-particle 
     select case (mode)
     case(0)  ! Init
@@ -2025,36 +2025,62 @@ integer :: if1
              if1=1
              x_in =  v_fxy(x_i,z_i,x_j,z_j,zv_min) - x_i
              y_in =  v_fxy(y_i,z_i,y_j,z_j,zv_min) - y_i
-
              z_in = zv_min - z_i
-             if(z_j < zv_max ) then 
-                 if1=1
-                 x_in = x_j - x_i
-                 y_in = y_j - y_i
-                 z_in = z_j - z_i
-                 if(z_j > zv_max ) then 
-                     if1=1
-                     x_in =  v_fxy(x_i,z_i,x_j,z_j,zv_max) - x_i
-                     y_in =  v_fxy(y_i,z_i,y_j,z_j,zv_max) - y_i
-                     z_in = zv_max - z_i
-                 end if
-             end if
-         end if 
- 
-         if(z_i<zv_min.and.z_j>zv_max) then ! 
-             if1=1
-             x_in =  v_fxy(x_i,z_i,x_j,z_j,zv_max) - v_fxy(x_i,z_i,x_j,z_j,zv_min) 
-             y_in =  v_fxy(y_i,z_i,y_j,z_j,zv_max) - v_fxy(y_i,z_i,y_j,z_j,zv_min) 
-             z_in = zv_max - zv_min
-
-             if(z_i>zv_max.and.z_j<zv_min) then 
-                 if1=1
-                 x_in =  v_fxy(x_i,z_i,x_j,z_j,zv_min) - v_fxy(x_i,z_i,x_j,z_j,zv_max) 
-                 y_in =  v_fxy(y_i,z_i,y_j,z_j,zv_min) - v_fxy(y_i,z_i,y_j,z_j,zv_max) 
-                 z_in = zv_min - zv_max
-             end if 
+             !deb             
+             !     print *,"x_i,z_i,x_j,z_j,zv_max",x_i,z_i,x_j,z_j,zv_max 
+             !     print *,"v_fxy=",v_fxy(x_i,z_i,x_j,z_j,zv_max) 
+             !     stop
+             !deb
          end if
+         if(z_j>zv_min .and. z_j < zv_max ) then 
+             if1=1
+             x_in = x_j - x_i
+             y_in = y_j - y_i
+             z_in = z_j - z_i
+         end if
+         if(z_j > zv_max ) then 
+             if1=1
+             x_in =  v_fxy(x_i,z_i,x_j,z_j,zv_max) - x_i
+             y_in =  v_fxy(y_i,z_i,y_j,z_j,zv_max) - y_i
+             z_in = zv_max - z_i
+         end if
+     end if
+     if(z_j>zv_min.and.z_j<zv_max) then ! z_j in volume control 
+         if(z_i < zv_min ) then 
+             if1=1
+             x_in = x_j -  v_fxy(x_i,z_i,x_j,z_j,zv_min) 
+             y_in = y_j -  v_fxy(y_i,z_i,y_j,z_j,zv_min) 
+!             z_in = zv_min - z_i
+             z_in = z_j - zv_min 
+         end if
+!already done         if(z_i>zv_min .and. z_i < zv_max ) then 
+!already done             if1=1
+!already done             x_in = x_j - x_i
+!already done             y_in = y_j - y_i
+!already done             z_in = z_j - z_i
+!already done         end if
+         if(z_i > zv_max ) then 
+             if1=1
+             x_in =  x_j - v_fxy(x_i,z_i,x_j,z_j,zv_max) 
+             y_in =  y_j - v_fxy(y_i,z_i,y_j,z_j,zv_max) 
+!             z_in = zv_max - z_i
+             z_in = z_j - zv_max 
+         end if
+     end if
+
+     if(z_i<zv_min.and.z_j>zv_max) then ! i particle to the left and j particle to the right of the control volume
+         if1=1
+         x_in =  v_fxy(x_i,z_i,x_j,z_j,zv_max) - v_fxy(x_i,z_i,x_j,z_j,zv_min) 
+         y_in =  v_fxy(y_i,z_i,y_j,z_j,zv_max) - v_fxy(y_i,z_i,y_j,z_j,zv_min) 
+         z_in = zv_max - zv_min
+     end if
+     if(z_i>zv_max.and.z_j<zv_min) then ! j particle to the left and i particle to the right of the control volume
+         if1=1
+         x_in =  v_fxy(x_i,z_i,x_j,z_j,zv_min) - v_fxy(x_i,z_i,x_j,z_j,zv_max) 
+         y_in =  v_fxy(y_i,z_i,y_j,z_j,zv_min) - v_fxy(y_i,z_i,y_j,z_j,zv_max) 
+         z_in = zv_min - zv_max
      end if 
+
      if (if1==1) then 
          vipvj(:) = v(:,ii) + v(:,jj) 
          xvf = xvf - 0.5*z_in*(vipvj(1)*f_ij(1)+vipvj(2)*f_ij(2)+vipvj(3)*f_ij(3)) ! add to i_part 
@@ -2062,6 +2088,7 @@ integer :: if1
          xf_y = xf_y - 0.5*y_in*f_ij(2) 
          xf_z = xf_z - 0.5*z_in*f_ij(3) 
      end if
+!     write (288,'(a,2i7,3f16.8)') "ii,jj,z_i,z_j,z_in", ii,jj,z_i,z_j,z_in
 
         ! END Nacho's variation 
         

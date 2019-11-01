@@ -546,6 +546,16 @@ end if ! mod(i_time-n_relax,5).eq.0
           mean_q_p = mean_q_p + ev_term_p
           mean_q_conf = mean_q_conf + xvf !change Maria Fiora
 
+! Add contributions to pressure calculation in the control volume 
+! Kinetic term for pressure
+! NOTE: we use here the total velocity. In case of flow, it should go the peculiar velocity (substraction of mean vel profile)
+
+                press_k_x =  press_k_x +  mass(i_part)*v(1,i_part)*v(1,i_part)  
+                press_k_y =  press_k_y +  mass(i_part)*v(2,i_part)*v(2,i_part)
+                press_k_z =  press_k_z +  mass(i_part)*v(3,i_part)*v(3,i_part)
+
+
+
 #       endif
 
  end subroutine observation
