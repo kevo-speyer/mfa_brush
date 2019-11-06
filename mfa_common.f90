@@ -170,12 +170,13 @@ module commons
 #if WALL==2 || WALL == 3
 #       ifndef ASYM_WALLS
         real (kind=8) :: sigma_w,a_w,sigma_w4,a_w4, sigma_wall(n_type), a_wall(n_type)
-#       else
+#       endif 
+#       if ASYM_WALLS == 1 || ASYM_WALLS == 2 
 ! Variables to define different top and bottom walls        
         real (kind=8) :: sigma_w(2),a_w(2),sigma_w4(2),a_w4(2), sigma_wall(2,n_type), a_wall(2,n_type)
         ! sigma_wall(1,i_type) = top wall 
         ! sigma_wall(2,i_type) = bottom wall 
-#       endif
+#       endif /* ASYM_WALLS == 1 */
 #endif
 
       real (kind=8) :: histo_b(hist_dim),histo_d(hist_dim)

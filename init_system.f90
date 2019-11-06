@@ -61,12 +61,13 @@ subroutine init_system()
 #       ifndef ASYM_WALLS
         read(14,*) ! dummy reading
            read(14,*,iostat=n_read) a_w,sigma_w,a_w4,sigma_w4  ! Wall interaction parameters
-#       else
+#       endif
+#       if ASYM_WALLS == 1 || ASYM_WALLS == 2 
         read(14,*) ! dummy reading
            read(14,*,iostat=n_read) a_w(1),sigma_w(1),a_w4(1),sigma_w4(1)  ! Top  Wall interaction parameters
         read(14,*) ! dummy reading
            read(14,*,iostat=n_read) a_w(2),sigma_w(2),a_w4(2),sigma_w4(2)  ! Bottom Wall interaction parameters
-#       endif /* ASYM_WALLS */
+#       endif /* ASYM_WALLS == 1 || 2  */
         if(n_read/=0) then
             print*," * Parameter missing in system_input! Line: a_w, sigma_w,a_w4,sigma_w4 "
             stop 
@@ -177,7 +178,8 @@ subroutine init_system()
 #           ifdef PARTICLE_4        
                print '(a,2f8.4/)', "  * LJ wall params (particle 4): sigma_w,a_w =",sigma_w4,A_w4
 #           endif
-#          else /* ifdef ASYM_WALLS */
+#          endif  /* ends ifndef ASYM_WALLS */
+#          if ASYM_WALLS == 1    
                 print '(/a)', "   ------- Wall fluid parameters for implicit wall--------" 
                 print '(/a,2f8.4)', "  *   Top wall: LJ wall params: sigma_w,a_w =",sigma_w(1),A_w(1)
                 print '(a,2f8.4)',  " * Bottom wall: LJ wall params: sigma_w,a_w =",sigma_w(2),A_w(2)
@@ -186,7 +188,18 @@ subroutine init_system()
                 print '(a,2f8.4/)', "  * Bottom wall:  * LJ wall params (particle 4): sigma_w,a_w =",sigma_w4(2),A_w4(2)
 !                print *,'stop' ; stop ! debug
 #               endif
-#          endif
+#           endif /*ASYM_WALLS == 1*/
+
+#          if ASYM_WALLS == 2    
+                print '(/a)', "   ------- Wall fluid parameters for implicit wall--------" 
+                print '(a,2f8.4)',  " * Bottom wall: LJ wall params: sigma_w,a_w =",sigma_w(2),A_w(2)
+#               ifdef PARTICLE_4        
+                print '(a,2f8.4/)', "  * Bottom wall:  * LJ wall params (particle 4): sigma_w,a_w =",sigma_w4(2),A_w4(2)
+!                print *,'stop' ; stop ! debug
+#               endif
+#           endif /*ASYM_WALLS == 2*/
+
+
 #   elif WALL==1
         print'(/a)', "   ------- Explicit wall--------"
 #   endif

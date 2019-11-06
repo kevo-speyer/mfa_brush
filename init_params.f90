@@ -600,7 +600,8 @@ range_2(2,1) = (2.**(1./6.)*sigma(2,1) )**2
           sigma_wall(4)=(sigma_w4+sigma(4,4))/2.
           a_wall(4)=a_w4
 #    endif
-#   else /* ifdef ASYM_WALLS */
+#   endif /* NOT def  ASYM_WALLS */
+#if ASYM_WALLS == 1 || ASYM_WALLS == 2
      do i_type=1, n_type
 ! Top wall
           sigma_wall(1,i_type)=(sigma_w(1)+sigma(i_type,i_type))/2
@@ -609,6 +610,7 @@ range_2(2,1) = (2.**(1./6.)*sigma(2,1) )**2
           sigma_wall(2,i_type)=(sigma_w(2)+sigma(i_type,i_type))/2
           a_wall(2,i_type)=a_w(2)
      enddo
+
 #    ifdef PARTICLE_4
      ! Top wall 
           sigma_wall(1,4)=(sigma_w4(1)+sigma(4,4))/2.
@@ -618,7 +620,7 @@ range_2(2,1) = (2.**(1./6.)*sigma(2,1) )**2
           a_wall(2,4)=a_w4(2)
 #    endif
 
-#   endif
+#   endif /* ASYM_WALLS ==1 || 2*/
 
 
 #if SYMMETRY != 1          
@@ -626,17 +628,29 @@ range_2(2,1) = (2.**(1./6.)*sigma(2,1) )**2
         print '(/a/)','  *  Interaction with implicit walls:' 
         print '(a,4(f8.3,x))','   sigma_w= ',sigma_wall(:)
         print '(a,4(f8.3,x))','   a_w    = ',a_wall
-#       else /*if ASYM_WALLS*/
-        print '(/a/)','  *  Interaction with implicit walls: ASYMMETRIC WALLS' 
+#       endif /*if NOT def ASYM_WALLS*/
+#       if ASYM_WALLS == 1         
+        print '(/a)','  *  Interaction with implicit walls: ASYMMETRIC WALLS' 
+        print '(a/)','  *  Top and bottom walls can have different potentials' 
         ! Top Wall
         print '(/a)', " Parameters for Top Wall potential"
         print '(a,4(f8.3,x))','   sigma_w= ',sigma_wall(1,:)
         print '(a,4(f8.3,x))','   a_w    = ',a_wall(1,:)
+#       endif
+#       if ASYM_WALLS == 2         
+        print '(/a)','  *  Interaction with implicit walls: ASYMMETRIC WALLS' 
+        print '(a)', '  *     Top wall:  adiabatic (specular reflection of particles).  ' 
+        print '(a/)','  *  Bottom wall:  9-3 potential and thermal wall' 
         ! Bottom wall 
         print '(/a)', " Parameters for Bottom Wall potential"
         print '(a,6(f8.3,x))','   sigma_w= ',sigma_wall(2,:)
         print '(a,6(f8.3,x))','   a_w    = ',a_wall(2,:)
 #       endif
+
+
+
+
+
 #endif        
 
 #endif
