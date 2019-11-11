@@ -43,8 +43,17 @@ use commons
 
 
 ! ----- Redefine some velocities with thermal walls 
+
 #       if THERMOSTAT == 2           
+#       ifndef ASYM_WALLS
            call thermal_walls(2)
+#       endif
+#       if ASYM_WALLS == 1
+           call thermal_walls(2)
+#       endif
+#       if ASYM_WALLS == 2 /* top wall adiabatic. Bottom wall thermal and 9-3 */ 
+           call thermal_walls(3)
+#       endif
 #       endif
            
 

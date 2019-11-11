@@ -82,7 +82,8 @@
               force(3,i_part) = force(3,i_part)    + 3*a_wall(i_type)*(sigma_wall(i_type))**3*(inv_z)**4
 
           end do
-#       else /* Asymmetric walls */
+#       endif /* not def ASYM_WALLS*/
+#       if ASYM_WALLS == 1
 
           do i_part = 1,n_mon_tot
 
@@ -128,7 +129,35 @@
               force(3,i_part) = force(3,i_part)    + 3*a_wall(1,i_type)*(sigma_wall(1,i_type))**3*(inv_z)**4
 
           end do
-#endif          /* Asymmetric walls */          
+#endif          /* Asymmetric walls == 1 */          
+#       if ASYM_WALLS == 2
+
+          do i_part = 1,n_mon_tot
+
+              ! *** Bottom wall interaction
+
+#       ifndef NO_WARNS
+              if (r0(3,i_part) < 0. ) then
+                  print*,"[fluid_wall] Warn:",i_part," particle inside the wall ! z=",r0(3,i_part),"t=",i_time
+                  print '(a/)',"[fluid_wall] Forcing a move in z "
+                  r0(3,i_part) = 0.1 
+              end if
+#       endif
+
+              i_type = a_type(i_part)
+
+              ! HPC 
+              inv_z = 1./r0(3,i_part) 
+              r_dummy = sigma_wall(2,i_type)*inv_z
+              v_fluid_wall = v_fluid_wall + abs(a_wall(2,i_type))*r_dummy**9 - a_wall(2,i_type)*r_dummy**3    !int with bottom wall
+              ! HPC
+              force(3,i_part) = force(3,i_part) +   9.*abs(a_wall(2,i_type))*(sigma_wall(2,i_type))**9*(inv_z)**10 
+              force(3,i_part) = force(3,i_part)   - 3.*a_wall(2,i_type)*(sigma_wall(2,i_type))**3*(inv_z)**4                              
+
+              ! ***  NO Top wall interaction: adiabatic wall in thermal_walls.f90
+
+          end do
+#endif          /* Asymmetric walls == 2 */          
 
 #endif /* WALL = 2*/
 

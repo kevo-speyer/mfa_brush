@@ -83,6 +83,7 @@
            ! ----  Propagate coordinates 
 
 !#           if THERMOSTAT ==2
+! Called from verlet_velocities 
 !           call thermal_walls()
 !#           endif
            call verlet_positions()

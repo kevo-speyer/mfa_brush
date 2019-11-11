@@ -39,7 +39,7 @@
  * 0= poor solvent      */
 
 /* NOTE:  WALL is  not used if SYMMETRY /= 1  */
-#define SOLVENT 0    
+#define SOLVENT 1    
 
 /* Some specific system properties */
 
